@@ -37,6 +37,9 @@ html {
 }
 
 body {
+  ::-moz-selection { background: $primary_color; color:white }
+  ::selection { background: $primary_color; color:white }
+
   background: #eeeeee;
   height: 100%;
   overflow-x: hidden;

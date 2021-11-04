@@ -16,7 +16,7 @@ class Language
      *
      * @array $languages
      */
-    protected $languages = ['es','en','pt'];
+    protected $languages = ['es','en'];
 
     /**
      * Handle an incoming request.
@@ -28,7 +28,7 @@ class Language
     public function handle($request, Closure $next)
     {
         $locale = Locale::acceptFromHttp(Request::server('HTTP_ACCEPT_LANGUAGE'));
-        $language = substr($locale, 0, 2) == 'pt' ? 'pt' : 'en';
+        $language = substr($locale, 0, 2) == 'es' ? 'es' : 'en';
 
         App::setLocale($language);
 

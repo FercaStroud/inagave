@@ -45,7 +45,7 @@ div
 
       b-navbar-brand(:to='homePath', :class='{"has-back": path !== homePath}')
         img.d-inline-block.align-top(
-          src='/assets/images/logo.png',
+          src='/assets/images/agave.svg',
           alt='Logo',
           height=36,
         )
@@ -61,17 +61,11 @@ div
             href='#',
           ) {{ $t(item.text) }}
 
-          b-nav-item(
-            :to='{ name: "messages" }'
-          ) {{ $t('strings.messages') }}&nbsp;
+          //b-nav-item(
+          //  :to='{ name: "messages" }'
+          //) {{ $t('strings.messages') }}&nbsp;
             the-message-badge
 
-          b-nav-item.github-link(
-            href='https://github.com/alefesouza/laravel-vue-boilerplate',
-            target='_blank',
-          ) GitHub
-            | &nbsp;
-            b-icon-github
 
           b-nav-item-dropdown(:text='user.name')
             b-dropdown-item(

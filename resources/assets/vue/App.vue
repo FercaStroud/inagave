@@ -26,7 +26,6 @@ export default class App extends Vue {
   */
   locales = [
     { flag: '🇺🇸', name: 'en', title: 'Switch to English', language: 'English' },
-    { flag: '🇧🇷', name: 'pt', title: 'Mudar para Português' , language: 'Português' },
     { flag: '🇪🇸', name: 'es', title: 'Cambiar a Español', language: 'Español' },
   ];
 
@@ -55,7 +54,7 @@ export default class App extends Vue {
     router-view#router
   .languages
     b-button(
-      v-for='locale, i in locales',
+      v-for='(locale, i) in locales',
       :class='{ active: activeLocale === locale.name }',
       :key='i',
       :title='locale.title',

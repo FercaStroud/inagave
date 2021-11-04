@@ -10,7 +10,7 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
-import { onError } from "apollo-link-error";
+import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 
 // Import it before vue-router because it uses i18n strings
@@ -44,7 +44,7 @@ const authLink = setContext((_, { headers }) => {
 
 const errorLink = onError((err: any) => {
   if (err.graphQLErrors && err.graphQLErrors[0]) {
-    if (err.graphQLErrors[0].message == 'Unauthorized') {
+    if (err.graphQLErrors[0].message === 'Unauthorized') {
       router.push('/');
     }
   }
@@ -53,7 +53,7 @@ const errorLink = onError((err: any) => {
     if (err.networkError.bodyText && err.networkError.bodyText.includes('[login]')) {
       store.dispatch('auth/logout', router);
     }
-  };
+  }
 });
 
 const apolloClient = new ApolloClient({
@@ -87,4 +87,4 @@ const app = new Vue({
 
 router.onReady(() => {
   app.$mount('#app');
-})
+});

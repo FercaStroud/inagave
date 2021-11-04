@@ -13,28 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group([
-    'middleware' => 'api',
-    'namespace' => 'Auth',
-], function () {
+Route::group(['middleware' => 'api', 'namespace' => 'Auth',], function () {
     Route::post('login', 'LoginController@login');
     Route::post('logout', 'LoginController@logout');
 
     Route::post('register', 'RegisterController@register');
 });
 
-Route::group([
-    'middleware' => ['auth:sanctum'],
-], function () {
+Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::get('vue', 'HomeController@vue');
     Route::post('user', 'HomeController@user');
 
     Route::post('settings', 'SettingController@saveSettings');
 });
 
-Route::group([
-    'middleware' => ['admin'],
-], function () {
+Route::group(['middleware' => ['admin'],], function () {
     Route::resource('users', 'Resources\UserController', [
         'except' => ['create', 'edit', 'show'],
     ]);

@@ -23,10 +23,8 @@ export default class Home extends Vue {
 </script>
 
 <template lang="pug">
-b-container#home(tag='main')
-  h1 {{ $t('strings.welcome') }}, {{ user.name }}
-  b-row
-    home-card(v-for='item in homeItems', :key='item.name', :item='item')
+div
+  b-container#home(tag='main')
 </template>
 
 <style scoped>

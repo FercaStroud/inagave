@@ -8,6 +8,6 @@ export default {
   dialogMessage: '',
   title: '',
   website: {
-    title: 'Laravel Vue Boilerplate',
+    title: 'Inagave - Administración',
   },
 };

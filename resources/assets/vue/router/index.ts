@@ -3,17 +3,19 @@ import Router from 'vue-router';
 
 import NProgress from 'nprogress';
 
-const BaseAuth = () => import(/* webpackChunkName: "login" */'@/views/auth/components/BaseAuth.vue');
-const AuthLogin = () => import(/* webpackChunkName: "login" */'../views/auth/AuthLogin.vue');
+const BaseAuth = () => import('@/views/auth/components/BaseAuth.vue');
+const AuthLogin = () => import('../views/auth/AuthLogin.vue');
 const AuthRegister = () => import('../views/auth/AuthRegister.vue');
 const AuthResetLink = () => import('../views/auth/AuthResetLink.vue');
 const AuthResetForm = () => import('../views/auth/AuthResetForm.vue');
 
-const Example = () => import(/* webpackChunkName: "example" */'../views/example/Example.vue');
+const Example = () => import('../views/example/Example.vue');
 const Home = () => import('../views/home/Home.vue');
 const Messages = () => import('../views/messages/Messages.vue');
 const Users = () => import('../views/users/Users.vue');
 const UsersGraphQL = () => import('../views/users/UsersGraphQL.vue');
+
+const Products = () => import('../views/products/Products.vue');
 
 import userTypes from '@/utils/userTypes';
 
@@ -28,6 +30,20 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
+      meta: {
+        title: {
+          key: 'strings.home',
+        },
+        auth: {
+          roles: [userTypes.ADMIN],
+          forbiddenRedirect: '/example',
+        },
+      },
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: Products,
       meta: {
         title: {
           key: 'strings.home',
@@ -67,7 +83,7 @@ const router = new Router({
       meta: {
         title: {
           key: 'users.title',
-          length: 2
+          length: 2,
         },
         auth: {
           roles: [userTypes.ADMIN],
@@ -82,7 +98,7 @@ const router = new Router({
       meta: {
         title: {
           key: 'users.title',
-          length: 2
+          length: 2,
         },
         auth: {
           roles: [userTypes.ADMIN],
@@ -90,54 +106,55 @@ const router = new Router({
         },
       },
     },
-
     {
       path: '/auth',
       component: BaseAuth,
-      children: [{
-        path: 'login',
-        name: 'auth.login',
-        component: AuthLogin,
-        meta: {
-          title: {
-            key: 'login.login'
+      children: [
+        {
+          path: 'login',
+          name: 'auth.login',
+          component: AuthLogin,
+          meta: {
+            title: {
+              key: 'login.login',
+            },
+            auth: false,
           },
-          auth: false,
         },
-      },
-      {
-        path: 'register',
-        name: 'auth.register',
-        component: AuthRegister,
-        meta: {
-          title: {
-            key: 'login.register'
+        {
+          path: 'register',
+          name: 'auth.register',
+          component: AuthRegister,
+          meta: {
+            title: {
+              key: 'login.register',
+            },
+            auth: false,
           },
-          auth: false,
         },
-      },
-      {
-        path: 'password/reset',
-        name: 'auth.reset',
-        component: AuthResetLink,
-        meta: {
-          title: {
-            key: 'login.reset_password'
+        {
+          path: 'password/reset',
+          name: 'auth.reset',
+          component: AuthResetLink,
+          meta: {
+            title: {
+              key: 'login.reset_password',
+            },
+            auth: false,
           },
-          auth: false,
         },
-      },
-      {
-        path: 'password/reset/:token',
-        name: 'auth.reset.token',
-        component: AuthResetForm,
-        meta: {
-          title: {
-            key: 'login.reset_password'
+        {
+          path: 'password/reset/:token',
+          name: 'auth.reset.token',
+          component: AuthResetForm,
+          meta: {
+            title: {
+              key: 'login.reset_password',
+            },
+            auth: false,
           },
-          auth: false,
         },
-      }]
+      ],
     },
 
     {
@@ -158,8 +175,8 @@ router.afterEach(() => {
 });
 
 router.beforeEach((to, from, next) => {
-  let { user } = (<any>store.state).auth;
-  const { auth } = to.meta;
+  let {user} = (<any>store.state).auth;
+  const {auth} = to.meta;
 
   let homePath = user.home_path;
 
@@ -194,7 +211,7 @@ router.beforeEach((to, from, next) => {
       if (to.name == 'public.home') {
         store.dispatch('setTitle', '');
       } else {
-        const { title } = to.meta;
+        const {title} = to.meta;
         store.dispatch('setTitle', Vue.i18n.translate(title.key, null, title.length));
       }
     }

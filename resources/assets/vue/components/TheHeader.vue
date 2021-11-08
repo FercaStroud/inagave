@@ -38,8 +38,11 @@ export default class TheHeader extends Vue {
 
 <template lang="pug">
 div
-  b-navbar.navbar-expand-lg.bg-light(type='light', style='background-color: #f8f9fa;')
-    b-container
+  b-navbar.navbar-expand-lg.bg-light.shadow(
+    type='light'
+    style='background-color: #f8f9fa;z-index:1;height:42px'
+  )
+    b-container(fluid)
       b-link.back-button.text-secondary(v-show='path !== homePath', :to='backUrl')
         b-icon-arrow-left-short(style='width: 30px; height: 30px;')
 
@@ -47,8 +50,10 @@ div
         img.d-inline-block.align-top(
           src='/assets/images/agave.svg',
           alt='Logo',
-          height=36,
+          height=31,
+          style="margin-right:5px"
         )
+        span(style="font-size:1em") Administración
 
       b-navbar-toggle(target='nav_collapse')
 
@@ -66,8 +71,7 @@ div
           //) {{ $t('strings.messages') }}&nbsp;
             the-message-badge
 
-
-          b-nav-item-dropdown(:text='user.name')
+          b-nav-item-dropdown(:text='user.name' dropleft)
             b-dropdown-item(
               @click='showSettings',
             ) {{ $t('strings.settings') }}

@@ -3,7 +3,7 @@
 return [
 
     'confirm_password' => 'Confirm password',
-    'description' => 'A Laravel 8 Single Page Application boilerplate using Vue.js 2.6, Bootstrap 4, TypeScript, Sass and Pug.',
+    'description' => '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam',
     'forgot_password' => 'Forgot Your Password?',
     'login' => 'Login',
     'keep_connected' => 'Keep me connected',

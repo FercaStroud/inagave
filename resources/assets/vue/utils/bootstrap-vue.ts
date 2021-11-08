@@ -7,7 +7,14 @@ import {
   FormPlugin,
   ListGroupPlugin,
   NavbarPlugin,
+  SidebarPlugin,
   BContainer,
+  BAvatar,
+  BMedia,
+  BMediaAside,
+  BMediaBody,
+  BTable,
+  BSpinner,
   BRow,
   BCol,
   BBadge,
@@ -23,6 +30,7 @@ import {
   BFormRadio,
   BDropdown,
   BDropdownItem,
+  BIcon,
 } from 'bootstrap-vue';
 
 Vue.component('b-dropdown', BDropdown);
@@ -34,6 +42,10 @@ Vue.use(ModalPlugin);
 Vue.use(FormPlugin);
 Vue.use(ListGroupPlugin);
 Vue.use(NavbarPlugin);
+Vue.use(SidebarPlugin);
+
+Vue.component('b-table', BTable);
+Vue.component('b-spinner', BSpinner);
 Vue.component('b-container', BContainer);
 Vue.component('b-row', BRow);
 Vue.component('b-col', BCol);
@@ -48,3 +60,8 @@ Vue.component('b-form-checkbox', BFormCheckbox);
 Vue.component('b-form-radio-group', BFormRadioGroup);
 Vue.component('b-form-radio', BFormRadio);
 Vue.component('b-pagination', BPagination);
+Vue.component('b-avatar', BAvatar);
+Vue.component('b-media', BMedia);
+Vue.component('b-media-aside', BMediaAside);
+Vue.component('b-media-body', BMediaBody);
+Vue.component('b-icon', BIcon);

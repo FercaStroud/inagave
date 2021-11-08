@@ -12,16 +12,24 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
+import { BootstrapVueIcons } from 'bootstrap-vue';
+
+Vue.use(BootstrapVueIcons);
 
 // Import it before vue-router because it uses i18n strings
 import './utils/i18n';
 import './utils/axios';
 
 import './utils/bootstrap-vue';
-
+import 'hover.css';
 import store from './store';
 import router from './router';
+import VueQuillEditor from 'vue-quill-editor';
 
+import 'quill/dist/quill.core.css'; // import styles
+import 'quill/dist/quill.snow.css'; // for snow theme
+
+Vue.use(VueQuillEditor, { });
 import App from './App.vue';
 
 (<any>window).Pusher = Pusher;

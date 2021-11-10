@@ -1,7 +1,8 @@
 <script lang="ts">
 import {Component, Emit, Prop, Vue} from 'vue-property-decorator';
 import {Action, State, namespace} from 'vuex-class';
-const cStore = namespace('contacts');
+
+const pStore = namespace('products');
 
 @Component({})
 
@@ -9,11 +10,12 @@ export default class ProductsModal extends Vue {
   @Prop() form;
   @Prop() isAdd;
   @Prop() isVisible;
-  @cStore.Action addProduct;
-  @cStore.Action editProduct;
-  @cStore.Action setModalVisible;
-  @cStore.State isModalLoading;
+  @pStore.Action addProduct;
+  @pStore.Action editProduct;
+  @pStore.Action setModalVisible;
+  @pStore.State isModalLoading;
   @Action setDialogMessage;
+
   handleOk() {
     if (this.isAdd) {
       this.addProduct(this.form);
@@ -21,6 +23,7 @@ export default class ProductsModal extends Vue {
       this.editProduct(this.form);
     }
   }
+
   handleClose() {
     this.setModalVisible(false);
   }
@@ -41,6 +44,8 @@ export default class ProductsModal extends Vue {
   )
     b-form
       b-row
+        b-col(md="12")
+          pre {{form}}
         b-col(md="4")
           b-form-group(
             :label='$t("products.form_estate")'
@@ -137,9 +142,10 @@ export default class ProductsModal extends Vue {
               required,
             )
         b-col(md="12")
+          span {{$t("products.form_description")}}
           quill-editor(
             ref="myQuillEditor"
-            v-model="content"
+            v-model="form.description"
             :options="{}"
           )
 

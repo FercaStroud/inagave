@@ -9,16 +9,12 @@ use \Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        Product::all();
+       return Product::all();
     }
 
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $request->validate([
@@ -27,7 +23,9 @@ class ProductController extends Controller
         ]);
 
         $product = new Product($request->all());
-        return response()->json($product, 201);
+        $product->save();
+
+        return response()->json($product);
     }
 
     /**

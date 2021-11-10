@@ -16,6 +16,20 @@ return [
     'title' => 'Título',
     'user' => 'Usuario',
     'welcome' => 'Bienvenido',
+    'created_at' => 'Fecha de Creación',
+    'updated_at' => 'Fecha de Actualización',
+
+    // Buttons
+    'update_table' => 'Actualizar tabla',
+    'add' => 'Añadir',
+    'update' => 'Actualizar',
+    'delete' => 'Eliminar',
+    'edit' => 'Editar',
+    'actions' => 'Acciones',
+    'show' => 'Mostrar',
+    'hide' => 'Ocultar',
+    'details' => 'Detalles',
+    'menu' => 'Menú',
 
     // Pages
     'example' => 'Ejemplo',

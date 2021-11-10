@@ -8,6 +8,7 @@ import {
   ListGroupPlugin,
   NavbarPlugin,
   SidebarPlugin,
+  BButtonGroup,
   BContainer,
   BAvatar,
   BMedia,
@@ -65,3 +66,4 @@ Vue.component('b-media', BMedia);
 Vue.component('b-media-aside', BMediaAside);
 Vue.component('b-media-body', BMediaBody);
 Vue.component('b-icon', BIcon);
+Vue.component('b-button-group', BButtonGroup);

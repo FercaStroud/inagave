@@ -11,7 +11,7 @@ const loadProducts = async ({ commit }, payload) => {
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('SET_PRODUCTS', response.data);
+      commit('SET_PRODUCTS', response);
     }
   } catch (e) {
     commit('SET_DIALOG_MESSAGE', 'errors.generic_error', { root: true });
@@ -38,11 +38,10 @@ const addProduct = async ({ commit }, payload) => {
   try {
     const response = await axios.post('products', product);
     const checkErrors = checkResponse(response);
-
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('ADD_PRODUCT', response.data);
+      commit('ADD_PRODUCT', response);
       commit('SET_MODAL_VISIBLE', false);
     }
   } catch {
@@ -74,7 +73,7 @@ const editProduct = async ({ commit }, payload) => {
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('UPDATE_PRODUCT', response.data);
+      commit('UPDATE_PRODUCT', response);
       commit('SET_MODAL_VISIBLE', false);
     }
   } catch {
@@ -104,8 +103,13 @@ const setModalVisible = ({ commit }, payload) => {
   commit('SET_MODAL_VISIBLE', payload);
 };
 
+const setForm = ({ commit }, payload) => {
+  commit('SET_FORM', payload);
+};
+
 export default {
   loadProducts,
+  setForm,
   addProduct,
   editProduct,
   deleteProduct,

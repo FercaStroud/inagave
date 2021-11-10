@@ -2,5 +2,6 @@
 
 return [
     'shortcuts'        => 'SHORTCUTS',
+    'products'        => 'Products',
 
 ];

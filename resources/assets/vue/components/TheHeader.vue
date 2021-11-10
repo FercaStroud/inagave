@@ -79,10 +79,46 @@ div
             b-dropdown-item(
               @click='logout',
             ) {{ $t('home.logout') }}
+
+          b-nav-item(
+            v-b-toggle.sidebar
+          ) {{ $t('strings.menu') }}
+
+  b-sidebar(
+    id="sidebar"
+    title="Sidebar"
+    shadow
+    ria-labelledby='sidebar-no-header-title'
+    no-header
+    bg-variant="primary"
+  )
+    .bg-white
+      b-container
+        b-navbar-brand(:to='homePath', :class='{"has-back": path !== homePath}')
+          img.d-inline-block.align-top(
+            src='/assets/images/agave.svg',
+            alt='Logo',
+            height=31,
+            style="margin-right:5px"
+          )
+          span(style="font-size:1em;color:black") Administración
+
+    b-container.mt-5.small.text-light.font-weight-bold {{ $t('sidebar.shortcuts') }}
+      b-list-group(flush)
+        b-list-group-item.text-light(to="/products")
+          b-icon(icon="layout-text-sidebar" variant="light" size="1em")
+          | {{ $t('sidebar.products') }}
+        b-list-group-item.text-light(href="#")
+          b-icon(icon="people" variant="light" size="1em")
+          | Cras justo odio
+        b-list-group-item.text-light(href="#")
+          b-icon(icon="shop" variant="light" size="1em")
+          | Cras justo odio
+
   the-settings(ref='the_settings')
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .has-back {
   padding-left: 15px;
 }
@@ -90,5 +126,22 @@ div
 .github-link a {
   display: flex;
   align-items: center;
+}
+.b-icon.bi {
+  margin-right: 7px;
+&:hover{
+   color:white !important;
+ }
+}
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 0.2rem 0;
+  border: none;
+
+  background: none;
+&:hover{
+   color:white;
+ }
 }
 </style>

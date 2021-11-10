@@ -25,6 +25,7 @@ import 'hover.css';
 import store from './store';
 import router from './router';
 import VueQuillEditor from 'vue-quill-editor';
+import VueMoment from 'vue-moment';
 
 import 'quill/dist/quill.core.css'; // import styles
 import 'quill/dist/quill.snow.css'; // for snow theme
@@ -79,6 +80,7 @@ const apolloProvider = new VueApollo({
 
 Vue.use(VueApollo);
 Vue.use(ModalDialogs);
+Vue.use(VueMoment);
 
 if ('serviceWorker' in navigator) {
   const wb = new Workbox('/service-worker.js');

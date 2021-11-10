@@ -22,6 +22,7 @@ class Product extends Model
     protected $fillable = [
         'estate',
         'plant',
+        'plant_age',
         'municipality',
         'size_estate',
         'location',

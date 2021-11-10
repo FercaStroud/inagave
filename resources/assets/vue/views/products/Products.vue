@@ -17,11 +17,13 @@ export default class Users extends Vue {
   @Action setBackUrl;
   @Action setMenu;
   @pStore.State isLoading;
+  @pStore.State form;
   @pStore.State isModalVisible;
   @pStore.Action setModalVisible;
+  @pStore.Action setForm;
 
-  form: Partial<Product> = {};
   isModalAdd = true;
+  product: Partial<Product> = {};
 
   async created() {
     this.setBackUrl('/');
@@ -36,6 +38,7 @@ export default class Users extends Vue {
 
   addProduct(): void {
     this.isModalAdd = true;
+    this.setForm(this.product);
     this.setModalVisible(true);
   }
 
@@ -46,7 +49,7 @@ export default class Users extends Vue {
 <template lang="pug">
 b-container(tag='main' fluid)
   b-row
-    b-col
+    b-col.mt-3
       h2 {{ $t('products.title') }}
       ProductsList
 

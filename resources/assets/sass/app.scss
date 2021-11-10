@@ -26,6 +26,7 @@
 @import '~bootstrap/scss/media';
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/utilities';
+@import '~bootstrap/scss/button-group';
 
 @import '~bootstrap/scss/utilities/align';
 @import '~bootstrap/scss/utilities/display';
@@ -41,7 +42,9 @@
 html {
   height: 100%;
 }
-
+.b-table-sticky-header > .table.b-table > thead > tr > th{
+  text-align: center !important;
+}
 body {
   ::-moz-selection {
     background: $primary_color;
@@ -81,6 +84,7 @@ body {
     cursor: pointer;
   }
 }
-.hvr-underline-reveal:before{
+
+.hvr-underline-reveal:before {
   background: $danger_color !important;
 }

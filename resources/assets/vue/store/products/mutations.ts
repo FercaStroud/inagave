@@ -36,6 +36,10 @@ const SET_MODAL_VISIBLE = (state, payload) => {
   state.isModalVisible = payload;
 };
 
+const SET_FORM = (state, payload) => {
+  state.form = payload;
+};
+
 export default {
   SET_PRODUCTS,
   ADD_PRODUCT,
@@ -44,4 +48,5 @@ export default {
   SET_LOADING,
   SET_MODAL_LOADING,
   SET_MODAL_VISIBLE,
+  SET_FORM,
 };

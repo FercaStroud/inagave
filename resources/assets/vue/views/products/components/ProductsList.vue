@@ -8,16 +8,17 @@ const pStore = namespace('products');
 @Component({})
 
 export default class ProductsCard extends Vue {
+  @pStore.State form;
   @pStore.State products;
   @pStore.State fields;
   @pStore.State pagination;
   @pStore.State isLoading;
   @pStore.State isModalVisible;
   @pStore.State isModalAdd;
-  @pStore.State form;
   @pStore.Action deleteProduct;
   @pStore.Action loadProducts;
   @pStore.Action setModalVisible;
+  @pStore.Action setForm;
 
 
   async created() {
@@ -55,23 +56,28 @@ export default class ProductsCard extends Vue {
 
 <template lang="pug">
   div
-    b-button.btn.table-btn.mr-2(
-      style="margin-bottom: 5px"
+    b-button(
+      style="margin-bottom: 5px;"
       @click="getProducts"
+      size="sm"
+      variant="primary"
     ) {{ $t('strings.update_table') }}
 
     b-table.btable(
-      style="max-height: max-content;"
+      style="max-height: calc(100vh - 191px); font-size: .75em;"
       striped
       hover
       responsive
       sticky-header
       no-border-collapse
+      bordered
       outlined
       head-variant="dark"
       :busy="isLoading"
       :items="products"
       :fields="fields"
+      select-mode="single"
+      small
     )
 
       template(#table-busy)
@@ -94,49 +100,67 @@ export default class ProductsCard extends Vue {
         span {{$t("products.quantity")}}
       template(v-slot:head(price)="data")
         span {{$t("products.price")}}
-      template(v-slot:head(description)="data")
-        span {{$t("products.description")}}
 
       template(v-slot:head(created_at)="data")
-        span {{$t("products.created_at")}}
+        span {{$t("strings.created_at")}}
       template(v-slot:head(updated_at)="data")
-        span {{$t("products.updated_at")}}
+        span {{$t("strings.updated_at")}}
       template(v-slot:head(actions)="data")
-        span {{$t("products.actions")}}
+        span {{$t("strings.actions")}}
 
+
+      template(v-slot:cell(location_url)="data")
+        a(v-show="data.item.location_url" :href="data.item.location_url" target="_blank") Link
+      template(v-slot:cell(description)="data")
+        b-button(
+          size="sm"
+          variant="primary"
+          @click="data.toggleDetails"
+          :title="(data.detailsShowing ? $t('strings.hide') : $t('strings.show'))+' '+$t('strings.details')"
+        )
+          b-icon(
+            icon="eye"
+            style="color: #fff;margin-right:5px"
+          )
+          span {{ data.detailsShowing ? $t('strings.hide') : $t('strings.show') }} {{ $t('strings.details') }}
 
       template(v-slot:cell(created_at)="data")
         span {{ data.item.created_at | moment("dddd D, MMMM YYYY") }}
       template(v-slot:cell(updated_at)="data")
         span {{ data.item.updated_at | moment("dddd D, MMMM YYYY") }}
       template(v-slot:cell(actions)="data")
-        b-button.btn.table-btn.mb-2(
-          size="sm"
-          style="margin-right: 5px"
-          @click="editProduct(data.item)"
-          :title="$t('strings.edit')"
-        )
-          b-icon(
-            icon="pencil"
-            style="color: #fff;margin-right:5px"
+        b-button-group(size="sm")
+          b-button(
+            @click="editProduct(data.item)"
+            :title="$t('strings.edit')"
+            variant="info"
           )
-          | {{$t('strings.edit')}}
+            b-icon(
+              icon="pencil"
+              style="color: #fff;margin-right:5px"
+            )
+            | {{$t('strings.edit')}}
 
-        b-button.btn-danger.table-btn.mb-2(
-          :title="$t('strings.delete')"
-          @click="deleteProductConfirm(data.item)"
-          size="sm"
-        )
-          b-icon(
-            icon="trash-fill"
-            style="color: #fff;margin-right:5px"
+          b-button(
+            :title="$t('strings.delete')"
+            @click="deleteProductConfirm(data.item)"
+            variant="danger"
           )
-          | {{$t('strings.delete')}}
+            b-icon(
+              icon="trash-fill"
+              style="color: #fff;margin-right:5px"
+            )
+            | {{$t('strings.delete')}}
 
       template(v-slot:cell(index)="data")
         span {{ data.index + 1 }}
 
-
+      template(#row-details='data')
+        b-container.bg-white
+          b-row
+            b-col(
+              v-html="data.item.description"
+            )
 </template>
 
 <style lang="scss" scoped>

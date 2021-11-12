@@ -54,7 +54,12 @@ export default {
   ],
   products: [],
   form:{},
+  productImageForm:{},
   isLoading: false,
   isModalLoading: false,
+  isModalAdd: false,
+  isProductImageModalAdd: false,
+  isProductImageModalLoading: false,
   isModalVisible: false,
+  isProductImageModalVisible: false,
 };

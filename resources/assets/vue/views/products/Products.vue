@@ -42,7 +42,6 @@ export default class Users extends Vue {
     this.setModalVisible(true);
   }
 
-
 }
 </script>
 

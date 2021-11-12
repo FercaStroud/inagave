@@ -35,6 +35,8 @@ export default class ProductsModal extends Vue {
     hide-header-close=true,
     :visible='isVisible',
     size="xl",
+    scrollable
+    centered
     :cancel-title='$t("buttons.cancel")',
     :ok-disabled='isModalLoading',
     :ok-title='isModalLoading ? $t("buttons.sending") : isAdd ? $t("buttons.add") : $t("buttons.update")',
@@ -44,8 +46,6 @@ export default class ProductsModal extends Vue {
   )
     b-form
       b-row
-        b-col(md="12")
-          pre {{form}}
         b-col(md="4")
           b-form-group(
             :label='$t("products.form_estate")'
@@ -117,7 +117,7 @@ export default class ProductsModal extends Vue {
               maxlength="75",
               required,
             )
-        b-col(md="4")
+        b-col(md="6")
           b-form-group(
             :label='$t("products.form_location")'
             :description='$t("products.form_location_description")'
@@ -129,7 +129,7 @@ export default class ProductsModal extends Vue {
               maxlength="125",
               required,
             )
-        b-col(md="4")
+        b-col(md="6")
           b-form-group(
             :label='$t("products.form_location_url")'
             :description='$t("products.form_location_url_description")'

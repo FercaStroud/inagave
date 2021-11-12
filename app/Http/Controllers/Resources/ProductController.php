@@ -14,7 +14,6 @@ class ProductController extends Controller
        return Product::all();
     }
 
-
     public function store(Request $request): JsonResponse
     {
         $request->validate([
@@ -25,17 +24,26 @@ class ProductController extends Controller
         $product = new Product($request->all());
         $product->save();
 
-        return response()->json($product);
+        return response()->json($product, 201);
     }
 
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function toArray($request)
+    public function update(Request $request, Product $product): JsonResponse
     {
-        return parent::toArray($request);
+        $request->validate([
+            'price' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        tap($product)->update($request->all());
+
+        $product->save();
+        return response()->json($product, 201);
+    }
+
+    public function destroy(Product $product): JsonResponse
+    {
+        $product->delete();
+
+        return response()->json(null, 204);
     }
 }

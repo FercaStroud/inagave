@@ -40,6 +40,13 @@ return [
 
     'form_location_url' => 'URL de Ubicación',
     'form_location_url_description' => 'https://www.google.com/maps/@25.5093786,-103.3522341,13.5z',
-
     'form_description' => 'Descripción',
+
+    'form_product_image_id' => 'ID de Imagen',
+    'form_product_image_id_description' => 'SOLO LECTURA',
+    'form_product_image_name'=> 'Nombre imagen',
+    'form_product_image_name_description' => 'PROVISIONAL',
+    'form_product_image'=> 'Imagen',
+    'form_product_image_description' => 'Seleccione una imagen para continuar'
+
 ];

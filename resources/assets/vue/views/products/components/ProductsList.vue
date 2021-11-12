@@ -1,11 +1,17 @@
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 import {Action, State, namespace} from 'vuex-class';
 import dialog from '@/utils/dialog';
 
+import ProductImageModal from './ProductImageModal.vue';
+
 const pStore = namespace('products');
 
-@Component({})
+@Component({
+  components: {
+    ProductImageModal,
+  }
+})
 
 export default class ProductsCard extends Vue {
   @pStore.State form;
@@ -20,6 +26,16 @@ export default class ProductsCard extends Vue {
   @pStore.Action setModalVisible;
   @pStore.Action setForm;
 
+  image: Partial<Image> = {};
+  @pStore.State productImageForm;
+  @pStore.State isProductImageModalLoading;
+  @pStore.State isProductImageModalVisible;
+  @pStore.State isProductImageModalAdd;
+  @pStore.Action setImageForm;
+  @pStore.Action setImageModalVisible;
+  @pStore.Action addProductImage;
+  @pStore.Action loadProductImages;
+  @pStore.Action deleteProductImage;
 
   async created() {
     if (this.products.length == 0) {
@@ -34,8 +50,7 @@ export default class ProductsCard extends Vue {
   editProduct(product: Product): void {
     this.isModalAdd = false;
     this.setModalVisible(true);
-
-    this.form = { ...product };
+    this.setForm(product);
   }
 
   async deleteProductConfirm(product: Product): Promise<void> {
@@ -50,17 +65,40 @@ export default class ProductsCard extends Vue {
     this.loadProducts();
   }
 
+  async getProductImages(product_id: number): Promise<void> {
+    console.log(this.loadProductImages({product_id}));
+  }
+
+  addImageToProduct(product_id: number): void {
+    this.image.product_id = product_id;
+    this.setImageForm(this.image);
+    this.setImageModalVisible(true);
+  }
+
+  async deleteProductImageConfirm(image: Image): Promise<void> {
+    if (!(await dialog('front.delete_product_image_confirmation', true))) {
+      return;
+    }
+
+    this.deleteProductImage(image);
+  }
 }
 
 </script>
 
 <template lang="pug">
   div
+    product-image-modal(
+      ref='product-image-modal',
+      :form='productImageForm',
+      :is-add='true',
+      :is-visible='isProductImageModalVisible',
+    )
     b-button(
       style="margin-bottom: 5px;"
       @click="getProducts"
       size="sm"
-      variant="primary"
+      variant="outline-primary"
     ) {{ $t('strings.update_table') }}
 
     b-table.btable(
@@ -112,55 +150,96 @@ export default class ProductsCard extends Vue {
       template(v-slot:cell(location_url)="data")
         a(v-show="data.item.location_url" :href="data.item.location_url" target="_blank") Link
       template(v-slot:cell(description)="data")
-        b-button(
+        b-button.btn-block(
           size="sm"
-          variant="primary"
+          variant="outline-primary"
+          style="font-size:.75em"
           @click="data.toggleDetails"
           :title="(data.detailsShowing ? $t('strings.hide') : $t('strings.show'))+' '+$t('strings.details')"
         )
-          b-icon(
-            icon="eye"
-            style="color: #fff;margin-right:5px"
-          )
           span {{ data.detailsShowing ? $t('strings.hide') : $t('strings.show') }} {{ $t('strings.details') }}
 
       template(v-slot:cell(created_at)="data")
-        span {{ data.item.created_at | moment("dddd D, MMMM YYYY") }}
+        span {{ data.item.created_at | moment("D, MMMM YYYY") }}
       template(v-slot:cell(updated_at)="data")
-        span {{ data.item.updated_at | moment("dddd D, MMMM YYYY") }}
+        span {{ data.item.updated_at | moment("D, MMMM YYYY") }}
       template(v-slot:cell(actions)="data")
         b-button-group(size="sm")
           b-button(
             @click="editProduct(data.item)"
             :title="$t('strings.edit')"
             variant="info"
+            style="font-size:.8em"
           )
-            b-icon(
-              icon="pencil"
-              style="color: #fff;margin-right:5px"
-            )
             | {{$t('strings.edit')}}
 
           b-button(
             :title="$t('strings.delete')"
             @click="deleteProductConfirm(data.item)"
             variant="danger"
+            style="font-size:.8em"
           )
-            b-icon(
-              icon="trash-fill"
-              style="color: #fff;margin-right:5px"
-            )
             | {{$t('strings.delete')}}
 
       template(v-slot:cell(index)="data")
         span {{ data.index + 1 }}
 
       template(#row-details='data')
-        b-container.bg-white
+        b-container(fluid)
           b-row
             b-col(
-              v-html="data.item.description"
+              md="4"
             )
+              b-card(
+                border-variant="primary"
+              )
+                b-card-title
+                  strong {{$t("strings.images")}}
+                  b-button-group(
+                    style="float:right"
+                    size="sm"
+                  )
+                    b-button(
+                      :title="$t('strings.update')"
+                      size="sm"
+                      @click="getProductImages(data.item.id)"
+                      variant="outline-primary"
+                    )
+                      | {{$t('strings.update')}}
+                    b-button(
+                      size="sm"
+                      :title="$t('strings.add')"
+                      @click="addImageToProduct(data.item.id)"
+                      variant="success"
+                    )
+                      | {{$t('strings.add')}}
+                b-card-body
+                  b-container(fluid)
+                    b-row
+                      b-col.border.p-1(
+                        md="3"
+                        v-for="(image, key) in data.item.images" :key="key"
+                      )
+                        img.img-fluid(
+                          :src="'/products/' + image.src"
+                        )
+                        b-button.btn-block.mt-1(
+                          :title="$t('strings.delete')"
+                          @click="deleteProductImageConfirm(image)"
+                          variant="outline-danger"
+                          style="font-size:.8em;"
+                        )
+                          | {{$t('strings.delete')}}
+
+            b-col(
+              md="8"
+            )
+              b-card(
+                border-variant="primary"
+              )
+                b-card-title {{$t("products.form_description")}}
+                b-card-body
+                  div(v-html="data.item.description")
 </template>
 
 <style lang="scss" scoped>

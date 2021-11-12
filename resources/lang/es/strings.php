@@ -5,6 +5,7 @@ return [
     'admin' => 'Administrador',
     'email' => 'E-mail',
     'image' => 'Imagen',
+    'images' => 'Imágenes',
     'loading' => 'Cargando',
     'logo' => 'Logo',
     'name' => 'Nombre',
@@ -30,6 +31,9 @@ return [
     'hide' => 'Ocultar',
     'details' => 'Detalles',
     'menu' => 'Menú',
+    'browse' => 'Buscar imagen',
+    'choose_img' => 'Escoger imagen',
+    'drop_img' => 'Deje caer la imagen aquí',
 
     // Pages
     'example' => 'Ejemplo',

@@ -31,6 +31,7 @@ Route::group(['middleware' => ['admin'],], function () {
 
     Route::resource('users', 'Resources\UserController', ['except' => ['create', 'edit', 'show'],]);
     Route::resource('products', 'Resources\ProductController', ['except' => ['create', 'edit', 'show'],]);
+    Route::resource('product-images', 'Resources\ProductImageController', ['except' => ['create', 'edit', 'show'],]);
 });
 
 Route::any('messages/{type}/{id}', function ($type, $id) {

@@ -20,9 +20,9 @@ class Utils
 
             $extension = pathinfo($fileName)['extension'];
 
-            $fileName = str_replace('.'.$extension, '', $fileName);
+            $fileName = str_replace('.' . $extension, '', $fileName);
 
-            $fileName .= '_'.$date.'.'.$extension;
+            $fileName .= '_' . $date . '.' . $extension;
 
             return $fileName;
         }

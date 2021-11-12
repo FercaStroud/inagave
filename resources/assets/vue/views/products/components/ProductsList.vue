@@ -66,7 +66,7 @@ export default class ProductsCard extends Vue {
   }
 
   async getProductImages(product_id: number): Promise<void> {
-    console.log(this.loadProductImages({product_id}));
+    this.loadProductImages({product_id});
   }
 
   addImageToProduct(product_id: number): void {

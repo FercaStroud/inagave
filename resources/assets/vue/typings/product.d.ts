@@ -1,5 +1,6 @@
 declare interface Product {
   id: number;
+  user_id: number;
   estate: string;
   size: string;
   age: number;
@@ -9,4 +10,5 @@ declare interface Product {
   location: string;
   location_url: string;
   description: string;
+  user: User;
 }

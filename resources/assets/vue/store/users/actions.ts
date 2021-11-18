@@ -23,6 +23,8 @@ const loadUsers = async ({ commit }, payload) => {
 const addUser = async ({ commit }, payload) => {
   const user = {
     name: payload.name,
+    lastname: payload.lastname,
+    second_lastname: payload.second_lastname,
     email: payload.email,
     type_id: payload.type_id,
     password: payload.password,
@@ -51,6 +53,8 @@ const addUser = async ({ commit }, payload) => {
 const editUser = async ({ commit }, payload) => {
   const user = {
     name: payload.name,
+    lastname: payload.lastname,
+    second_lastname: payload.second_lastname,
     email: payload.email,
     type_id: payload.type_id,
     password: payload.password,

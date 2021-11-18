@@ -33,7 +33,7 @@ return [
     'form_location_description' => 'form_location_description',
     'form_location_url' => 'form_location_url',
     'form_location_url_description' => 'form_location_url_description',
-    'form_description' => 'form_description',
+    'form_description' => 'Description',
 
     'form_product_image_id' => 'form_product_image_id',
     'form_product_image_id_description' => 'form_product_image_id_description',

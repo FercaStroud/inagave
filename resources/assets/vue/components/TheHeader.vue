@@ -84,6 +84,13 @@ export default class TheHeader extends Vue {
             img.icon-navigator(src="/assets/images/payment.png" :alt="$t('strings.payments')")
             | {{ $t('strings.payments') }}
 
+          b-nav-item.menu(
+            v-for='item in menu',
+            :key='item.key',
+            @click.prevent='item.handler',
+            href='#',
+          ) {{ $t(item.text) }}
+
           b-nav-item-dropdown(:text='user.name' dropleft)
             b-dropdown-item(
               @click='showSettings',

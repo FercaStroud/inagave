@@ -9,6 +9,8 @@ return [
     'loading' => 'Loading',
     'logo' => 'Logo',
     'name' => 'Name',
+    'lastname' => 'Lastname',
+    'second_lastname' => 'Second Lastname',
     'normal' => 'Normal',
     'optional' => 'Optional',
     'password' => 'Password',
@@ -24,6 +26,7 @@ return [
     'acres' => 'Acre(s)',
     'years' => 'Year(s)',
     'total' => 'Total',
+    'owner' => 'Owner',
 
     // Buttons
     'update_table' => 'Update Table',
@@ -41,6 +44,7 @@ return [
     'drop_img' => 'Drop Image',
     'view_in_maps' => 'View in Maps',
     'checkout' => 'Checkout',
+    'generate_payment' => 'Generate Payment',
 
     // Pages
     'example' => 'Example',

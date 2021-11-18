@@ -9,6 +9,8 @@ return [
     'loading' => 'Cargando',
     'logo' => 'Logo',
     'name' => 'Nombre',
+    'lastname' => 'Apellido Materno',
+    'second_lastname' => 'Apellido Paterno',
     'normal' => 'Normal',
     'optional' => 'Opcional',
     'password' => 'Contraseña',
@@ -19,6 +21,8 @@ return [
     'welcome' => 'Bienvenido',
     'created_at' => 'Fecha de Creación',
     'updated_at' => 'Fecha de Actualización',
+    'total' => 'Total',
+    'owner' => 'Propietario',
 
     // Buttons
     'update_table' => 'Actualizar tabla',
@@ -40,7 +44,7 @@ return [
     'acres' => 'Hectárea(s)',
     'years' => 'Año(s)',
     'checkout' => 'Pagar',
-    'total' => 'Total',
+    'generate_payment' => 'Generar Pago',
 
     // Pages
     'example' => 'Ejemplo',

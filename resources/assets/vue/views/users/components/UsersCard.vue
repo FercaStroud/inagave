@@ -19,7 +19,7 @@ export default class UsersCard extends Vue {
 
 <template lang="pug">
 b-card.users-card.mb-3(no-body)
-  h4(slot='header') {{ user.name }}
+  h4(slot='header') {{ user.name }} {{ user.lastname }} {{ user.second_lastname }}
 
   b-card-body
     p.card-text

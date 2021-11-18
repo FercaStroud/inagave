@@ -40,6 +40,7 @@
     <script>
       let authenticated = {{ Auth::guest() ? 'false' : 'true' }};
     </script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

@@ -40,5 +40,8 @@ class Product extends Model
         return $this->hasMany('App\ProductImage');
     }
 
-
+    public function user(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo('App\User');
+    }
 }

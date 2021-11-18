@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-       return Product::all();
+       return Product::with('user')->get();
     }
 
     public function getStoreProducts()
@@ -31,8 +31,9 @@ class ProductController extends Controller
         ]);
 
         $product = new Product($request->all());
+        $product->user_id = auth()->user()->id;
         $product->save();
-
+        $product['user'] = auth()->user();
         return response()->json($product, 201);
     }
 

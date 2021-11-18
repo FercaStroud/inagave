@@ -7,7 +7,6 @@ export default {
     },
     {
       key: 'estate',
-      class: 'text-center',
     },
     {
       key: 'size',
@@ -19,7 +18,6 @@ export default {
     },
     {
       key: 'municipality',
-      class: 'text-center',
     },
     {
       key: 'location',
@@ -35,6 +33,10 @@ export default {
     },
     {
       key: 'price',
+      class: 'text-center',
+    },
+    {
+      key: 'owner',
       class: 'text-center',
     },
     {

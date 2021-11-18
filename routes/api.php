@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::post('user', 'HomeController@user');
 
     Route::post('settings', 'SettingController@saveSettings');
+    Route::post('checkout', 'CheckoutController@createPreferences');
     Route::get('get/store/products', 'Resources\ProductController@getStoreProducts');
 
 });

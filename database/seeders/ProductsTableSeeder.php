@@ -33,6 +33,7 @@ class ProductsTableSeeder extends Seeder
                 'description' => $faker->sentence(20, true),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
+                'user_id' => 1,
             ]);
 
             for ($j = 0; $j < $imageLimit; $j++) {

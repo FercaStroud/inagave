@@ -10,6 +10,7 @@ import {
   SidebarPlugin,
   CarouselPlugin,
   InputGroupPlugin,
+  ToastPlugin,
   BButtonGroup,
   BContainer,
   BAvatar,
@@ -48,6 +49,7 @@ Vue.use(NavbarPlugin);
 Vue.use(SidebarPlugin);
 Vue.use(CarouselPlugin);
 Vue.use(InputGroupPlugin);
+Vue.use(ToastPlugin);
 
 Vue.component('b-table', BTable);
 Vue.component('b-spinner', BSpinner);

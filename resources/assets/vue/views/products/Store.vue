@@ -7,7 +7,7 @@ const pStore = namespace('products');
 import {latLng, icon} from "leaflet";
 import {LMap, LTileLayer, LMarker, LIcon, LControl} from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
-
+import axios from "axios";
 
 @Component({
   components: {
@@ -27,6 +27,15 @@ export default class Users extends Vue {
 
   isModalAdd = true;
   product: Partial<Product> = {};
+  mpContainer = false;
+
+  icon = icon(
+    {
+      iconUrl: "/assets/images/agave.svg",
+      iconSize: [50, 50],
+      iconAnchor: [50, 50]
+    }
+  );
 
   async created() {
     this.setBackUrl('/');
@@ -44,13 +53,34 @@ export default class Users extends Vue {
     this.loadStoreProducts();
   }
 
-  icon = icon(
-    {
-      iconUrl: "/assets/images/agave.svg",
-      iconSize: [50, 50],
-      iconAnchor: [50, 50]
+  async checkout(product: Product): Promise<void> {
+    try {
+      const response = await axios.post('checkout', product);
+      const mp = new window["MercadoPago"](
+        'TEST-64bd709d-7139-413c-b8fe-0dc0baa97bc8', {
+          locale: 'es-MX'
+        });
+      mp.checkout({
+        preference: {
+          id: response.data.id
+        },
+        render: {
+          container: '.mp-container' + product.id, // Indicates the name of the class where the payment button will be displayed
+          label: this.$t('strings.checkout'), // Changes the button label (optional)
+        }
+      });
+    } catch {
+      this.$bvToast.toast('', {
+        title: this.$t('errors.generic_error'),
+        variant: 'danger',
+        toaster: 'b-toaster-top-center',
+        solid: true
+      })
+    } finally {
+      this.mpContainer = true;
     }
-  );
+
+  }
 }
 </script>
 
@@ -129,7 +159,7 @@ export default class Users extends Vue {
                 p
                   strong {{ $t('strings.total') }}:
                     .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * product.price).toFixed(2) }}
-                b-input-group
+                b-input-group(v-show="!mpContainer")
                   b-form-input(
                     type="number"
                     min="0"
@@ -139,22 +169,31 @@ export default class Users extends Vue {
                   b-input-group-append
                     b-button(
                       variant="danger"
-                    ) {{ $t('strings.checkout') }}
+                      @click="checkout(product)"
+                    ) {{ $t('strings.generate_payment') }}
+
+                div( :class="'mp-container' + product.id")
 
             b-col.mt-2(md="12" sm="12")
-                hr
-                strong {{ $t('products.description') }}
-                div(v-html="product.description" )
+              hr
+              strong {{ $t('products.description') }}
+              div(v-html="product.description" )
 
 </template>
 
 <style lang="scss" scoped>
-.product-card{
+.product-card {
   border-radius: 20px !important;
 }
-.price{
+
+.price {
 }
-.total{
+
+.total {
   font-size: 2em;
+}
+
+.mercadopago-button {
+  width: 100%;
 }
 </style>

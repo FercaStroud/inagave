@@ -138,6 +138,8 @@ export default class ProductsCard extends Vue {
         span {{$t("products.quantity")}}
       template(v-slot:head(price)="data")
         span {{$t("products.price")}}
+      template(v-slot:head(owner)="data")
+        span {{$t("strings.owner")}}
 
       template(v-slot:head(created_at)="data")
         span {{$t("strings.created_at")}}
@@ -147,6 +149,8 @@ export default class ProductsCard extends Vue {
         span {{$t("strings.actions")}}
 
 
+      template(v-slot:cell(owner)="data")
+        span {{data.item.user.name}} {{data.item.user.lastname}}
       template(v-slot:cell(location_url)="data")
         a(v-show="data.item.location_url" :href="data.item.location_url" target="_blank") Link
       template(v-slot:cell(description)="data")

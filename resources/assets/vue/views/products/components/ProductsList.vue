@@ -124,10 +124,10 @@ export default class ProductsCard extends Vue {
 
       template(v-slot:head(estate)="data")
         span {{$t("products.estate")}}
-      template(v-slot:head(size_estate)="data")
-        span {{$t("products.size_estate")}}
-      template(v-slot:head(plant_age)="data")
-        span {{$t("products.plant_age")}}
+      template(v-slot:head(size)="data")
+        span {{$t("products.size")}}
+      template(v-slot:head(age)="data")
+        span {{$t("products.age")}}
       template(v-slot:head(municipality)="data")
         span {{$t("products.municipality")}}
       template(v-slot:head(location)="data")

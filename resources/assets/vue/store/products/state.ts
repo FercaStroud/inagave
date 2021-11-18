@@ -10,11 +10,11 @@ export default {
       class: 'text-center',
     },
     {
-      key: 'size_estate',
+      key: 'size',
       class: 'text-center',
     },
     {
-      key: 'plant_age',
+      key: 'age',
       class: 'text-center',
     },
     {

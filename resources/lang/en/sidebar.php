@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'shortcuts'        => 'SHORTCUTS',
-    'products'        => 'Products',
-
+    'shortcuts' => 'SHORTCUTS',
+    'products' => 'Products',
+    'users' => 'Users',
 ];

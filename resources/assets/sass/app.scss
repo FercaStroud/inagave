@@ -27,6 +27,7 @@
 @import '~bootstrap/scss/images';
 @import '~bootstrap/scss/utilities';
 @import '~bootstrap/scss/button-group';
+@import '~bootstrap/scss/carousel';
 
 @import '~bootstrap/scss/utilities/align';
 @import '~bootstrap/scss/utilities/display';
@@ -38,13 +39,17 @@
 
 @import '~bootstrap-vue/src/index.scss';
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 
 html {
   height: 100%;
 }
-.b-table-sticky-header > .table.b-table > thead > tr > th{
+
+.b-table-sticky-header > .table.b-table > thead > tr > th {
   text-align: center !important;
 }
+
 body {
   ::-moz-selection {
     background: $primary_color;
@@ -82,6 +87,10 @@ body {
 
   .btn-link {
     cursor: pointer;
+  }
+
+  .montserrat {
+    font-family: 'Montserrat', sans-serif;
   }
 }
 

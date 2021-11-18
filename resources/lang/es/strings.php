@@ -34,6 +34,13 @@ return [
     'browse' => 'Buscar imagen',
     'choose_img' => 'Escoger imagen',
     'drop_img' => 'Deje caer la imagen aquí',
+    'view_in_maps' => 'Ver en Mapas',
+    'unit' => 'Unidad',
+    'units' => 'Unidades',
+    'acres' => 'Hectárea(s)',
+    'years' => 'Año(s)',
+    'checkout' => 'Pagar',
+    'total' => 'Total',
 
     // Pages
     'example' => 'Ejemplo',
@@ -42,6 +49,10 @@ return [
     'users' => 'Usuarios',
     'users_graphql' => 'Usuarios (GraphQL)',
     'settings' => 'Configuraciones',
+    'store' => 'Tienda',
+    'withdraws' => 'Retiros y Fondos',
+    'care' => 'Mantenimiento',
+    'payments' => 'Historial de Compras',
 
     'error_occurred' => 'Ocurrió un error.',
     'items_to_show' => 'Elementos a mostrar por página:',

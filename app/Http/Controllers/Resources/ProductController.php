@@ -14,6 +14,15 @@ class ProductController extends Controller
        return Product::all();
     }
 
+    public function getStoreProducts()
+    {
+        $products = Product::with('images')->get();
+        foreach ($products as $key=>$product){
+            $products[$key]['checkoutQty'] = 1;
+        }
+       return  $products;
+    }
+
     public function store(Request $request): JsonResponse
     {
         $request->validate([

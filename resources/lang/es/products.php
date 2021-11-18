@@ -3,8 +3,8 @@
 return [
     'title' => 'LISTADO DE PRODUCTOS',
     'estate' => 'Predio',
-    'size_estate' => 'Dimensión del Predio',
-    'plant_age' => 'Edad de la Planta',
+    'size' => 'Dimensión del Predio',
+    'age' => 'Edad de la Planta',
     'municipality' => 'Municipio',
     'location' => 'Ubicación (Coordenadas)',
     'location_url' => 'Ubicación (GMaps URL)',
@@ -12,6 +12,7 @@ return [
     'price' => 'Precio (Por planta)',
     'description' => 'Descripción',
     'image' => 'Imagen',
+    'acres' => 'Hectáreas',
 
 
     'add_product' => 'Añadir Producto',
@@ -20,11 +21,11 @@ return [
     'form_estate' => 'Predio',
     'form_estate_description' => 'Ingresa nombre de predio',
 
-    'form_size_estate' => 'Dimensión del Predio',
-    'form_size_estate_description' => 'Ingresa dimensión en hectareas',
+    'form_size' => 'Dimensión del Predio',
+    'form_size_description' => 'Ingresa dimensión en hectareas',
 
-    'form_plant_age_name' => 'Edad de la planta',
-    'form_plant_age_description' => '0 a 7 Años',
+    'form_age_name' => 'Edad de la planta',
+    'form_age_description' => '0 a 7 Años',
 
     'form_quantity_name' => 'Cantidad de Plantas disponibles',
     'form_quantity_description' => 'Ingresa el numero de plantas',

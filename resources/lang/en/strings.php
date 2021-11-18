@@ -19,6 +19,11 @@ return [
     'welcome' => 'Welcome',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
+    'unit' => 'Unit',
+    'units' => 'Units',
+    'acres' => 'Acre(s)',
+    'years' => 'Year(s)',
+    'total' => 'Total',
 
     // Buttons
     'update_table' => 'Update Table',
@@ -34,6 +39,8 @@ return [
     'browse' => 'Browse',
     'choose_img' => 'Choose Image',
     'drop_img' => 'Drop Image',
+    'view_in_maps' => 'View in Maps',
+    'checkout' => 'Checkout',
 
     // Pages
     'example' => 'Example',
@@ -42,6 +49,10 @@ return [
     'users' => 'Users',
     'users_graphql' => 'Users (GraphQL)',
     'settings' => 'Settings',
+    'store' => 'Store',
+    'withdraws' => 'Withdraws',
+    'care' => 'Care',
+    'payments' => 'Payments',
 
     'error_occurred' => 'An error occurred.',
     'items_to_show' => 'Items to show:',

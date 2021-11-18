@@ -8,6 +8,8 @@ import {
   ListGroupPlugin,
   NavbarPlugin,
   SidebarPlugin,
+  CarouselPlugin,
+  InputGroupPlugin,
   BButtonGroup,
   BContainer,
   BAvatar,
@@ -44,6 +46,8 @@ Vue.use(FormPlugin);
 Vue.use(ListGroupPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(SidebarPlugin);
+Vue.use(CarouselPlugin);
+Vue.use(InputGroupPlugin);
 
 Vue.component('b-table', BTable);
 Vue.component('b-spinner', BSpinner);

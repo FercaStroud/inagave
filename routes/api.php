@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::post('user', 'HomeController@user');
 
     Route::post('settings', 'SettingController@saveSettings');
+    Route::get('get/store/products', 'Resources\ProductController@getStoreProducts');
+
 });
 
 Route::group(['middleware' => ['admin'],], function () {

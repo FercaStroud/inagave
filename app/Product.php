@@ -22,9 +22,9 @@ class Product extends Model
     protected $fillable = [
         'estate',
         'plant',
-        'plant_age',
+        'age',
         'municipality',
-        'size_estate',
+        'size',
         'location',
         'location_url',
         'quantity',
@@ -34,6 +34,11 @@ class Product extends Model
 
     protected $hidden = [
     ];
+
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany('App\ProductImage');
+    }
 
 
 }

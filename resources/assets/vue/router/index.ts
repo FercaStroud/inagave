@@ -16,6 +16,7 @@ const Users = () => import('../views/users/Users.vue');
 const UsersGraphQL = () => import('../views/users/UsersGraphQL.vue');
 
 const Products = () => import('../views/products/Products.vue');
+const Store = () => import('../views/products/Store.vue');
 
 import userTypes from '@/utils/userTypes';
 
@@ -72,6 +73,17 @@ const router = new Router({
       meta: {
         title: {
           key: 'strings.messages',
+        },
+        auth: true,
+      },
+    },
+    {
+      path: '/store',
+      name: 'store',
+      component: Store,
+      meta: {
+        title: {
+          key: 'strings.store',
         },
         auth: true,
       },

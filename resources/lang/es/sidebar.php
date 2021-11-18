@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'shortcuts'        => 'ACCESOS RÁPIDOS',
-    'products'        => 'Productos',
-
+    'shortcuts' => 'ACCESOS RÁPIDOS',
+    'products' => 'Productos',
+    'users' => 'Usuarios',
 ];

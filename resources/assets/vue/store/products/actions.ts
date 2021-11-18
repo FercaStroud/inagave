@@ -20,11 +20,30 @@ const loadProducts = async ({ commit }, payload) => {
   }
 };
 
+const loadStoreProducts = async ({ commit }, payload) => {
+  commit('SET_LOADING', true);
+
+  try {
+    const response = await axios.get('get/store/products');
+    const checkErrors = checkResponse(response);
+
+    if (checkErrors) {
+      commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
+    } else {
+      commit('SET_PRODUCTS', response.data);
+    }
+  } catch (e) {
+    commit('SET_DIALOG_MESSAGE', 'errors.generic_error', { root: true });
+  } finally {
+    commit('SET_LOADING', false);
+  }
+};
+
 const addProduct = async ({ commit }, payload) => {
   const product = {
     estate: payload.estate,
-    size_estate: payload.size_estate,
-    plant_age: payload.plant_age,
+    size: payload.size,
+    age: payload.age,
     municipality: payload.municipality,
     location: payload.location,
     description: payload.description,
@@ -54,8 +73,8 @@ const addProduct = async ({ commit }, payload) => {
 const editProduct = async ({ commit }, payload) => {
   const product = {
     estate: payload.estate,
-    size_estate: payload.size_estate,
-    plant_age: payload.plant_age,
+    size: payload.size,
+    age: payload.age,
     municipality: payload.municipality,
     location: payload.location,
     description: payload.description,
@@ -191,6 +210,7 @@ const setProductImageModalAdd = ({ commit }, payload) => {
 
 export default {
   loadProducts,
+  loadStoreProducts,
   setForm,
   setModalAdd,
   addProduct,

@@ -60,23 +60,23 @@ export default class ProductsModal extends Vue {
             )
         b-col(md="4")
           b-form-group(
-            :label='$t("products.form_size_estate")'
-            :description='$t("products.form_size_estate_description")'
-            label-for='size_estate',
+            :label='$t("products.form_size")'
+            :description='$t("products.form_size_description")'
+            label-for='size',
           )
-            b-form-input#size_estate(
+            b-form-input#size(
               type='text',
-              v-model='form.size_estate',
+              v-model='form.size',
               maxlength="20",
               required,
             )
         b-col(md="4")
           b-form-group(
-            :label='$t("products.form_plant_age_name")'
-            :description='$t("products.form_plant_age_description")'
-            label-for='plant_age',
+            :label='$t("products.form_age_name")'
+            :description='$t("products.form_age_description")'
+            label-for='age',
           )
-            b-form-input#plant_age(
+            b-form-input#age(
               type='number',
               min=0,
               required,

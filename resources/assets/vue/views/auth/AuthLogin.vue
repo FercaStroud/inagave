@@ -20,8 +20,8 @@ export default class AuthLogin extends Vue {
 
   form = {
     rememberMe: false,
-    email:'admin@example.com',
-    password:'admin',
+    email:'normal@example.com',
+    password:'normal',
 
   };
   authError = false;

@@ -16,8 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('estate', 75)->nullable();
-            $table->string('size_estate', 20)->nullable();
-            $table->smallInteger('plant_age')->nullable();
+            $table->string('size', 20)->nullable();
+            $table->smallInteger('age')->nullable();
             $table->string('municipality', 75)->nullable();
             $table->string('location', 125)->nullable();
             $table->text('description')->nullable();

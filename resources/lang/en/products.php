@@ -3,8 +3,8 @@
 return [
     'title' => 'PRODUCT LIST',
     'estate' => 'Estate',
-    'size_estate' => 'Estate Size',
-    'plant_age' => 'Plant Age',
+    'size' => 'Estate Size',
+    'age' => 'Plant Age',
     'municipality' => 'Municipality',
     'location' => 'Location (Coordinates)',
     'location_url' => 'Location (GMaps URL)',
@@ -12,16 +12,17 @@ return [
     'price' => 'Price (Per Unit)',
     'description' => 'Description',
     'image' => 'Image',
+    'acres' => 'Acres',
 
 
     'add_product' => 'Add Product',
 
     'form_estate' => 'form_estate',
     'form_estate_description' => 'form_estate_description',
-    'form_size_estate' => 'form_size_estate',
-    'form_size_estate_description' => 'form_size_estate_description',
-    'form_plant_age_name' => 'form_plant_age_name',
-    'form_plant_age_description' => 'form_plant_age_description',
+    'form_size' => 'form_size',
+    'form_size_description' => 'form_size_description',
+    'form_age_name' => 'form_age_name',
+    'form_age_description' => 'form_age_description',
     'form_quantity_name' => 'form_quantity_name',
     'form_quantity_description' => 'form_quantity_description',
     'form_price_name' => 'form_price_name',

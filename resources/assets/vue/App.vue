@@ -75,7 +75,7 @@ export default class App extends Vue {
     bottom: 16px;
     position: fixed;
     right: 16px;
-    z-index: 2;
+    z-index: 9999;
 
     .btn {
       margin-left: 5px;

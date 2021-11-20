@@ -78,7 +78,7 @@
                     {{ $payment['quantity'] }}
                 </p>
                 <p>
-                    <strong>Precio unitario: </strong>
+                    <strong>Precio unitario: {{ $payment['price'] }}</strong>
                 </p>
                 <p>
                     <strong>Total: </strong> {{ $payment['total'] }}

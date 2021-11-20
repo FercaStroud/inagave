@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::post('user', 'HomeController@user');
 
     Route::post('settings', 'SettingController@saveSettings');
-    Route::post('checkout', 'CheckoutController@createPreferences');
+    Route::post('checkout', 'PaymentController@createPreferences');
     Route::get('get/store/products', 'Resources\ProductController@getStoreProducts');
 
 });
@@ -52,3 +52,5 @@ Route::any('messages/{type}/{id}', function ($type, $id) {
 
     return response()->json($data);
 });
+
+Route::get('checkout/feedback', 'PaymentController@feedback');

@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function getStoreProducts()
     {
-        $products = Product::with('images')->get();
+        $products = Product::with('images')->where('available', '=', 1)->get();
         foreach ($products as $key=>$product){
             $products[$key]['checkoutQty'] = 1;
         }

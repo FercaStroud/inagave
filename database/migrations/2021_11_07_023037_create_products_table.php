@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('location_url', 475)->nullable();
             $table->integer('quantity');
             $table->float('price');
+            $table->boolean('available')->default(1);
             $table->timestamps();
         });
     }

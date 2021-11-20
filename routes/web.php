@@ -11,14 +11,12 @@
 |
 */
 
-Route::group([
-    'middleware' => 'guest',
-], function () {
+Route::group(['middleware' => 'guest',], function () {
+
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 });
 
 // It's necessary for the reset password e-mail
 Route::get('password/reset/{token}', 'HomeController@index')->name('password.reset');
-
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');

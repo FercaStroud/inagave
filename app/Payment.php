@@ -5,10 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Payment extends Model
 {
     use SoftDeletes;
-    protected $table = 'products';
+    protected $table = 'payments';
     public $timestamps = true;
 
     protected $primaryKey = 'id';
@@ -20,17 +20,17 @@ class Product extends Model
     ];
 
     protected $fillable = [
+        'user_id',
         'estate',
-        'plant',
-        'age',
-        'municipality',
-        'size',
-        'location',
-        'location_url',
-        'quantity',
         'price',
-        'description',
-        'available',
+        'quantity',
+        'total',
+        'reference_id',
+        'payment_id',
+        'merchant_order_id',
+        'payment_status',
+        'feedback_status',
+        'ipn_status',
     ];
 
     protected $hidden = [

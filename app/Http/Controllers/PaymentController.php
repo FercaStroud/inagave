@@ -73,13 +73,24 @@ class PaymentController extends Controller
 
     public function feedback(Request $request)
     {
-        $payment = Payment::where([
-            ['user_id', '=', auth()->user()->id],
-            ['preference_id', '=', $request->get('preference_id')],
-        ])->get();
-
-        if($payment[0]->feedback_status === 1){
-            return response()->json(['ERROR' => 'PREFERENCE_ID PROCESADO CON ANTERIORIDAD'], 200);
+        try {
+            $payment = Payment::where([
+                ['user_id', '=', auth()->user()->id],
+                ['preference_id', '=', $request->get('preference_id')],
+            ])->get();
+        } catch (Exception $e) {
+            return response()->view('responses.feedback_error',
+                [
+                    'error' => 'PREFERENCE_ID PROCESADO CON ANTERIORIDAD'
+                ]
+            );
+        }
+        if ($payment[0]->feedback_status === 1) {
+            return response()->view('responses.feedback_error',
+                [
+                    'ERROR' => 'PREFERENCE_ID PROCESADO CON ANTERIORIDAD'
+                ]
+            );
         }
 
         $payment = Payment::find($payment[0]->id);
@@ -98,19 +109,25 @@ class PaymentController extends Controller
         $payment->feedback_status = 1;
         $payment->save();
 
-        if($request->get('status') === 'approved'){
+        if ($request->get('status') === 'approved') {
             $product = Product::find($payment->product_id);
-            $product->quantity = (Integer)$product->quantity - (Integer)$payment->quantity;
+            $product->quantity = (integer)$product->quantity - (integer)$payment->quantity;
             $product->save();
 
             $newProduct = $product->replicate();
             $newProduct->push();
-            $newProduct->quantity = (Integer)$payment->quantity;
+            $newProduct->quantity = (integer)$payment->quantity;
             $newProduct->user_id = $payment->user_id;
             $newProduct->available = 0;
             $newProduct->save();
             Mail::send(new FeedbackMail($payment, $newProduct));
         }
+        return response()->view('responses.feedback_success',
+            [
+                'user' => auth()->user(),
+                'payment' => $payment
+            ]
+        );
 
     }
 }

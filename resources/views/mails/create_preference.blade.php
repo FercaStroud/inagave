@@ -42,7 +42,8 @@
         <tr>
             <td align="center" class="esd-block-image es-p10b"
                 style="font-size: 0px;">
-                <a target="_blank"><img
+                <a target="_blank">
+                    <img
                         src="https://inagave.com/wp-content/uploads/2021/09/INAGAVE-VECTORE.png"
                         alt="Logo"
                         style="display: block; font-size: 12px;"

@@ -24,6 +24,7 @@ export default class Users extends Vue {
   @pStore.State isLoading;
   @pStore.State products;
   @pStore.Action loadStoreProducts;
+  @pStore.Mutation SET_LOADING;
 
   isModalAdd = true;
   product: Partial<Product> = {};
@@ -54,10 +55,12 @@ export default class Users extends Vue {
   }
 
   async checkout(product: Product): Promise<void> {
+    this.SET_LOADING(true);
+
     try {
       const response = await axios.post('checkout', product);
       const mp = new window["MercadoPago"](
-        'TEST-64bd709d-7139-413c-b8fe-0dc0baa97bc8', {
+        'TEST-14c03268-ce28-4220-93ef-d2f6faddbbed', {
           locale: 'es-MX'
         });
       mp.checkout({
@@ -65,9 +68,10 @@ export default class Users extends Vue {
           id: response.data.id
         },
         render: {
-          container: '.mp-container' + product.id, // Indicates the name of the class where the payment button will be displayed
-          label: this.$t('strings.checkout'), // Changes the button label (optional)
-        }
+          container: '.mp-container' + product.id,
+          label: this.$t('strings.checkout'),
+        },
+        autoOpen: true,
       });
     } catch {
       this.$bvToast.toast('', {
@@ -78,8 +82,11 @@ export default class Users extends Vue {
       })
     } finally {
       this.mpContainer = true;
+      this.SET_LOADING(false);
+      /*setTimeout(function (){
+        window.close()
+      }, 2000)*/
     }
-
   }
 }
 </script>
@@ -159,7 +166,7 @@ export default class Users extends Vue {
                 p
                   strong {{ $t('strings.total') }}:
                     .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * product.price).toFixed(2) }}
-                b-input-group(v-show="!mpContainer")
+                b-input-group(v-if="!isLoading && !mpContainer")
                   b-form-input(
                     type="number"
                     min="0"
@@ -171,8 +178,18 @@ export default class Users extends Vue {
                       variant="danger"
                       @click="checkout(product)"
                     ) {{ $t('strings.generate_payment') }}
-
-                div( :class="'mp-container' + product.id")
+                div(v-if="isLoading")
+                  b-button(
+                    variant="danger"
+                    disabled
+                    block
+                  )
+                    b-spinner(
+                      small
+                      variant="light"
+                      type="grow"
+                    )
+                div( :class="'w100 mp-container' + product.id")
 
             b-col.mt-2(md="12" sm="12")
               hr
@@ -191,9 +208,5 @@ export default class Users extends Vue {
 
 .total {
   font-size: 2em;
-}
-
-.mercadopago-button {
-  width: 100%;
 }
 </style>

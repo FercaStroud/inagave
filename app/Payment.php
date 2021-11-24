@@ -24,22 +24,25 @@ class Payment extends Model
         'estate',
         'price',
         'quantity',
+        'age',
         'total',
-        'reference_id',
+        'collection_id',
+        'collection_status',
         'payment_id',
+        'status',
+        'payment_type',
+        'external_reference',
         'merchant_order_id',
-        'payment_status',
+        'preference_id',
+        'site_id',
+        'processing_mode',
+        'merchant_account_id',
         'feedback_status',
-        'ipn_status',
+        'preference_status',
     ];
 
     protected $hidden = [
     ];
-
-    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany('App\ProductImage');
-    }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {

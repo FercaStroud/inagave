@@ -17,6 +17,7 @@ const UsersGraphQL = () => import('../views/users/UsersGraphQL.vue');
 
 const Products = () => import('../views/products/Products.vue');
 const Store = () => import('../views/products/Store.vue');
+const Payments = () => import('../views/payments/Payments.vue');
 
 import userTypes from '@/utils/userTypes';
 
@@ -51,6 +52,20 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
+          forbiddenRedirect: '/example',
+        },
+      },
+    },
+    {
+      path: '/payments',
+      name: 'payments',
+      component: Payments,
+      meta: {
+        title: {
+          key: 'strings.payments',
+        },
+        auth: {
+          roles: [userTypes.ADMIN, userTypes.NORMAL],
           forbiddenRedirect: '/example',
         },
       },

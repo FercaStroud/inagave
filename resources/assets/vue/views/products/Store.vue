@@ -54,38 +54,42 @@ export default class Users extends Vue {
     this.loadStoreProducts();
   }
 
-  async checkout(product: Product): Promise<void> {
-    this.SET_LOADING(true);
+  async checkout(product): Promise<void> {
+    if (parseInt(product.checkoutQty) > parseInt(product.quantity)) {
+        this.$bvModal.msgBoxOk(''+this.$t('errors.max_error'));
+    } else {
+      this.SET_LOADING(true);
 
-    try {
-      const response = await axios.post('checkout', product);
-      const mp = new window["MercadoPago"](
-        'TEST-14c03268-ce28-4220-93ef-d2f6faddbbed', {
-          locale: 'es-MX'
+      try {
+        const response = await axios.post('checkout', product);
+        const mp = new window["MercadoPago"](
+          'TEST-14c03268-ce28-4220-93ef-d2f6faddbbed', {
+            locale: 'es-MX'
+          });
+        mp.checkout({
+          preference: {
+            id: response.data.id
+          },
+          render: {
+            container: '.mp-container' + product.id,
+            label: this.$t('strings.checkout'),
+          },
+          autoOpen: true,
         });
-      mp.checkout({
-        preference: {
-          id: response.data.id
-        },
-        render: {
-          container: '.mp-container' + product.id,
-          label: this.$t('strings.checkout'),
-        },
-        autoOpen: true,
-      });
-    } catch {
-      this.$bvToast.toast('', {
-        title: this.$t('errors.generic_error'),
-        variant: 'danger',
-        toaster: 'b-toaster-top-center',
-        solid: true
-      })
-    } finally {
-      this.mpContainer = true;
-      this.SET_LOADING(false);
-      /*setTimeout(function (){
-        window.close()
-      }, 2000)*/
+      } catch {
+        this.$bvToast.toast('', {
+          title: this.$t('errors.generic_error'),
+          variant: 'danger',
+          toaster: 'b-toaster-top-center',
+          solid: true
+        })
+      } finally {
+        this.mpContainer = true;
+        this.SET_LOADING(false);
+        /*setTimeout(function (){
+          window.close()
+        }, 2000)*/
+      }
     }
   }
 }
@@ -96,6 +100,14 @@ export default class Users extends Vue {
     b-row
       b-col.mt-3
         h2 {{ $t('products.title') }}
+
+    b-row
+      b-col.mt-3
+        b-button(
+          @click="getProducts();mpContainer = false;"
+          size="sm"
+          variant="outline-primary"
+        ) {{ $t('strings.update') }}
 
     b-row
       b-col.mt-3(

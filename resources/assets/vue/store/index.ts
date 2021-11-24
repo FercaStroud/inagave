@@ -11,6 +11,7 @@ import state from './state';
 import messages from './messages';
 import users from './users';
 import products from './products';
+import payments from './payments';
 import auth from './auth';
 
 Vue.use(Vuex);
@@ -19,6 +20,7 @@ const modules = {
   messages,
   users,
   products,
+  payments,
   auth,
 };
 

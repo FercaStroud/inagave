@@ -80,6 +80,7 @@ export default class TheHeader extends Vue {
 
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"
+            to="/payments"
           )
             img.icon-navigator(src="/assets/images/payment.png" :alt="$t('strings.payments')")
             | {{ $t('strings.payments') }}
@@ -133,9 +134,9 @@ export default class TheHeader extends Vue {
           b-list-group-item.text-light(to="/products")
             b-icon(icon="layout-text-sidebar" variant="light" size="1em")
             | {{ $t('sidebar.products') }}
-          b-list-group-item.text-light(href="#")
+          b-list-group-item.text-light(to="/payments")
             b-icon(icon="shop" variant="light" size="1em")
-            | Cras justo odio
+            | {{ $t('sidebar.payments') }}
 
     the-settings(ref='the_settings')
 </template>

@@ -6,7 +6,6 @@ use App\Mail\FeedbackMail;
 use App\Payment;
 use App\Product;
 use Exception;
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use MercadoPago\Item;
@@ -17,6 +16,37 @@ use App\Mail\CreatePreferenceMail;
 
 class PaymentController extends Controller
 {
+    public function index()
+    {
+        $payments = Payment::where([
+            ['preference_status', '=', 1],
+        ])->with('user')->get();
+        foreach ($payments as $key=>$payment){
+            if($payment->collection_status != 'approved') {
+                $payments[$key]['_rowVariant'] = 'danger';
+            }else{
+                $payments[$key]['_rowVariant'] = 'success';
+            }
+        }
+        return $payments;
+    }
+
+    public function getByUserId()
+    {
+        $payments = Payment::where([
+            ['user_id', '=', auth()->user()->id],
+            ['preference_status', '=', 1],
+        ])->with('user')->get();
+        foreach ($payments as $key=>$payment){
+            if($payment->collection_status != 'approved') {
+                $payments[$key]['_rowVariant'] = 'danger';
+            }else{
+                $payments[$key]['_rowVariant'] = 'success';
+            }
+        }
+        return $payments;
+    }
+
     public function createPreferences(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([

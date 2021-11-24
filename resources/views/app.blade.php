@@ -15,7 +15,7 @@
 
     <meta name="application-name" content="{{ config('app.name', 'Laravel') }}">
 
-    <meta name="theme-color" content="#132a97">
+    <meta name="theme-color" content="#3A7C8D">
 
     <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'Laravel') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">

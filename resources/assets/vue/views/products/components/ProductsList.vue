@@ -13,7 +13,7 @@ const pStore = namespace('products');
   }
 })
 
-export default class ProductsCard extends Vue {
+export default class ProductsList extends Vue {
   @pStore.State form;
   @pStore.State products;
   @pStore.State fields;

@@ -6,6 +6,7 @@ use App\Mail\FeedbackMail;
 use App\Payment;
 use App\Product;
 use Exception;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use MercadoPago\Item;
@@ -16,7 +17,7 @@ use App\Mail\CreatePreferenceMail;
 
 class PaymentController extends Controller
 {
-    public function createPreferences(Request $request)
+    public function createPreferences(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'checkoutQty' => 'required',
@@ -71,20 +72,10 @@ class PaymentController extends Controller
         }
     }
 
-    public function feedback(Request $request)
+    public function feedback(Request $request): \Illuminate\Http\Response
     {
-        try {
-            $payment = Payment::where([
-                ['user_id', '=', auth()->user()->id],
-                ['preference_id', '=', $request->get('preference_id')],
-            ])->get();
-        } catch (Exception $e) {
-            return response()->view('responses.feedback_error',
-                [
-                    'error' => 'PREFERENCE_ID PROCESADO CON ANTERIORIDAD'
-                ]
-            );
-        }
+        $payment = Payment::where('preference_id', '=', $request->get('preference_id'))->get();
+
         if ($payment[0]->feedback_status === 1) {
             return response()->view('responses.feedback_error',
                 [
@@ -124,7 +115,6 @@ class PaymentController extends Controller
         }
         return response()->view('responses.feedback_success',
             [
-                'user' => auth()->user(),
                 'payment' => $payment
             ]
         );

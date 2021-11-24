@@ -21,7 +21,7 @@
                         con
                         éxito.</h5>
                     <p>
-                        <strong>{{ $user['name'] }}</strong>, gracias por su compra.
+                        <strong>Gracias por su compra.</strong>
                         Recibirá un correo con los detalles de la misma.
                     </p>
                     <p>

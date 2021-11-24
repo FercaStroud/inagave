@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,6 +14,8 @@ class FeedbackMail extends Mailable
 
     public $payment;
     public $product;
+    public $user;
+
     /**
      * Create a new message instance.
      *
@@ -22,6 +25,7 @@ class FeedbackMail extends Mailable
     {
         $this->payment = $payment;
         $this->product = $product;
+        $this->user = User::find($this->payment->user_id);
     }
 
     /**
@@ -29,12 +33,11 @@ class FeedbackMail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): FeedbackMail
     {
-        return $this->view('mails.feedback')->to(auth()->user()->email, auth()->user()->name)
+        return $this->view('mails.feedback')->to($this->user->email, $this->user->name)
             ->cc(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
             ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'))
-            ->subject('Pedido Completado')
-            ->with(['user' => auth()->user()]);
+            ->subject('Pedido Completado');
     }
 }

@@ -52,11 +52,33 @@ b-form(@submit='register')
     :label='$t("strings.name")'
     label-for='name',
   )
-    b-form-input(
+    b-form-input#name(
       type='text',
       v-model='form.name',
-      maxlength='191',
+      maxlength='25',
       required,
+      autofocus,
+    )
+
+  b-form-group(
+    :label='$t("strings.lastname")'
+    label-for='lastname',
+  )
+    b-form-input#lastname(
+      type='text',
+      v-model='form.lastname',
+      maxlength='15',
+      required,
+      autofocus,
+    )
+  b-form-group(
+    :label='$t("strings.second_lastname")'
+    label-for='second_lastname',
+  )
+    b-form-input#second_lastname(
+      type='text',
+      v-model='form.second_lastname',
+      maxlength='15',
       autofocus,
     )
 

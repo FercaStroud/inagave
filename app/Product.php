@@ -31,6 +31,8 @@ class Product extends Model
         'price',
         'description',
         'available',
+        'planted_at',
+        'jimado_at',
     ];
 
     protected $hidden = [

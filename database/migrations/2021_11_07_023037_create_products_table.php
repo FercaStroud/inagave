@@ -25,6 +25,8 @@ class CreateProductsTable extends Migration
             $table->integer('quantity');
             $table->float('price');
             $table->boolean('available')->default(1);
+            $table->timestamp('planted_at')->nullable();
+            $table->timestamp('jimado_at')->nullable();
             $table->timestamps();
         });
     }

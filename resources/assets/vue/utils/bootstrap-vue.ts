@@ -11,6 +11,7 @@ import {
   CarouselPlugin,
   InputGroupPlugin,
   ToastPlugin,
+  BFormDatepicker,
   BButtonGroup,
   BContainer,
   BAvatar,
@@ -73,3 +74,4 @@ Vue.component('b-media-aside', BMediaAside);
 Vue.component('b-media-body', BMediaBody);
 Vue.component('b-icon', BIcon);
 Vue.component('b-button-group', BButtonGroup);
+Vue.component('b-form-datepicker', BFormDatepicker);

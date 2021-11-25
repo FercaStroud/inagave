@@ -6,6 +6,9 @@ declare interface Product {
   age: number;
   quantity: number;
   price: any;
+  available: boolean;
+  jimado_at: any;
+  planted_at: any;
   municipality: string;
   location: string;
   location_url: string;

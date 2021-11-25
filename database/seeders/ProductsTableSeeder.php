@@ -31,6 +31,7 @@ class ProductsTableSeeder extends Seeder
                 'location_url' => $faker->url(),
                 'location' => '24.170300138817815, -110.29608660056246',
                 'description' => $faker->sentence(20, true),
+                'planted_at' => \Carbon\Carbon::now(),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
                 'user_id' => 1,

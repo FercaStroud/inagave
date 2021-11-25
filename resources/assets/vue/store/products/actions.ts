@@ -50,6 +50,9 @@ const addProduct = async ({ commit }, payload) => {
     location_url: payload.location_url,
     quantity: payload.quantity,
     price: payload.price,
+    available: payload.available,
+    planted_at: payload.planted_at,
+    jimado_at: payload.jimado_at,
   };
 
   commit('SET_MODAL_LOADING', true);
@@ -81,6 +84,9 @@ const editProduct = async ({ commit }, payload) => {
     location_url: payload.location_url,
     quantity: payload.quantity,
     price: payload.price,
+    available: payload.available,
+    planted_at: payload.planted_at,
+    jimado_at: payload.jimado_at,
   };
 
   commit('SET_MODAL_LOADING', true);

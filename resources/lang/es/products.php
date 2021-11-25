@@ -13,6 +13,7 @@ return [
     'description' => 'Descripción',
     'image' => 'Imagen',
     'acres' => 'Hectáreas',
+    'available' => 'En Venta',
 
 
     'add_product' => 'Añadir Producto',
@@ -42,6 +43,14 @@ return [
     'form_location_url' => 'URL de Ubicación',
     'form_location_url_description' => 'https://www.google.com/maps/@25.5093786,-103.3522341,13.5z',
     'form_description' => 'Descripción',
+
+    'form_planted_at' => 'Plantado el',
+    'form_planted_at_description' => 'Fecha de plantación',
+    'form_jimado_at' => 'Jimado el',
+    'form_jimado_at_description' => 'Fecha de Jimado',
+
+    'form_available' => '¿En Venta?',
+    'form_available_description' => 'Producto disponible para venta',
 
     'form_product_image_id' => 'ID de Imagen',
     'form_product_image_id_description' => 'SOLO LECTURA',

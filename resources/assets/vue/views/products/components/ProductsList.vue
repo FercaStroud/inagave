@@ -24,6 +24,7 @@ export default class ProductsList extends Vue {
   @pStore.Action deleteProduct;
   @pStore.Action loadProducts;
   @pStore.Action setModalVisible;
+  @pStore.Action setModalAdd;
   @pStore.Action setForm;
 
   image: Partial<Image> = {};
@@ -37,6 +38,8 @@ export default class ProductsList extends Vue {
   @pStore.Action loadProductImages;
   @pStore.Action deleteProductImage;
 
+  search = '';
+
   async created() {
     if (this.products.length == 0) {
       await this.getProducts();
@@ -48,8 +51,10 @@ export default class ProductsList extends Vue {
   }
 
   editProduct(product: Product): void {
-    this.isModalAdd = false;
+    //this.isModalAdd = false;
+    this.setModalAdd(false);
     this.setModalVisible(true);
+    product.available = Boolean(product.available);
     this.setForm(product);
   }
 
@@ -94,6 +99,14 @@ export default class ProductsList extends Vue {
       :is-add='true',
       :is-visible='isProductImageModalVisible',
     )
+
+    b-form-input#search.mb-2(
+      type="search"
+      v-model='search',
+      :placeholder='$t("strings.search")'
+      style="width:230px;float:right"
+    )
+
     b-button(
       style="margin-bottom: 5px;"
       @click="getProducts"
@@ -116,6 +129,7 @@ export default class ProductsList extends Vue {
       :fields="fields"
       select-mode="single"
       small
+      :filter="search"
     )
 
       template(#table-busy)
@@ -140,7 +154,13 @@ export default class ProductsList extends Vue {
         span {{$t("products.price")}}
       template(v-slot:head(owner)="data")
         span {{$t("strings.owner")}}
+      template(v-slot:head(available)="data")
+        span {{$t("products.available")}}
 
+      template(v-slot:head(planted_at)="data")
+        span {{$t("strings.planted_at")}}
+      template(v-slot:head(jimado_at)="data")
+        span {{$t("strings.jimado_at")}}
       template(v-slot:head(created_at)="data")
         span {{$t("strings.created_at")}}
       template(v-slot:head(updated_at)="data")
@@ -148,7 +168,15 @@ export default class ProductsList extends Vue {
       template(v-slot:head(actions)="data")
         span {{$t("strings.actions")}}
 
-
+      template(v-slot:cell(available)="data")
+        span.text-success(v-if="data.item.available" ) {{$t("strings.true")}}
+        span.text-danger(v-else) {{$t("strings.false")}}
+      template(v-slot:cell(size)="data")
+        span {{data.item.size}} (ha)
+      template(v-slot:cell(price)="data")
+        span ${{data.item.price}} (MXN)
+      template(v-slot:cell(age)="data")
+        span {{data.item.age}} {{$t("strings.years")}}
       template(v-slot:cell(owner)="data")
         span {{data.item.user.name}} {{data.item.user.lastname}}
       template(v-slot:cell(location_url)="data")
@@ -167,6 +195,10 @@ export default class ProductsList extends Vue {
         span {{ data.item.created_at | moment("D, MMMM YYYY") }}
       template(v-slot:cell(updated_at)="data")
         span {{ data.item.updated_at | moment("D, MMMM YYYY") }}
+      template(v-slot:cell(planted_at)="data")
+        span {{ data.item.planted_at | moment("D, MMMM YYYY") }}
+      template(v-slot:cell(jimado_at)="data")
+        span {{ data.item.jimado_at | moment("D, MMMM YYYY") }}
       template(v-slot:cell(actions)="data")
         b-button-group(size="sm")
           b-button(

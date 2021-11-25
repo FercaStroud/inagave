@@ -58,6 +58,28 @@ export default class TheHeader extends Vue {
       b-navbar-toggle(target='nav_collapse')
 
       b-collapse#nav_collapse(is-nav)
+        b-navbar-nav
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
+            to="/users"
+          )
+            b-icon(icon="people" variant="dark" size="1em")
+            | {{ $t('sidebar.users') }}
+
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
+            to="/products"
+          )
+            b-icon(icon="layout-text-sidebar" variant="dark" size="1em")
+            | {{ $t('sidebar.products') }}
+
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
+            to="/payments"
+          )
+            b-icon(icon="shop" variant="dark" size="1em")
+            | {{ $t('sidebar.payments') }}
+
         b-navbar-nav.ml-auto
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"
@@ -101,43 +123,6 @@ export default class TheHeader extends Vue {
               @click='logout',
             ) {{ $t('home.logout') }}
 
-          b-nav-item(
-            v-if="user.type_id === 1"
-            v-b-toggle.sidebar
-          ) {{ $t('strings.menu') }}
-
-    b-sidebar(
-      v-if="user.type_id === 1"
-      id="sidebar"
-      title="Sidebar"
-      shadow
-      ria-labelledby='sidebar-no-header-title'
-      no-header
-      bg-variant="primary"
-    )
-      .bg-white
-        b-container
-          b-navbar-brand(:to='homePath', :class='{"has-back": path !== homePath}')
-            img.d-inline-block.align-top(
-              src='/assets/images/agave.svg',
-              alt='Logo',
-              height=31,
-              style="margin-right:5px"
-            )
-            span(style="font-size:1em;color:black") Administración
-
-      b-container.mt-5.small.text-light.font-weight-bold {{ $t('sidebar.shortcuts') }}
-        b-list-group(flush)
-          b-list-group-item.text-light(to="/users")
-            b-icon(icon="people" variant="light" size="1em")
-            | {{ $t('sidebar.users') }}
-          b-list-group-item.text-light(to="/products")
-            b-icon(icon="layout-text-sidebar" variant="light" size="1em")
-            | {{ $t('sidebar.products') }}
-          b-list-group-item.text-light(to="/payments")
-            b-icon(icon="shop" variant="light" size="1em")
-            | {{ $t('sidebar.payments') }}
-
     the-settings(ref='the_settings')
 </template>
 
@@ -169,10 +154,6 @@ export default class TheHeader extends Vue {
 
 .b-icon.bi {
   margin-right: 7px;
-
-  &:hover {
-    color: white !important;
-  }
 }
 
 .list-group-item {

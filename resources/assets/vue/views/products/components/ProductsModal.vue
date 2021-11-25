@@ -14,10 +14,11 @@ export default class ProductsModal extends Vue {
   @pStore.Action editProduct;
   @pStore.Action setModalVisible;
   @pStore.State isModalLoading;
+  @pStore.State isModalAdd;
   @Action setDialogMessage;
 
   handleOk() {
-    if (this.isAdd) {
+    if (this.isModalAdd) {
       this.addProduct(this.form);
     } else {
       this.editProduct(this.form);
@@ -39,8 +40,8 @@ export default class ProductsModal extends Vue {
     centered
     :cancel-title='$t("buttons.cancel")',
     :ok-disabled='isModalLoading',
-    :ok-title='isModalLoading ? $t("buttons.sending") : isAdd ? $t("buttons.add") : $t("buttons.update")',
-    :title='isAdd ? $t("products.add_product") : $t("products.edit_product")',
+    :ok-title='isModalLoading ? $t("buttons.sending") : isModalAdd ? $t("buttons.add") : $t("buttons.update")',
+    :title='isModalAdd ? $t("products.add_product") : $t("products.edit_product")',
     @hide='handleClose',
     @ok.prevent='handleOk',
   )
@@ -80,7 +81,7 @@ export default class ProductsModal extends Vue {
               type='number',
               min=0,
               required,
-              v-model='form.plant_age',
+              v-model='form.age',
             )
         b-col(md="4")
           b-form-group(
@@ -141,6 +142,37 @@ export default class ProductsModal extends Vue {
               maxlength="475",
               required,
             )
+        b-col(md="6")
+          b-form-group(
+            :label='$t("products.form_planted_at")'
+            :description='$t("products.form_planted_at_description")'
+            label-for='planted_at',
+          )
+            b-form-datepicker#planted_at(
+              v-model='form.planted_at',
+              required,
+            )
+        b-col(md="6")
+          b-form-group(
+            :label='$t("products.form_jimado_at")'
+            :description='$t("products.form_jimado_at_description")'
+            label-for='jimado_at',
+          )
+            b-form-datepicker#jimado_at(
+              v-model='form.jimado_at',
+              required,
+            )
+        b-col(md="6")
+          b-form-group(
+            :label='$t("products.form_available")',
+            :description='$t("products.form_available_description")',
+            label-for='available',
+          )
+            b-form-checkbox#available(
+              name="available",
+              switch,
+              v-model='form.available',
+            )
         b-col(md="12")
           span {{$t("products.form_description")}}
           quill-editor(
@@ -148,5 +180,4 @@ export default class ProductsModal extends Vue {
             v-model="form.description"
             :options="{}"
           )
-
 </template>

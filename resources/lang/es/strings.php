@@ -23,6 +23,10 @@ return [
     'updated_at' => 'Fecha de Actualización',
     'total' => 'Total',
     'owner' => 'Propietario',
+    'true' => 'Verdadero',
+    'false' => 'Falso',
+    'planted_at' => 'Planted At',
+    'jimado_at' => 'Jimado At',
 
     // Buttons
     'update_table' => 'Actualizar tabla',

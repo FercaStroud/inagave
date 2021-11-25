@@ -20,6 +20,7 @@ export default class Users extends Vue {
   @pStore.State form;
   @pStore.State isModalVisible;
   @pStore.Action setModalVisible;
+  @pStore.Action setModalAdd;
   @pStore.Action setForm;
 
   isModalAdd = true;
@@ -37,7 +38,8 @@ export default class Users extends Vue {
   }
 
   addProduct(): void {
-    this.isModalAdd = true;
+    this.setModalAdd(true);
+    this.product.available = true;
     this.setForm(this.product);
     this.setModalVisible(true);
   }

@@ -27,6 +27,10 @@ return [
     'years' => 'Year(s)',
     'total' => 'Total',
     'owner' => 'Owner',
+    'true' => 'True',
+    'false' => 'False',
+    'planted_at' => 'Planted At',
+    'jimado_at' => 'Jimado At',
 
     // Buttons
     'update_table' => 'Update Table',

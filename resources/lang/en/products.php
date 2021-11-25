@@ -13,6 +13,7 @@ return [
     'description' => 'Description',
     'image' => 'Image',
     'acres' => 'Acres',
+    'available' => 'For Sale',
 
 
     'add_product' => 'Add Product',
@@ -34,6 +35,12 @@ return [
     'form_location_url' => 'form_location_url',
     'form_location_url_description' => 'form_location_url_description',
     'form_description' => 'Description',
+    'form_planted_at' => 'Planted at',
+    'form_planted_at_description' => 'form_planted_at_description',
+    'form_jimado_at' => 'Jimado at',
+    'form_jimado_at_description' => 'form_jimado_at_description',
+    'form_available' => 'For Sale?',
+    'form_available_description' => 'form_available_description',
 
     'form_product_image_id' => 'form_product_image_id',
     'form_product_image_id_description' => 'form_product_image_id_description',

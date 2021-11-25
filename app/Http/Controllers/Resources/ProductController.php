@@ -32,6 +32,7 @@ class ProductController extends Controller
 
         $product = new Product($request->all());
         $product->user_id = auth()->user()->id;
+        //$product->available = (bool)(int)$request->get('available', 1);
         $product->save();
         $product['user'] = auth()->user();
         return response()->json($product, 201);

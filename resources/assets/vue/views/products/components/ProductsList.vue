@@ -51,11 +51,10 @@ export default class ProductsList extends Vue {
   }
 
   editProduct(product: Product): void {
-    //this.isModalAdd = false;
     this.setModalAdd(false);
-    this.setModalVisible(true);
     product.available = Boolean(product.available);
     this.setForm(product);
+    this.setModalVisible(true);
   }
 
   async deleteProductConfirm(product: Product): Promise<void> {

@@ -17,7 +17,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create();
-        $limit = 10;
+        $limit = 20;
         $imageLimit = 3;
 
         for ($i = 0; $i < $limit; $i++) {
@@ -31,7 +31,7 @@ class ProductsTableSeeder extends Seeder
                 'location_url' => $faker->url(),
                 'location' => '24.170300138817815, -110.29608660056246',
                 'description' => $faker->sentence(20, true),
-                'planted_at' => \Carbon\Carbon::now(),
+                'planted_at' => $faker->dateTimeBetween('-1 week', '+9 years'),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
                 'user_id' => 1,

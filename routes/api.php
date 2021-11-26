@@ -28,6 +28,9 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::post('checkout', 'PaymentController@createPreferences');
     Route::get('get/user/payments', 'PaymentController@getByUserId');
     Route::get('get/store/products', 'Resources\ProductController@getStoreProducts');
+
+    Route::resource('prices', 'Resources\PricesController', ['except' => ['create', 'edit', 'show'],]);
+
 });
 
 Route::group(['middleware' => ['admin'],], function () {

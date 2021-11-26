@@ -18,7 +18,7 @@ import axios from "axios";
     LControl
   },
 })
-export default class Users extends Vue {
+export default class Store extends Vue {
   @Action setBackUrl;
   @Action setMenu;
   @pStore.State isLoading;

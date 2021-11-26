@@ -12,6 +12,7 @@ import messages from './messages';
 import users from './users';
 import products from './products';
 import payments from './payments';
+import prices from './prices';
 import auth from './auth';
 
 Vue.use(Vuex);
@@ -21,6 +22,7 @@ const modules = {
   users,
   products,
   payments,
+  prices,
   auth,
 };
 

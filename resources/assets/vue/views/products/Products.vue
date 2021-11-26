@@ -13,7 +13,7 @@ const pStore = namespace('products');
     ProductsModal,
   },
 })
-export default class Users extends Vue {
+export default class Products extends Vue {
   @Action setBackUrl;
   @Action setMenu;
   @pStore.State isLoading;

@@ -8,6 +8,8 @@ return [
     'settings' => 'Configuraciones',
 
     'delete_user_confirmation' => '¿Seguro que quieres eliminar a este usuario?',
+    'delete_product_confirmation' => '¿Seguro que quieres eliminar este producto?',
+    'delete_price_confirmation' => '¿Seguro que quieres eliminar este precio?',
     'language' => 'Español',
 
 ];

@@ -68,6 +68,13 @@ export default class TheHeader extends Vue {
 
           b-nav-item.border-navigator(
             v-if="user.type_id === 1"
+            to="/prices"
+          )
+            b-icon(icon="cash" variant="dark" size="1em")
+            | {{ $t('sidebar.prices') }}
+
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
             to="/products"
           )
             b-icon(icon="layout-text-sidebar" variant="dark" size="1em")

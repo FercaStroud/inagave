@@ -20,6 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('name', 25);
             $table->string('lastname', 15);
             $table->string('second_lastname', 15)->default('')->nullable();
+            $table->string('address', 400)->default('SIN DATOS');
+            $table->string('state', 75)->default('SIN DATOS');
+            $table->string('municipality', 75)->default('SIN DATOS');
+            $table->string('city', 75)->default('SIN DATOS');
+            $table->string('country', 75)->default('SIN DATOS');
             $table->string('email')->unique();
             $table->string('password');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\FeedbackMail;
 use App\Payment;
 use App\Product;
+use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -62,6 +63,14 @@ class PaymentController extends Controller
             $preference = new Preference();
             $payer = new Payer();
 
+            $owner = User::find($request->get('user_id'));
+
+            if($owner->isAdmin()){
+                $price = (float)$product->price;
+            } else {
+                $price = (float)$request->get('price');
+            }
+
             $payer->name = auth()->user()->name;
             $payer->surname = auth()->user()->lastname;
             $payer->email = auth()->user()->email;
@@ -70,7 +79,7 @@ class PaymentController extends Controller
             $item = new Item();
             $item->title = $product->estate . ' / ' . $request->get('checkoutQty') . ' Item(s)';
             $item->quantity = (integer)$request->get('checkoutQty');
-            $item->unit_price = (float)$product->price;
+            $item->unit_price = $price;
             $item->currency_id = "MXN";
             $preference->items = [$item];
             $preference->back_urls = [
@@ -90,7 +99,7 @@ class PaymentController extends Controller
             $payment->user_id = auth()->user()->id;
             $payment->product_id = $product->id;
             $payment->quantity = (integer)$request->get('checkoutQty');
-            $payment->total = (float)$product->price * (float)$request->get('checkoutQty');
+            $payment->total = $price * (float)$request->get('checkoutQty');
             $payment->preference_id = $preference->id;
             $payment->preference_status = 1;
             $payment->feedback_status = 0;

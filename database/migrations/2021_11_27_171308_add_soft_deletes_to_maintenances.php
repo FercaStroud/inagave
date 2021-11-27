@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePricesTable extends Migration
+class AddSoftDeletesToMaintenances extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('prices', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->float('price');
-            $table->smallInteger('year')->unique();
-            $table->timestamps();
+        Schema::table('maintenances', function (Blueprint $table) {
+            //
         });
     }
 
@@ -28,6 +25,8 @@ class CreatePricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prices');
+        Schema::table('maintenances', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -11,16 +11,29 @@ class ProductController extends Controller
 {
     public function index()
     {
-       return Product::with('user')->get();
+        return Product::with('user')->get();
     }
 
     public function getStoreProducts()
     {
-        $products = Product::with('images')->where('available', '=', 1)->get();
-        foreach ($products as $key=>$product){
+        $products = Product::with('images')->where([
+            ['available', '=', 1],
+            ['quantity', '>', 0]
+        ])->with('user')->get();
+
+        foreach ($products as $key => $product) {
             $products[$key]['checkoutQty'] = 1;
         }
-       return  $products;
+        return $products;
+    }
+
+    public function getUserProducts()
+    {
+        $products = Product::where('user_id', '=', auth()->user()->id)->with('user')->get();
+        foreach ($products as $key => $product) {
+            $products[$key]['cloneQty'] = 1;
+        }
+        return $products;
     }
 
     public function store(Request $request): JsonResponse
@@ -36,6 +49,31 @@ class ProductController extends Controller
         $product->save();
         $product['user'] = auth()->user();
         return response()->json($product, 201);
+    }
+
+    public function cloneProduct(Request $request): JsonResponse
+    {
+        $request->validate([
+            'cloneQty' => 'required',
+        ]);
+
+        $product = Product::find($request->get('id'));
+        if ((integer)$product->quantity < (integer)$request->get('cloneQty')) {
+
+            return response()->json($product, 500);
+        } else {
+            $product->quantity = (integer)$product->quantity - (integer)$request->get('cloneQty');
+            $product->save();
+
+            $newProduct = $product->replicate();
+            $newProduct->push();
+            $newProduct->quantity = (integer)$request->get('cloneQty');
+            $newProduct->available = 1;
+            $newProduct->save();
+
+            return response()->json($newProduct, 201);
+        }
+
     }
 
     public function update(Request $request, Product $product): JsonResponse

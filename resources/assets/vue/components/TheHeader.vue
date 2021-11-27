@@ -103,9 +103,10 @@ export default class TheHeader extends Vue {
 
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"
+            to="/user/products"
           )
-            img.icon-navigator(src="/assets/images/care.png" :alt="$t('strings.care')")
-            | {{ $t('strings.care') }}
+            img.icon-navigator(src="/assets/images/care.png" :alt="$t('strings.my_plants')")
+            | {{ $t('strings.my_plants') }}
 
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"

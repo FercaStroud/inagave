@@ -39,6 +39,25 @@ const loadStoreProducts = async ({ commit }, payload) => {
   }
 };
 
+const loadUserProducts = async ({ commit }, payload) => {
+  commit('SET_LOADING', true);
+
+  try {
+    const response = await axios.get('get/user/products');
+    const checkErrors = checkResponse(response);
+
+    if (checkErrors) {
+      commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
+    } else {
+      commit('SET_PRODUCTS', response.data);
+    }
+  } catch (e) {
+    commit('SET_DIALOG_MESSAGE', 'errors.generic_error', { root: true });
+  } finally {
+    commit('SET_LOADING', false);
+  }
+};
+
 const addProduct = async ({ commit }, payload) => {
   const product = {
     estate: payload.estate,
@@ -230,4 +249,6 @@ export default {
   deleteProductImage,
   setImageModalVisible,
   setImageForm,
+
+  loadUserProducts,
 };

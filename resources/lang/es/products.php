@@ -2,6 +2,7 @@
 
 return [
     'title' => 'LISTADO DE PRODUCTOS',
+    'my_plants' => 'MIS PLANTAS',
     'estate' => 'Predio',
     'size' => 'Dimensión del Predio',
     'age' => 'Edad de la Planta',

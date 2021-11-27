@@ -8,6 +8,11 @@ return [
     'images' => 'Images',
     'loading' => 'Loading',
     'logo' => 'Logo',
+    'address' => 'Address',
+    'city' => 'City',
+    'country' => 'Country',
+    'municipality' => 'Municipality',
+    'state' => 'State',
     'name' => 'Name',
     'lastname' => 'Lastname',
     'second_lastname' => 'Second Lastname',
@@ -49,6 +54,8 @@ return [
     'view_in_maps' => 'View in Maps',
     'checkout' => 'Checkout',
     'generate_payment' => 'Generate Payment',
+    'generate_product' => 'Generate Product',
+    'sold' => 'SOLD',
 
     // Pages
     'example' => 'Example',
@@ -61,6 +68,7 @@ return [
     'withdraws' => 'Withdraws',
     'care' => 'Care',
     'payments' => 'Payments',
+    'my_plants' => 'My Plants',
 
     'error_occurred' => 'An error occurred.',
     'items_to_show' => 'Items to show:',

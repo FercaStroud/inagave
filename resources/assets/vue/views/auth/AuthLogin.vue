@@ -20,8 +20,8 @@ export default class AuthLogin extends Vue {
 
   form = {
     rememberMe: false,
-    email:'admin@example.com',
-    password:'admin',
+    email:'hola@ferca.dev',
+    password:'normal',
   };
   authError = false;
   isSending = false;
@@ -76,55 +76,59 @@ export default class AuthLogin extends Vue {
 </script>
 
 <template lang="pug">
-b-form#login(@submit='login')
-  b-form-group(
-    :label='$t("strings.email")'
-    label-for='email',
-  )
-    b-form-input(
-      type='email',
-      v-model='form.email',
-      name='email',
-      maxlength='191',
-      required,
-      autofocus,
-    )
-    span.help-block(v-if='authError')
-      strong {{ $t('auth.failed') }}
+b-form(@submit='login')
+  b-container(fluid)
+    b-row
+      b-col(md="12")
+        b-form-group.montserrat.text-primary(
+          :label='$t("strings.email")'
+          label-for='email',
+        )
+          b-form-input(
+            type='email',
+            v-model='form.email',
+            name='email',
+            maxlength='191',
+            required,
+            autofocus,
+          )
+          span.help-block(v-if='authError')
+            strong {{ $t('auth.failed') }}
+      b-col(md="12")
+        b-form-group.montserrat.text-primary(
+          :label='$t("strings.password")'
+          label-for='password',
+        )
+          b-form-input(
+            type='password',
+            v-model='form.password',
+            required,
+          )
+      b-col(md="12")
+        b-form-group#boxes
+          .d-flex.justify-content-between.align-items-center
+            b-form-checkbox.montserrat.text-primary(
+              v-model='form.rememberMe',
+              checked-value=true,
+              unchecked-value=false,
+            ) {{ $t('login.keep_connected') }}
 
-  b-form-group(
-    :label='$t("strings.password")'
-    label-for='password',
-  )
-    b-form-input(
-      type='password',
-      v-model='form.password',
-      required,
-    )
+            b-button.content-vertical.text-secondary(variant='link', :to='{ name: "auth.reset" }')
+              b-icon-question-circle-fill
+              | &nbsp;{{ $t('login.forgot_password') }}
 
-  b-form-group#boxes
-    .d-flex.justify-content-between.align-items-center
-      b-form-checkbox(
-        v-model='form.rememberMe',
-        checked-value=true,
-        unchecked-value=false,
-      ) {{ $t('login.keep_connected') }}
+      b-col.mb-4(md="12")
+        .d-flex.justify-content-between
+          b-button(
+            type='submit',
+            variant='primary',
+            :class='{ disabled: isSending }',
+          ) {{ $t('login.login') }}
 
-      b-button.content-vertical.text-secondary(variant='link', :to='{ name: "auth.reset" }')
-        b-icon-question-circle-fill
-        | &nbsp;{{ $t('login.forgot_password') }}
-
-  .d-flex.justify-content-between
-    b-button(
-      type='submit',
-      variant='primary',
-      :class='{ disabled: isSending }',
-    ) {{ $t('login.login') }}
-
-    b-button(
-      variant='primary',
-      :to='{ name: "auth.register" }',
-    ) {{ $t('login.register') }}
+          b-button(
+            variant='primary',
+            :to='{ name: "auth.register" }',
+          ) {{ $t('login.register') }}
 </template>
 
 <style scoped>

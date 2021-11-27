@@ -8,6 +8,11 @@ return [
     'images' => 'Imágenes',
     'loading' => 'Cargando',
     'logo' => 'Logo',
+    'address' => 'Dirección',
+    'city' => 'Ciudad',
+    'country' => 'País',
+    'municipality' => 'Municipio',
+    'state' => 'Estado',
     'name' => 'Nombre',
     'lastname' => 'Apellido Materno',
     'second_lastname' => 'Apellido Paterno',
@@ -25,8 +30,8 @@ return [
     'owner' => 'Propietario',
     'true' => 'Verdadero',
     'false' => 'Falso',
-    'planted_at' => 'Planted At',
-    'jimado_at' => 'Jimado At',
+    'planted_at' => 'Plantado el',
+    'jimado_at' => 'Jimado el',
 
     // Buttons
     'update_table' => 'Actualizar tabla',
@@ -49,6 +54,8 @@ return [
     'years' => 'Año(s)',
     'checkout' => 'Pagar',
     'generate_payment' => 'Generar Pago',
+    'generate_product' => 'Generar Producto',
+    'sold' => 'VENDIDO',
 
     // Pages
     'example' => 'Ejemplo',
@@ -61,6 +68,7 @@ return [
     'withdraws' => 'Retiros y Fondos',
     'care' => 'Mantenimiento',
     'payments' => 'Historial de Compras',
+    'my_plants' => 'Mis Plantas',
 
     'error_occurred' => 'Ocurrió un error.',
     'items_to_show' => 'Elementos a mostrar por página:',

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 @Component
 export default class BaseAuth extends Vue {
@@ -7,102 +7,34 @@ export default class BaseAuth extends Vue {
 </script>
 
 <template lang="pug">
-.container-fluid
-  .login-row.row
-    b-col.login-col(cols=12, md=6, sm=12, lg=4)
-      router-link(:to='{ name: "auth.login" }')
-        .logo
-          img.d-inline-block.align-top(
-            src='/assets/images/logo.svg',
-            alt='Logo'
-          )
+  div.custom-vh(:style="{background: 'url(https://inagave.com/wp-content/uploads/2021/09/bruno-emmanuelle-U0-3w8afuok-unsplash-scaled.jpg) no-repeat', }")
+    b-container(fluid)
+      b-row
+        b-col.mt-5.mb-5.shadow(
+          md="8"
+          sm="10"
+          lg="8"
+          offset-sm="1"
+          offset-md="2"
+          offset-lg="2"
+          style="backdrop-filter: blur(15px); border-radius:25px; background-color:rgba(255,255,255,0.5)"
+        )
+          router-link(:to='{ name: "auth.login" }')
+            img.mt-3(
+              src='/assets/images/logo.svg',
+              alt='Logo'
+              style="width:300px;margin-left:50%;left:-150px;position:relative;"
+            )
+          router-view
 
-      router-view
-
-    b-col.login-background(
-      cols=12,
-      md=6,
-      sm=12,
-      lg=8,
-      :style="{ background: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/assets/images/agave.svg) repeat', backgroundSize: '120px' }"
-    )
-      .welcome
-        h1 {{ $t('strings.welcome') }}!
-        .sub-text {{ $t('login.description') }}
 
 </template>
 
 <style lang="scss" scoped>
-.container-fluid {
-  height: 100%;
+.custom-vh{
+  height: 100vh;
 }
-
-form {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 35px;
-  max-width: 380px;
-}
-
-.fork-me {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: 0;
-}
-
-.login-background {
-  padding-left: 75px;
-}
-
-.login-col {
-  padding: 50px;
-}
-
-.login-screen,
-.login-row {
-  height: 100%;
-}
-
-.logo {
-  margin-top: 0px;
-}
-
 .reset-password {
   padding-top: 0px;
-}
-
-.title {
-  color: #000000;
-  font-size: 27px;
-  font-weight: 500;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-
-.welcome {
-  color: #ffffff;
-  max-width: 555px;
-  margin-bottom: 65px;
-  margin-top: 65px;
-  padding-right: 55px;
-  h1 {
-    font-size: 60px;
-  }
-}
-
-@media (min-width: 768px) {
-  .login-screen {
-    form {
-      margin-top: 150px;
-    }
-  }
-  .logo {
-    margin-top: 50px;
-  }
-  .welcome {
-    margin-bottom: 0px;
-    margin-top: 285px;
-  }
 }
 </style>

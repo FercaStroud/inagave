@@ -4,7 +4,6 @@ import {Action, namespace} from 'vuex-class';
 
 const pStore = namespace('products');
 const prStore = namespace('prices');
-const aStore = namespace('auth');
 
 import {latLng, icon} from "leaflet";
 import {LMap, LTileLayer, LMarker, LIcon, LControl} from 'vue2-leaflet';
@@ -20,22 +19,19 @@ import axios from "axios";
     LControl
   },
 })
-export default class Store extends Vue {
+export default class Plants extends Vue {
   @Action setBackUrl;
   @Action setMenu;
 
-  @aStore.State user;
-
   @pStore.State isLoading;
   @pStore.State products;
-  @pStore.Action loadStoreProducts;
+  @pStore.Action loadUserProducts;
   @pStore.Mutation SET_LOADING;
 
   @prStore.State prices;
   @prStore.Action loadPrices;
 
   isModalAdd = true;
-  product: Partial<Product> = {};
   mpContainer = false;
 
   icon = icon(
@@ -58,7 +54,7 @@ export default class Store extends Vue {
   }
 
   async getProducts(): Promise<void> {
-    this.loadStoreProducts();
+    this.loadUserProducts();
   }
 
   async getPrices(): Promise<void> {
@@ -69,43 +65,21 @@ export default class Store extends Vue {
     return (this.prices.find(({year}) => year === parseInt(planted_at.slice(0, 4)))).price;
   }
 
-  async checkout(product): Promise<void> {
-    if (parseInt(product.checkoutQty) > parseInt(product.quantity)) {
+  async cloneProduct(product): Promise<void> {
+    if (parseInt(product.cloneQty) > parseInt(product.quantity)) {
       this.$bvModal.msgBoxOk('' + this.$t('errors.max_error'));
     } else {
-
-      product.price = this.getProductPriceByYear(product.planted_at);
       this.SET_LOADING(true);
 
       try {
-        const response = await axios.post('checkout', product);
-        const mp = new window["MercadoPago"](
-          'TEST-14c03268-ce28-4220-93ef-d2f6faddbbed', {
-            locale: 'es-MX'
-          });
-        mp.checkout({
-          preference: {
-            id: response.data.id
-          },
-          render: {
-            container: '.mp-container' + product.id,
-            label: this.$t('strings.checkout'),
-          },
-          autoOpen: true,
-        });
+        const response = await axios.post('clone/product', product);
+        console.log(response);
       } catch {
-        this.$bvToast.toast('', {
-          title: this.$t('errors.generic_error'),
-          variant: 'danger',
-          toaster: 'b-toaster-top-center',
-          solid: true
-        })
+        this.$bvModal.msgBoxOk('' + this.$t('errors.generic_error'));
+
       } finally {
-        this.mpContainer = true;
-        this.SET_LOADING(false);
-        /*setTimeout(function (){
-          window.close()
-        }, 2000)*/
+        this.mpContainer = false;
+        this.getProducts();
       }
     }
   }
@@ -116,7 +90,7 @@ export default class Store extends Vue {
   b-container.mb-5(tag='main' fluid)
     b-row
       b-col.mt-3
-        h2 {{ $t('products.title') }}
+        h2 {{ $t('products.my_plants') }}
 
     b-row
       b-col.mt-3
@@ -216,29 +190,28 @@ export default class Store extends Vue {
                   br/
                   strong {{ $t('strings.owner') }}: &nbsp;
                   span.text-muted {{ product.user.name }}
+                  br/
+                  strong {{ $t('products.available') }}: &nbsp;
+                  span.text-success(v-if="product.available" ) {{$t("strings.true")}}
+                  span.text-danger(v-else) {{$t("strings.false")}}
 
                 hr
-                p(v-if="product.user.type_id === 1")
-                  strong {{ $t('strings.total') }}:
-                    .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * product.price).toFixed(2) }}
-                p(v-else)
-                  strong {{ $t('strings.total') }}:
-                    .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * getProductPriceByYear(product.planted_at)).toFixed(2) }}
-                b-input-group(v-if="!isLoading && !mpContainer && product.user_id !== user.id")
+                strong.text-primary.montserrat(style="font-size:1.5em") {{ getProductPriceByYear(product.planted_at) }} (MXN)
+                b-input-group(v-if="!isLoading && !mpContainer && !product.available")
                   b-form-input(
                     type="number"
                     min="0"
-                    v-model="product.checkoutQty"
+                    v-model="product.cloneQty"
                     :max="product.quantity"
                   )
                   b-input-group-append
                     b-button(
-                      variant="danger"
-                      @click="checkout(product)"
-                    ) {{ $t('strings.generate_payment') }}
+                      variant="warning"
+                      @click="cloneProduct(product)"
+                    ) {{ $t('strings.generate_product') }}
                 div(v-if="isLoading")
                   b-button(
-                    variant="danger"
+                    variant="warning"
                     disabled
                     block
                   )
@@ -247,9 +220,9 @@ export default class Store extends Vue {
                       variant="light"
                       type="grow"
                     )
-                div( :class="'w100 mp-container' + product.id")
 
             b-col.mt-2(md="12" sm="12")
+              h3.text-danger.text-center.montserrat(v-if="product.quantity === 0") {{ $t('strings.sold') }}
               hr
               strong {{ $t('products.description') }}
               div(v-html="product.description" )

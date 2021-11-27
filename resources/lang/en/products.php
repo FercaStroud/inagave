@@ -2,6 +2,7 @@
 
 return [
     'title' => 'PRODUCT LIST',
+    'my_plants' => 'MY PLANTS',
     'estate' => 'Estate',
     'size' => 'Estate Size',
     'age' => 'Plant Age',

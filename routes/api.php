@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::post('checkout', 'PaymentController@createPreferences');
     Route::get('get/user/payments', 'PaymentController@getByUserId');
     Route::get('get/store/products', 'Resources\ProductController@getStoreProducts');
+    Route::get('get/user/products', 'Resources\ProductController@getUserProducts');
+    Route::post('clone/product', 'Resources\ProductController@cloneProduct');
 
     Route::resource('prices', 'Resources\PricesController', ['except' => ['create', 'edit', 'show'],]);
 

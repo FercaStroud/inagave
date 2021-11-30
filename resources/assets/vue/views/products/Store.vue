@@ -74,15 +74,18 @@ export default class Store extends Vue {
       this.$bvModal.msgBoxOk('' + this.$t('errors.max_error'));
     } else {
 
-      product.price = this.getProductPriceByYear(product.planted_at);
+      if(product.user.type_id !== 1) {
+        product.price = this.getProductPriceByYear(product.planted_at);
+      }
       this.SET_LOADING(true);
 
       try {
         const response = await axios.post('checkout', product);
         const mp = new window["MercadoPago"](
-          'TEST-14c03268-ce28-4220-93ef-d2f6faddbbed', {
+          this.$store.state.MP_TOKEN, {
             locale: 'es-MX'
-          });
+          }
+        );
         mp.checkout({
           preference: {
             id: response.data.id

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Resources;
 
+use App\Maintenance;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use \Illuminate\Http\JsonResponse;
@@ -29,8 +31,21 @@ class ProductController extends Controller
 
     public function getUserProducts()
     {
-        $products = Product::where('user_id', '=', auth()->user()->id)->with('user')->get();
+        $products = Product::with('maintenances')
+            ->where('user_id', '=', auth()->user()->id)
+            ->with('user')->get();
+
         foreach ($products as $key => $product) {
+            $maintenance = Maintenance::where([
+                ['status', '=', 'approved'],
+                ['product_id', '=', $product->id]
+            ])->latest('created_at')->first();
+
+            if ($maintenance !== null) {
+                $products[$key]['isMaintenancePaid'] = Carbon::now()->between(Carbon::parse($maintenance->start_date), Carbon::parse($maintenance->end_date));
+            } else {
+                $products[$key]['isMaintenancePaid'] = false;
+            }
             $products[$key]['cloneQty'] = 1;
         }
         return $products;

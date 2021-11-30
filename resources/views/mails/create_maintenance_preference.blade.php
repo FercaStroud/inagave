@@ -57,94 +57,46 @@
     <table cellpadding="0" cellspacing="0" width="100%">
         <tbody>
         <tr>
+            <td align="center" class="esd-block-text es-m-txt-c">
+                <h2>Orden de pago de mantenimiento #{{ $maintenance['id'] }} creada con éxito.</h2>
+            </td>
+        </tr>
+        <tr>
             <td align="center" class="esd-block-text es-p20b">
-                <h5 class="card-title" style="font-weight:bold">Compra #{{ $payment['id'] }} completada con
-                    éxito.</h5>
                 <p>
-                    <strong>{{ $user['name'] }}</strong>, gracias por su compra.
-                    Recibirá un correo con los detalles de la misma.
+                    Hola, <i>{{ $user['name'] }} {{ $user['lastname'] }} {{ $user['second_lastname'] }}</i>.
                 </p>
                 <p>
-                    <strong>Predio: </strong>
-                    {{ $payment['estate'] }}
+                    Se creó una órden de mantenimiento a su nombre con los
+                    siguientes datos: <br/>
                 </p>
                 <p>
                     <strong># de Ítems: </strong>
-                    {{ $payment['quantity'] }}
+                    {{ $maintenance['quantity'] }}
                 </p>
                 <p>
-                    <strong>Precio unitario: </strong>
-                    ${{ $payment['price'] }} (MXN)
+                    <strong>Precio unitario:</strong> ${{ $maintenance['price'] }} (MXN)
                 </p>
                 <p>
-                    <strong>Total: </strong> ${{ $payment['total'] }} (MXN)
+                    <strong>Total: </strong> ${{ $maintenance['total'] }} (MXN)
                 </p>
                 <p>
-
-                <p>
-                    A continuación se listan datos importantes de compra
-                    para cualquier duda y aclaración.
-                </p>
                 <p>
                     <strong>Referencia: </strong>
-                    {{ $payment['preference_id'] }}
-                </p>
-                <p>
-                    <strong>ID de Colección: </strong>
-                    {{ $payment['collection_id'] }}
-                </p>
-                <p>
-                    <strong>Estatus de Colección: </strong>
-                    {{ $payment['collection_status'] }}
-                </p>
-                <p>
-                    <strong>ID de Pago: </strong>
-                    {{ $payment['payment_id'] }}
-                </p>
-                <p>
-                    <strong>Estatus de compra: </strong>
-                    {{ $payment['status'] }}
-                </p>
-                <p>
-                    <strong>Tipo de Pago: </strong>
-                    {{ $payment['payment_type'] }}
-                </p>
-                <p>
-                    <strong>ID de Pedido Mercantíl: </strong>
-                    {{ $payment['merchant_order_id'] }}
-                </p>
-                <p>
-                    <strong>Modo de Procesamiento: </strong>
-                    {{ $payment['processing_mode'] }}
-                </p>
-                <p>
-                    <strong>Cuenta MercadoPago(si aplica): </strong>
-                    {{ $payment['merchant_account_id'] }}
+                    {{ $maintenance['preference_id'] }}
                 </p>
                 <p>
                     <strong>NOTA: </strong><br/>
-                    Los productos que apartaste se descontarán hasta que
-                    el pago quede procesado, por favor
-                    continúa el proceso de compra. En caso de que no se
-                    efectue el pago éstos regresarán a la
-                    tienda y Ud. perderá los ítems en esta órden.
-                    <br/>
-                    <br/>
-                    Adocionalmente, los productos serán visibles en el
-                    panel una vez se confirme. Si ocurre un problema
-                    durante la transacción, no dude en contactarse con
-                    el equipo de INAGAVE.
-                    <br/><br/>
                     Le recordamos <strong>no cerrar las ventanas
                         emergentes</strong> hasta que su pago quede
                     liberado y la pantalla de
                     confirmación sea mostrada.
                 </p>
                 <p>Contacto: <strong>payments@inagave.com</strong></p>
-                <p>Órden:&nbsp;<strong>#{{ $payment['id'] }}</strong>
+                <p>Órden:&nbsp;<strong>#{{ $maintenance['id'] }}</strong>
                 </p>
                 <p>Fecha de
-                    Creación:&nbsp;<strong>{{ $payment['created_at']}}</strong>
+                    Creación:&nbsp;<strong>{{ $maintenance['created_at']}}</strong>
                 </p>
                 <p>Método de Pago:&nbsp;<strong>MercadoPago</strong></p>
                 <p>
@@ -158,4 +110,5 @@
     </table>
 </div>
 </body>
+
 </html>

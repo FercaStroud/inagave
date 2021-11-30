@@ -25,13 +25,15 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::post('user', 'HomeController@user');
 
     Route::post('settings', 'SettingController@saveSettings');
-    Route::post('checkout', 'PaymentController@createPreferences');
+    Route::post('checkout', 'PaymentController@preference');
     Route::get('get/user/payments', 'PaymentController@getByUserId');
     Route::get('get/store/products', 'Resources\ProductController@getStoreProducts');
     Route::get('get/user/products', 'Resources\ProductController@getUserProducts');
     Route::post('clone/product', 'Resources\ProductController@cloneProduct');
 
     Route::resource('prices', 'Resources\PricesController', ['except' => ['create', 'edit', 'show'],]);
+    Route::get('get/all/settings', 'SettingController@index');
+    Route::post('checkout/maintenance', 'MaintenanceController@preference');
 
 });
 
@@ -41,6 +43,7 @@ Route::group(['middleware' => ['admin'],], function () {
     Route::resource('products', 'Resources\ProductController', ['except' => ['create', 'edit', 'show'],]);
     Route::resource('product-images', 'Resources\ProductImageController', ['except' => ['create', 'edit', 'show'],]);
     Route::get('get/all/payments', 'PaymentController@index');
+    Route::get('edit/settings', 'SettingController@update');
 
 });
 
@@ -61,3 +64,4 @@ Route::any('messages/{type}/{id}', function ($type, $id) {
 });
 
 Route::get('checkout/feedback', 'PaymentController@feedback');
+Route::get('checkout/maintenance/feedback', 'MaintenanceController@feedback');

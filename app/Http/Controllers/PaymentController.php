@@ -22,10 +22,10 @@ class PaymentController extends Controller
         $payments = Payment::where([
             ['preference_status', '=', 1],
         ])->with('user')->get();
-        foreach ($payments as $key=>$payment){
-            if($payment->collection_status != 'approved') {
+        foreach ($payments as $key => $payment) {
+            if ($payment->collection_status != 'approved') {
                 $payments[$key]['_rowVariant'] = 'danger';
-            }else{
+            } else {
                 $payments[$key]['_rowVariant'] = 'success';
             }
         }
@@ -38,17 +38,17 @@ class PaymentController extends Controller
             ['user_id', '=', auth()->user()->id],
             ['preference_status', '=', 1],
         ])->with('user')->get();
-        foreach ($payments as $key=>$payment){
-            if($payment->collection_status != 'approved') {
+        foreach ($payments as $key => $payment) {
+            if ($payment->collection_status != 'approved') {
                 $payments[$key]['_rowVariant'] = 'danger';
-            }else{
+            } else {
                 $payments[$key]['_rowVariant'] = 'success';
             }
         }
         return $payments;
     }
 
-    public function createPreferences(Request $request): \Illuminate\Http\JsonResponse
+    public function preference(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate([
             'checkoutQty' => 'required',
@@ -65,7 +65,7 @@ class PaymentController extends Controller
 
             $owner = User::find($request->get('user_id'));
 
-            if($owner->isAdmin()){
+            if ($owner->isAdmin()) {
                 $price = (float)$product->price;
             } else {
                 $price = (float)$request->get('price');

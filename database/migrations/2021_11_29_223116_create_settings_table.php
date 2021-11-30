@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSoftDeletesToMaintenances extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddSoftDeletesToMaintenances extends Migration
      */
     public function up()
     {
-        Schema::table('maintenances', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('settings', function (Blueprint $table) {
+            $table->id();
+            $table->float('maintenance');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddSoftDeletesToMaintenances extends Migration
      */
     public function down()
     {
-        Schema::table('maintenances', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
-        });
+        Schema::dropIfExists('settings');
     }
 }

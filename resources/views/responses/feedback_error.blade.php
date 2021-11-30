@@ -21,7 +21,7 @@
                         <strong>ERROR</strong>
                     </h2>
                     <p>
-                        {{ $error }}
+                        {{ $error['ERROR'] }}
                     </p>
                     <img class="img-fluid"
                          src="https://inagave.com/wp-content/uploads/2021/09/INAGAVE-VECTORE.png"

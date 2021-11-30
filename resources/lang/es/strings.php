@@ -26,6 +26,7 @@ return [
     'welcome' => 'Bienvenido',
     'created_at' => 'Fecha de Creación',
     'updated_at' => 'Fecha de Actualización',
+    'payment_at' => 'Fecha de Compra',
     'total' => 'Total',
     'owner' => 'Propietario',
     'true' => 'Verdadero',
@@ -56,6 +57,9 @@ return [
     'generate_payment' => 'Generar Pago',
     'generate_product' => 'Generar Producto',
     'sold' => 'VENDIDO',
+    'generate_maintenance_payment' => 'Generar Pago de Mantenimiento',
+    'maintenance_price' => 'Precio de mantenimiento (unidad)',
+    'history' => 'Historial',
 
     // Pages
     'example' => 'Ejemplo',

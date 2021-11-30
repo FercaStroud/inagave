@@ -26,6 +26,7 @@ return [
     'welcome' => 'Welcome',
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
+    'payment_at' => 'Payment At',
     'unit' => 'Unit',
     'units' => 'Units',
     'acres' => 'Acre(s)',
@@ -56,6 +57,9 @@ return [
     'generate_payment' => 'Generate Payment',
     'generate_product' => 'Generate Product',
     'sold' => 'SOLD',
+    'generate_maintenance_payment' => 'Generate Maintenance Payment',
+    'maintenance_price' => 'Maintenance Price',
+    'history' => 'History',
 
     // Pages
     'example' => 'Example',

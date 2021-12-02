@@ -11,6 +11,10 @@ const SET_USERS = (state, payload) => {
   };
 };
 
+const SET_USER_STATS = (state, payload) => {
+  state.stats = payload;
+};
+
 const ADD_USER = (state, payload) => {
   state.users.unshift(payload);
 };
@@ -51,4 +55,5 @@ export default {
   SET_LOADING,
   SET_MODAL_LOADING,
   SET_MODAL_VISIBLE,
+  SET_USER_STATS,
 };

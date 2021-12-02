@@ -15,6 +15,7 @@ class MaintenanceFeedbackMail extends Mailable
 
     public $maintenance;
     public $user;
+    public $product;
 
     /**
      * Create a new message instance.

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DepositToWalletMail;
 use App\Mail\FeedbackMail;
+use App\Mail\ProductSoldMail;
 use App\Payment;
+use App\Percentage;
 use App\Product;
 use App\User;
+use App\Wallet;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -46,6 +50,48 @@ class PaymentController extends Controller
             }
         }
         return $payments;
+    }
+
+    public function insertOnWallet($owner, $product, $newProduct, $payment)
+    {
+        $percentages = Percentage::all();
+        $transactions = [];
+
+        $lastID = 0;
+        //parent
+        foreach ($percentages as $key => $percentage) {
+            if($percentage->name === 'USER'){
+                $wallet = new Wallet();
+                $wallet->user_id = $owner->id;
+                $wallet->status = 'VENTA COMPLETADA';
+                $wallet->amount = (float)$payment->total * ((float)$percentage->value / 100);
+                $wallet->bank = $percentage->name;
+                $wallet->account = $percentage->name;
+                $wallet->type = 'DEPOSIT';
+                $wallet->save();
+                $lastID = $wallet->id;
+                array_push($transactions, $wallet);
+            }
+        }
+        //children
+        foreach ($percentages as $key => $percentage) {
+            if($percentage->name !== 'USER'){
+                $wallet = new Wallet();
+                $wallet->user_id = $owner->id;
+                $wallet->parent_id = $lastID;
+                $wallet->status = 'VENTA COMPLETADA';
+                $wallet->amount = (float)$payment->total * ((float)$percentage->value / 100);
+                $wallet->bank = $percentage->name;
+                $wallet->account = $percentage->name;
+                $wallet->type = 'DEPOSIT';
+                $wallet->save();
+                array_push($transactions, $wallet);
+            }
+        }
+
+
+        Mail::send(new DepositToWalletMail($owner, $transactions));
+        Mail::send(new ProductSoldMail($owner, $newProduct));
     }
 
     public function preference(Request $request): \Illuminate\Http\JsonResponse
@@ -151,12 +197,22 @@ class PaymentController extends Controller
             $newProduct->available = 0;
             $newProduct->save();
             Mail::send(new FeedbackMail($payment, $newProduct));
-        }
-        return response()->view('responses.feedback_success',
-            [
-                'payment' => $payment
-            ]
-        );
+            $owner = User::find($product->user_id);
 
+            if (!$owner->isAdmin() && auth()->user()->id !== $owner->id) {
+                $this->insertOnWallet($owner, $product, $newProduct, $payment);
+            }
+            return response()->view('responses.feedback_success',
+                [
+                    'payment' => $payment
+                ]
+            );
+        } else {
+            return response()->view('responses.feedback_error',
+                [
+                    'ERROR' => 'PAGO NO APROBADO'
+                ]
+            );
+        }
     }
 }

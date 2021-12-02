@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Resources;
 
+use App\Price;
+use App\Product;
+use App\Wallet;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -90,5 +94,35 @@ class UserController extends Controller
         ], [
             'type_id.*' => __('users.invalid_user_type'),
         ]);
+    }
+
+    public function getUserStats(){
+        $wallet_deposits = Wallet::where([
+            ['user_id', '=', auth()->user()->id],
+            ['type', '=', 'DEPOSIT'],
+            ['bank', '=', 'USER'],
+        ])->sum('amount');
+
+        $wallet_withdraws = Wallet::where([
+            ['user_id', '=', auth()->user()->id],
+            ['type', '=', 'WITHDRAW'],
+            ['bank', '=', 'USER'],
+        ])->sum('amount');
+
+        $products = Product::where('user_id', '=', auth()->user()->id)->get();
+        $plantFounds = 0;
+
+        foreach ($products as $key => $product) {
+            $year = \Carbon\Carbon::parse($product->planted_at)->year;
+            $price = Price::select('price')->where('year', '=', $year)->get();
+            $plantFounds += (float)$price[0]->price * $product->quantity;
+        }
+
+        return response()->json([
+            'total_plants' => $products->sum('quantity'),
+            'total_user_founds' => (float)$wallet_deposits - (float)$wallet_withdraws,
+            'total_plant_founds' => $plantFounds,
+        ]);
+
     }
 }

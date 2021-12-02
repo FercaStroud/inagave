@@ -100,10 +100,15 @@ const setModalVisible = ({ commit }, payload) => {
   commit('SET_MODAL_VISIBLE', payload);
 };
 
+const setUserStats = ({ commit }, payload) => {
+  commit('SET_USER_STATS', payload);
+};
+
 export default {
   loadUsers,
   addUser,
   editUser,
   deleteUser,
   setModalVisible,
+  setUserStats,
 };

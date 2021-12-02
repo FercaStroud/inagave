@@ -2,6 +2,10 @@ import Vue from 'vue';
 
 const SET_PRICES = (state, payload) => {
   state.prices = payload;
+  state.pricesArray = [];
+  state.yearsArray = [];
+  payload.forEach(price => state.pricesArray.push(price.price));
+  payload.forEach(price => state.yearsArray.push(price.year));
 };
 
 const ADD_PRICE = (state, payload) => {

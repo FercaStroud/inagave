@@ -37,6 +37,8 @@ export default {
     },
   ],
   prices: [],
+  pricesArray: [],
+  yearsArray: [],
   form:{},
   isLoading: false,
   isModalLoading: false,

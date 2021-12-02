@@ -1,5 +1,6 @@
 export default {
   users: [],
+  stats: {},
   pagination: {
     currentPage: 1,
     perPage: 5,

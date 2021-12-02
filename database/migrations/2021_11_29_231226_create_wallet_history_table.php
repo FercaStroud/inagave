@@ -15,6 +15,7 @@ class CreateWalletHistoryTable extends Migration
     {
         Schema::create('wallet_history', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('parent_id')->default(0);
             $table->string('status', 50);
             $table->string('amount', 20);
             $table->string('bank', 50);

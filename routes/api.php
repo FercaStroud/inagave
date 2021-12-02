@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::resource('prices', 'Resources\PricesController', ['except' => ['create', 'edit', 'show'],]);
     Route::get('get/all/settings', 'SettingController@index');
     Route::post('checkout/maintenance', 'MaintenanceController@preference');
+    Route::get('get/user/stats', 'Resources\UserController@getUserStats');
 
 });
 

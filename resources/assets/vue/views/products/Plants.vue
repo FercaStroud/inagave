@@ -106,7 +106,6 @@ export default class Plants extends Vue {
 
       try {
         const response = await axios.post('clone/product', product);
-        console.log(response);
       } catch {
         this.$bvModal.msgBoxOk('' + this.$t('errors.generic_error'));
 
@@ -237,7 +236,7 @@ export default class Plants extends Vue {
               b-col(
                 md="4"
                 sm="12"
-                v-if="!product.isMaintenancePaid"
+                v-if="!product.isMaintenancePaid && product.available !== 1"
               )
                 p.mt-3.text-center.font-weight-bold.text-info.montserrat {{ $t('strings.maintenance_price') }}:
                 p.font-weight-bold.text-center.text-danger.montserrat ${{ settings.maintenance }} (MXN)
@@ -264,8 +263,8 @@ export default class Plants extends Vue {
                       type="grow"
                     )
 
-            b-col.mt-2(md="12" sm="12")
-              h2.font-weight-bold.text-danger.text-center.montserrat {{ $t('strings.history') }}
+            b-col.mt-2(md="12" sm="12" v-if="product.available !== 1" )
+              h2.font-weight-bold.text-danger.text-center.montserrat {{ $t('strings.maintenance_history') }}
               b-table(
                 style="max-height: calc(100vh - 191px); font-size: .75em;"
                 striped

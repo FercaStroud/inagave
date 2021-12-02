@@ -29,15 +29,15 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Normal',
-            'lastname' => 'Lastname',
-            'second_lastname' => 'Secondlastname',
+            'name' => 'Fernando',
+            'lastname' => 'Cárdenas',
+            'second_lastname' => 'González',
             'address' => 'Calle Falsa, #123',
             'country' => 'MX',
             'state' => 'Coahuila',
             'city' => 'Torreón',
             'municipality' => 'Torreón',
-            'email' => 'normal@example.com',
+            'email' => 'hola@ferca.dev',
             'password' => bcrypt('normal'),
             'type_id' => 2,
         ]);
@@ -51,7 +51,7 @@ class UsersTableSeeder extends Seeder
             'state' => 'Coahuila',
             'city' => 'Torreón',
             'municipality' => 'Torreón',
-            'email' => 'hola@ferca.dev',
+            'email' => 'fernandocardenas@outlook.com',
             'password' => bcrypt('normal'),
             'type_id' => 2,
         ]);

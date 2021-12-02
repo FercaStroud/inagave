@@ -59,10 +59,18 @@ return [
     'sold' => 'VENDIDO',
     'generate_maintenance_payment' => 'Generar Pago de Mantenimiento',
     'maintenance_price' => 'Precio de mantenimiento (unidad)',
-    'history' => 'Historial',
+    'maintenance_history' => 'Historial de Pagos de Mantenimiento',
+    'total_user_plants' => 'Total de Plantas',
+    'total_wallet_user_plants' => 'Inversión total en Plantas (Estimado)',
+    'total_wallet_user' => 'Total de Fondos en mi cuenta',
+    'withdraw_wallet' => 'Retirar Fondos',
+    'sell_plant' => 'Vender Plantas',
+    'buy_plant' => 'Comprar Plantas',
+    'pay_maintenance' => 'Pago de Mantenimiento',
+
 
     // Pages
-    'example' => 'Ejemplo',
+    'dashboard' => 'Tablero',
     'home' => 'Home',
     'messages' => 'Mensajes',
     'users' => 'Usuarios',

@@ -9,6 +9,7 @@ const AuthRegister = () => import('../views/auth/AuthRegister.vue');
 const AuthResetLink = () => import('../views/auth/AuthResetLink.vue');
 const AuthResetForm = () => import('../views/auth/AuthResetForm.vue');
 
+const Dashboard = () => import('../views/dashboard/Dashboard.vue');
 const Example = () => import('../views/example/Example.vue');
 const Home = () => import('../views/home/Home.vue');
 const Messages = () => import('../views/messages/Messages.vue');
@@ -101,12 +102,23 @@ const router = new Router({
       },
     },
     {
-      path: '/example',
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
+      meta: {
+        title: {
+          key: 'strings.dashboard',
+        },
+        auth: true,
+      },
+    },
+    {
+      path: '/home',
       name: 'example',
       component: Example,
       meta: {
         title: {
-          key: 'strings.example',
+          key: 'strings.dashboard',
         },
         auth: true,
       },
@@ -264,7 +276,7 @@ router.beforeEach((to, from, next) => {
       return;
     }
 
-    if (from.name || to.path.includes('/dashboard')) {
+    if (from.name || to.path.includes('/')) {
       if (to.name == 'public.home') {
         store.dispatch('setTitle', '');
       } else {

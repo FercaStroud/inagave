@@ -90,6 +90,13 @@ export default class TheHeader extends Vue {
         b-navbar-nav.ml-auto
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"
+            to="/dashboard"
+          )
+            img.icon-navigator(src="/assets/images/monitor.png" :alt="$t('strings.dashboard')")
+            | {{ $t('strings.dashboard') }}
+
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 2"
             to="/store"
           )
             img.icon-navigator(src="/assets/images/store.png" :alt="$t('strings.store')")

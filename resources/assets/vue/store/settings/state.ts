@@ -31,7 +31,7 @@ export default {
       class: 'text-center',
     },
   ],
-  settings: {},
+  settings: { maintenance : '' },
   form:{},
   isLoading: false,
   isModalLoading: false,

@@ -1,14 +1,15 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {Action} from 'vuex-class';
+import {Action, namespace} from 'vuex-class';
+import ContentDashboard from "@/views/dashboard/components/ContentDashboard.vue";
 
-
-@Component({})
-export default class Example extends Vue {
+@Component({
+  components: {ContentDashboard}
+})
+export default class Dashboard extends Vue {
   @Action setBackUrl;
   @Action setMenu;
   @Action setDialogMessage;
-
 
   async created() {
     this.setBackUrl('/');
@@ -20,4 +21,5 @@ export default class Example extends Vue {
 
 <template lang="pug">
   b-container(tag='main' fluid)
+    ContentDashboard
 </template>

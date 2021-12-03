@@ -14,6 +14,9 @@ import products from './products';
 import payments from './payments';
 import prices from './prices';
 import settings from './settings';
+import wallets from './wallets';
+import maintenances from './maintenances';
+import percentages from './percentages';
 import auth from './auth';
 
 Vue.use(Vuex);
@@ -25,6 +28,9 @@ const modules = {
   payments,
   prices,
   settings,
+  wallets,
+  maintenances,
+  percentages,
   auth,
 };
 

@@ -67,6 +67,10 @@ return [
     'sell_plant' => 'Sell Plant',
     'buy_plant' => 'Buy Plant',
     'pay_maintenance' => 'Pay Maintenance',
+    'request' => 'Request',
+    'start_date' => 'Start Date',
+    'end_date' => 'End Date',
+    'approve' => 'Approve',
 
     // Pages
     'dashboard' => 'Dashboard',

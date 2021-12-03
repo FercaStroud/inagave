@@ -106,7 +106,7 @@ class UserController extends Controller
         $wallet_withdraws = Wallet::where([
             ['user_id', '=', auth()->user()->id],
             ['type', '=', 'WITHDRAW'],
-            ['bank', '=', 'USER'],
+            ['status', '=', 'APPROVED'],
         ])->sum('amount');
 
         $products = Product::where('user_id', '=', auth()->user()->id)->get();

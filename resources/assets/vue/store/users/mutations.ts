@@ -12,7 +12,7 @@ const SET_USERS = (state, payload) => {
 };
 
 const SET_USER_STATS = (state, payload) => {
-  state.stats = payload;
+  state.stats = payload.data;
 };
 
 const ADD_USER = (state, payload) => {

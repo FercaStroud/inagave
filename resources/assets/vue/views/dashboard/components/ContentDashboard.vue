@@ -18,6 +18,7 @@ export default class ContentDashboard extends Vue {
 
   @uStore.State stats;
   @uStore.Action setUserStats;
+  @uStore.Action loadUserStats;
 
   @pStore.State isLoading;
   @pStore.State prices;
@@ -38,19 +39,7 @@ export default class ContentDashboard extends Vue {
   }
 
   async getUserStats(): Promise<void> {
-      this.SET_LOADING(true);
-
-      try {
-        const response = await axios.get('get/user/stats');
-        this.setUserStats(response.data);
-
-      } catch {
-        this.$bvModal.msgBoxOk('' + this.$t('errors.generic_error'));
-
-      } finally {
-        this.SET_LOADING(false);
-        console.log(this.stats);
-      }
+    this.loadUserStats();
   }
 
 }
@@ -77,7 +66,7 @@ export default class ContentDashboard extends Vue {
               b-card-body
                 .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_wallet_user') }}:
                 p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:2em") ${{(stats.total_user_founds).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}} (MXN)
-                b-button(variant="warning" block to="/user/wallet" ) {{ $t('strings.withdraw_wallet') }}
+                b-button(variant="warning" block to="/wallet" ) {{ $t('strings.withdraw_wallet') }}
           b-col.mt-3(md="6" sm="12")
             b-card
               b-card-body

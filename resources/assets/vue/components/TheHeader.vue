@@ -87,6 +87,27 @@ export default class TheHeader extends Vue {
             b-icon(icon="shop" variant="dark" size="1em")
             | {{ $t('sidebar.payments') }}
 
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
+            to="/maintenances"
+          )
+            b-icon(icon="gear-fill" variant="dark" size="1em")
+            | {{ $t('sidebar.maintenances') }}
+
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
+            to="/wallet"
+          )
+            b-icon(icon="credit-card" variant="dark" size="1em")
+            | {{ $t('sidebar.wallets') }}
+
+          b-nav-item.border-navigator(
+            v-if="user.type_id === 1"
+            to="/percentages"
+          )
+            b-icon(icon="octagon-half" variant="dark" size="1em")
+            | {{ $t('sidebar.percentages') }}
+
         b-navbar-nav.ml-auto
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"
@@ -104,6 +125,7 @@ export default class TheHeader extends Vue {
 
           b-nav-item.border-navigator(
             v-if="user.type_id === 2"
+            to="/wallet"
           )
             img.icon-navigator(src="/assets/images/cash.png" :alt="$t('strings.withdraws')")
             | {{ $t('strings.withdraws') }}

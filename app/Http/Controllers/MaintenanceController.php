@@ -18,10 +18,7 @@ class MaintenanceController extends Controller
 {
     public function index()
     {
-    }
-
-    public function getByUserId()
-    {
+        return Maintenance::with('product')->get();
     }
 
     public function preference(Request $request): \Illuminate\Http\JsonResponse

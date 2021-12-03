@@ -67,7 +67,10 @@ return [
     'sell_plant' => 'Vender Plantas',
     'buy_plant' => 'Comprar Plantas',
     'pay_maintenance' => 'Pago de Mantenimiento',
-
+    'request' => 'Solicitar',
+    'start_date' => 'Fecha de Inicio',
+    'end_date' => 'Fecha de Fin',
+    'approve' => 'Aprobar',
 
     // Pages
     'dashboard' => 'Tablero',

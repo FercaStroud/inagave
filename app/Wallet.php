@@ -30,4 +30,9 @@ class Wallet extends Model
 
     protected $hidden = [
     ];
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo('App\User');
+    }
 }

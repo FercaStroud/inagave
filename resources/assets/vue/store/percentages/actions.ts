@@ -1,17 +1,17 @@
 import axios from 'axios';
 import checkResponse from '@/utils/checkResponse';
 
-const loadUsers = async ({ commit }, payload) => {
+const loadPercentages = async ({ commit }, payload) => {
   commit('SET_LOADING', true);
 
   try {
-    const response = await axios.get(`users?page=${payload.page}`);
+    const response = await axios.get('percentages');
     const checkErrors = checkResponse(response);
 
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('SET_USERS', response.data);
+      commit('SET_PERCENTAGES', response.data);
     }
   } catch (e) {
     commit('SET_DIALOG_MESSAGE', 'errors.generic_error', { root: true });
@@ -20,46 +20,21 @@ const loadUsers = async ({ commit }, payload) => {
   }
 };
 
-const loadUserStats = async ({ commit }, payload) => {
-  commit('SET_LOADING', true);
-
-  try {
-    const response = await axios.get('get/user/stats');
-    const checkErrors = checkResponse(response);
-
-    if (checkErrors) {
-      commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
-    } else {
-      commit('SET_USER_STATS', response);
-    }
-  } catch (e) {
-    commit('SET_DIALOG_MESSAGE', 'errors.generic_error', { root: true });
-  } finally {
-    commit('SET_LOADING', false);
-  }
-};
-
-const addUser = async ({ commit }, payload) => {
-  const user = {
+const addPercentage = async ({ commit }, payload) => {
+  const percentage = {
     name: payload.name,
-    lastname: payload.lastname,
-    second_lastname: payload.second_lastname,
-    email: payload.email,
-    type_id: payload.type_id,
-    password: payload.password,
-    password_confirmation: payload.password_confirmation,
+    value: payload.value,
   };
 
   commit('SET_MODAL_LOADING', true);
 
   try {
-    const response = await axios.post('users', user);
+    const response = await axios.post('percentages', percentage);
     const checkErrors = checkResponse(response);
-
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('ADD_USER', response.data);
+      commit('ADD_PERCENTAGE', response.data);
       commit('SET_MODAL_VISIBLE', false);
     }
   } catch {
@@ -69,27 +44,22 @@ const addUser = async ({ commit }, payload) => {
   }
 };
 
-const editUser = async ({ commit }, payload) => {
-  const user = {
+const editPercentage = async ({ commit }, payload) => {
+  const percentage = {
+    value: payload.value,
     name: payload.name,
-    lastname: payload.lastname,
-    second_lastname: payload.second_lastname,
-    email: payload.email,
-    type_id: payload.type_id,
-    password: payload.password,
-    password_confirmation: payload.password_confirmation,
   };
 
   commit('SET_MODAL_LOADING', true);
 
   try {
-    const response = await axios.put(`users/${payload.id}`, user);
+    const response = await axios.put(`percentage/${payload.id}`, percentage);
     const checkErrors = checkResponse(response);
 
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('UPDATE_USER', response.data);
+      commit('UPDATE_PERCENTAGE', response);
       commit('SET_MODAL_VISIBLE', false);
     }
   } catch {
@@ -99,15 +69,15 @@ const editUser = async ({ commit }, payload) => {
   }
 };
 
-const deleteUser = async ({ commit }, payload) => {
+const deletePercentage = async ({ commit }, payload) => {
   try {
-    const response = await axios.delete(`users/${payload.id}`);
+    const response = await axios.delete(`percentages/${payload.id}`);
     const checkErrors = checkResponse(response);
 
     if (checkErrors) {
       commit('SET_DIALOG_MESSAGE', checkErrors.message, { root: true });
     } else {
-      commit('DELETE_USER', payload);
+      commit('DELETE_PERCENTAGE', payload);
       commit('SET_DIALOG_MESSAGE', 'front.deleted_successfully', { root: true });
     }
   } catch {
@@ -119,16 +89,20 @@ const setModalVisible = ({ commit }, payload) => {
   commit('SET_MODAL_VISIBLE', payload);
 };
 
-const setUserStats = ({ commit }, payload) => {
-  commit('SET_USER_STATS', payload);
+const setForm = ({ commit }, payload) => {
+  commit('SET_FORM', payload);
+};
+
+const setModalAdd = ({ commit }, payload) => {
+  commit('SET_MODAL_ADD', payload);
 };
 
 export default {
-  loadUsers,
-  addUser,
-  editUser,
-  deleteUser,
+  loadPercentages,
+  setForm,
+  setModalAdd,
+  addPercentage,
+  editPercentage,
+  deletePercentage,
   setModalVisible,
-  setUserStats,
-  loadUserStats,
 };

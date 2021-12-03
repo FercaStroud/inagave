@@ -21,6 +21,9 @@ const Store = () => import('../views/products/Store.vue');
 const MyPlants = () => import('../views/products/Plants.vue');
 const Payments = () => import('../views/payments/Payments.vue');
 const Prices = () => import('../views/prices/Prices.vue');
+const Wallets = () => import('../views/wallets/Wallets.vue');
+const Maintenances = () => import('../views/maintenances/Maintenances.vue');
+const Percentages = () => import('../views/percentages/Percentages.vue');
 
 import userTypes from '@/utils/userTypes';
 
@@ -74,6 +77,34 @@ const router = new Router({
       },
     },
     {
+      path: '/percentages',
+      name: 'percentages',
+      component: Percentages,
+      meta: {
+        title: {
+          key: 'strings.percentages',
+        },
+        auth: {
+          roles: [userTypes.ADMIN],
+          forbiddenRedirect: '/example',
+        },
+      },
+    },
+    {
+      path: '/maintenances',
+      name: 'maintenances',
+      component: Maintenances,
+      meta: {
+        title: {
+          key: 'strings.maintenances',
+        },
+        auth: {
+          roles: [userTypes.ADMIN],
+          forbiddenRedirect: '/example',
+        },
+      },
+    },
+    {
       path: '/payments',
       name: 'payments',
       component: Payments,
@@ -94,6 +125,20 @@ const router = new Router({
       meta: {
         title: {
           key: 'strings.my_plants',
+        },
+        auth: {
+          roles: [userTypes.ADMIN, userTypes.NORMAL],
+          forbiddenRedirect: '/example',
+        },
+      },
+    },
+    {
+      path: '/wallet',
+      name: 'wallet',
+      component: Wallets,
+      meta: {
+        title: {
+          key: 'strings.wallet',
         },
         auth: {
           roles: [userTypes.ADMIN, userTypes.NORMAL],

@@ -41,4 +41,9 @@ class Maintenance extends Model
 
     protected $hidden = [
     ];
+
+    public function product(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo('App\Product');
+    }
 }

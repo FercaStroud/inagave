@@ -199,7 +199,7 @@ class PaymentController extends Controller
             Mail::send(new FeedbackMail($payment, $newProduct));
             $owner = User::find($product->user_id);
 
-            if (!$owner->isAdmin() && auth()->user()->id !== $owner->id) {
+            if (!$owner->isAdmin() && $newProduct->id !== $owner->id) {
                 $this->insertOnWallet($owner, $product, $newProduct, $payment);
             }
             return response()->view('responses.feedback_success',

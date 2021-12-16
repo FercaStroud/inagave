@@ -10,7 +10,6 @@ const AuthResetLink = () => import('../views/auth/AuthResetLink.vue');
 const AuthResetForm = () => import('../views/auth/AuthResetForm.vue');
 
 const Dashboard = () => import('../views/dashboard/Dashboard.vue');
-const Example = () => import('../views/example/Example.vue');
 const Home = () => import('../views/home/Home.vue');
 const Messages = () => import('../views/messages/Messages.vue');
 const Users = () => import('../views/users/Users.vue');
@@ -44,7 +43,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -58,7 +57,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -72,7 +71,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -86,7 +85,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -100,7 +99,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -114,7 +113,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN, userTypes.NORMAL],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -128,7 +127,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN, userTypes.NORMAL],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -142,7 +141,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN, userTypes.NORMAL],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -150,17 +149,6 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: {
-        title: {
-          key: 'strings.dashboard',
-        },
-        auth: true,
-      },
-    },
-    {
-      path: '/home',
-      name: 'example',
-      component: Example,
       meta: {
         title: {
           key: 'strings.dashboard',
@@ -201,7 +189,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -216,7 +204,7 @@ const router = new Router({
         },
         auth: {
           roles: [userTypes.ADMIN],
-          forbiddenRedirect: '/example',
+          forbiddenRedirect: '/',
         },
       },
     },
@@ -289,17 +277,17 @@ router.afterEach(() => {
 });
 
 router.beforeEach((to, from, next) => {
-  let {user} = (<any>store.state).auth;
-  const {auth} = to.meta;
+  let { user } = (<any>store.state).auth;
+  const { auth } = to.meta;
 
   let homePath = user.home_path;
 
-  if (user.id && to.name == 'auth.login' && from.name == homePath) {
+  if (user.id && to.name === 'auth.login' && from.name === homePath) {
     next(false);
     return;
   }
 
-  if (!authenticated && to.name == 'auth.login') {
+  if (!authenticated && to.name === 'auth.login') {
     store.dispatch('setTitle', '');
     next();
     return;
@@ -310,7 +298,7 @@ router.beforeEach((to, from, next) => {
     if (!routeResolved) {
       NProgress.start();
     }
-  }, progressShowDelay);
+  },         progressShowDelay);
 
   function authCheck() {
     if (auth && (!user.id)) {
@@ -322,10 +310,10 @@ router.beforeEach((to, from, next) => {
     }
 
     if (from.name || to.path.includes('/')) {
-      if (to.name == 'public.home') {
+      if (to.name === 'public.home') {
         store.dispatch('setTitle', '');
       } else {
-        const {title} = to.meta;
+        const { title } = to.meta;
         store.dispatch('setTitle', Vue.i18n.translate(title.key, null, title.length));
       }
     }

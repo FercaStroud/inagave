@@ -28,7 +28,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -46,8 +46,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $User
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User $User
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -68,7 +68,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $User
+     * @param \App\User $User
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
@@ -83,7 +83,7 @@ class UserController extends Controller
         $emailValidation = 'required|max:191|email|unique:users';
 
         if (!empty($id)) {
-            $emailValidation .= ',email,'.$id;
+            $emailValidation .= ',email,' . $id;
         }
 
         $request->validate([
@@ -96,33 +96,41 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUserStats(){
-        $wallet_deposits = Wallet::where([
-            ['user_id', '=', auth()->user()->id],
-            ['type', '=', 'DEPOSIT'],
-            ['bank', '=', 'USER'],
-        ])->sum('amount');
+    public function getUserStats()
+    {
+        try {
+            $wallet_deposits = Wallet::where([
+                ['user_id', '=', auth()->user()->id],
+                ['type', '=', 'DEPOSIT'],
+                ['bank', '=', 'USER'],
+            ])->sum('amount');
 
-        $wallet_withdraws = Wallet::where([
-            ['user_id', '=', auth()->user()->id],
-            ['type', '=', 'WITHDRAW'],
-            ['status', '=', 'APPROVED'],
-        ])->sum('amount');
+            $wallet_withdraws = Wallet::where([
+                ['user_id', '=', auth()->user()->id],
+                ['type', '=', 'WITHDRAW'],
+                ['status', '=', 'APPROVED'],
+            ])->sum('amount');
 
-        $products = Product::where('user_id', '=', auth()->user()->id)->get();
-        $plantFounds = 0;
+            $products = Product::where('user_id', '=', auth()->user()->id)->get();
+            $plantFounds = 0;
 
-        foreach ($products as $key => $product) {
-            $year = \Carbon\Carbon::parse($product->planted_at)->year;
-            $price = Price::select('price')->where('year', '=', $year)->get();
-            $plantFounds += (float)$price[0]->price * $product->quantity;
+            foreach ($products as $key => $product) {
+                $year = \Carbon\Carbon::parse($product->planted_at)->year;
+                $price = Price::select('price')->where('year', '=', $year)->get();
+                $plantFounds += (float)$price[0]->price * $product->quantity;
+            }
+
+            return response()->json([
+                'total_plants' => $products->sum('quantity'),
+                'total_user_founds' => (float)$wallet_deposits - (float)$wallet_withdraws,
+                'total_plant_founds' => $plantFounds,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'total_plants' => 0,
+                'total_user_founds' => 0,
+                'total_plant_founds' => 0,
+            ]);
         }
-
-        return response()->json([
-            'total_plants' => $products->sum('quantity'),
-            'total_user_founds' => (float)$wallet_deposits - (float)$wallet_withdraws,
-            'total_plant_founds' => $plantFounds,
-        ]);
-
     }
 }

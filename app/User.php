@@ -22,7 +22,8 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
-        'name', 'lastname', 'second_lastname', 'email', 'password', 'type_id',
+        'name', 'lastname', 'second_lastname', 'email',
+        'address', 'state', 'municipality', 'city', 'country', 'password', 'type_id',
     ];
 
     protected $hidden = [
@@ -51,9 +52,9 @@ class User extends Authenticatable
     {
         switch ($this->type_id) {
             case 1:
-            return 'home';
+                return 'home';
             default:
-            return 'example'; // TODO change
+                return 'dashboard'; // TODO change
         }
     }
 }

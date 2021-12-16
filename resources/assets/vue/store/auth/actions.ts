@@ -1,5 +1,5 @@
 import Vue from 'vue';
-// import router from '../../router';
+import router from '../../router';
 
 declare let authenticated;
 
@@ -15,8 +15,8 @@ const checkUser = async ({ dispatch }, callback) => {
 };
 
 const setUser = ({ commit }, obj) => {
-  if (obj.language == 'en') {
-    Vue.i18n.set('en');
+  if (obj.language === 'es') {
+    Vue.i18n.set('es');
   }
 
   if (obj.is_admin) {
@@ -45,15 +45,9 @@ const logout = ({ commit, rootState, dispatch }) => {
 
   authenticated = false;
 
-  // router.push({
-  //   name: 'auth.login',
-  // });
-
-  Vue.axios.post('/logout')
-    .then(() => {
-      window.location.reload();
-    });
-}
+  Vue.axios.post('/logout');
+  router.push({ name: 'auth.login' });
+};
 
 export default {
   setUser,

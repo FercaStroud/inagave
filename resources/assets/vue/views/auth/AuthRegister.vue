@@ -25,7 +25,7 @@ export default class AuthRegister extends Vue {
 
     this.setDialogMessage('login.account_created');
 
-    this.$router.push({name: 'auth.login'});
+    await this.$router.push({name: 'auth.login'});
   }
 
   async register(evt: Event) {

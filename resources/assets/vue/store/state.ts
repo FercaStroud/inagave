@@ -7,7 +7,7 @@ export default {
   settings: {},
   dialogMessage: '',
   title: '',
-  MP_TOKEN: 'TEST-14c03268-ce28-4220-93ef-d2f6faddbbed',
+  MP_TOKEN: 'APP_USR-655f750c-4355-4210-a1c4-4e1745da9d1b',
   website: {
     title: 'Inagave - Administración',
   },

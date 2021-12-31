@@ -175,7 +175,7 @@ export default class Store extends Vue {
                 strong {{ $t('products.location') }}
                 l-map(
                   :zoom="14"
-                  :center="[47.41322, -1.219482]"
+                  :center="(product.location).split(',')"
                   style="height: 282px; width: 100%;"
                 )
                   l-tile-layer(
@@ -184,7 +184,7 @@ export default class Store extends Vue {
                   )
                   l-marker(
                     :icon="icon"
-                    :lat-lng="[47.41322, -1.219482]"
+                    :lat-lng="(product.location).split(',')"
                   )
                   l-control(
                     position="topright"

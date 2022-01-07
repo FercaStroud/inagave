@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth:sanctum'],], function () {
     Route::resource('prices', 'Resources\PricesController', ['except' => ['create', 'edit', 'show'],]);
     Route::get('get/all/settings', 'SettingController@index');
     Route::post('checkout/maintenance', 'MaintenanceController@preference');
+    Route::post('paypal/checkout/maintenance', 'MaintenanceController@paypalPreference');
+    Route::post('paypal/checkout', 'PaypalController@preference');
     Route::get('get/user/stats', 'Resources\UserController@getUserStats');
     Route::post('request/withdraw', 'Resources\WalletController@requestWithdraw');
 
@@ -72,3 +74,5 @@ Route::any('messages/{type}/{id}', function ($type, $id) {
 
 Route::get('checkout/feedback', 'PaymentController@feedback');
 Route::get('checkout/maintenance/feedback', 'MaintenanceController@feedback');
+Route::get('paypal/checkout/maintenance/feedback', 'MaintenanceController@paypalFeedback');
+Route::get('paypal/checkout/feedback', 'PaypalController@feedback');

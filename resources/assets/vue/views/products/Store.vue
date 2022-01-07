@@ -69,6 +69,47 @@ export default class Store extends Vue {
     return (this.prices.find(({year}) => year === parseInt(planted_at.slice(0, 4)))).price;
   }
 
+  async checkoutPaypal(product): Promise<void> {
+    if (parseInt(product.checkoutQty) > parseInt(product.quantity)) {
+      this.$bvModal.msgBoxOk('' + this.$t('errors.max_error'));
+    } else {
+
+      if(product.user.type_id !== 1) {
+        product.price = this.getProductPriceByYear(product.planted_at);
+      }
+      this.SET_LOADING(true);
+
+      try {
+        const response = await axios.post('paypal/checkout', product);
+
+        if (response.data.result.links !== undefined) {
+          let links = response.data.result.links;
+          links.forEach(function (item, index) {
+            if (item.rel === "approve") {
+              window.location.replace(item.href);
+            }
+          })
+        } else {
+          alert(
+            "Error desconocido,, favor de mandar lo siguiente al administrador:"
+            + JSON.stringify(response.data)
+          )
+        }
+
+      } catch {
+        this.$bvToast.toast('', {
+          title: this.$t('errors.generic_error'),
+          variant: 'danger',
+          toaster: 'b-toaster-top-center',
+          solid: true
+        })
+      } finally {
+        this.mpContainer = true;
+        this.SET_LOADING(false);
+      }
+    }
+  }
+
   async checkout(product): Promise<void> {
     if (parseInt(product.checkoutQty) > parseInt(product.quantity)) {
       this.$bvModal.msgBoxOk('' + this.$t('errors.max_error'));
@@ -236,9 +277,13 @@ export default class Store extends Vue {
                   )
                   b-input-group-append
                     b-button(
-                      variant="danger"
+                      variant="warning"
                       @click="checkout(product)"
-                    ) {{ $t('strings.generate_payment') }}
+                    ) MercadoPago
+                    b-button(
+                      variant="info"
+                      @click="checkoutPaypal(product)"
+                    ) PayPal
                 div(v-if="isLoading")
                   b-button(
                     variant="danger"

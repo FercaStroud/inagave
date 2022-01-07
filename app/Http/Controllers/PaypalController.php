@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreatePreferenceMail;
 use App\Mail\DepositToWalletMail;
 use App\Mail\FeedbackMail;
 use App\Mail\ProductSoldMail;
@@ -13,49 +14,13 @@ use App\Wallet;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use MercadoPago\Item;
-use MercadoPago\Payer;
-use MercadoPago\Preference;
-use MercadoPago\SDK;
-use App\Mail\CreatePreferenceMail;
+use App\Classes\PayPalClient;
 
-class PaymentController extends Controller
+class PaypalController extends Controller
 {
     public function index()
     {
-        $payments = Payment::where([
-            ['preference_status', '=', 1],
-        ])->with('user')->get();
-        foreach ($payments as $key => $payment) {
-            if ($payment->collection_status == 'approved') {
-                $payments[$key]['_rowVariant'] = 'success';
-            } else if ($payment->collection_status == 'APPROVED') {
-                $payments[$key]['_rowVariant'] = 'info';
 
-            } else {
-                $payments[$key]['_rowVariant'] = 'danger';
-            }
-        }
-        return $payments;
-    }
-
-    public function getByUserId()
-    {
-        $payments = Payment::where([
-            ['user_id', '=', auth()->user()->id],
-            ['preference_status', '=', 1],
-        ])->with('user')->get();
-        foreach ($payments as $key => $payment) {
-            if ($payment->collection_status == 'approved') {
-                $payments[$key]['_rowVariant'] = 'success';
-            } else if ($payment->collection_status == 'APPROVED') {
-                $payments[$key]['_rowVariant'] = 'info';
-
-            } else {
-                $payments[$key]['_rowVariant'] = 'danger';
-            }
-        }
-        return $payments;
     }
 
     public function insertOnWallet($owner, $product, $newProduct, $payment)
@@ -100,20 +65,20 @@ class PaymentController extends Controller
         Mail::send(new ProductSoldMail($owner, $newProduct));
     }
 
-    public function preference(Request $request): \Illuminate\Http\JsonResponse
+    public function preference(Request $request)
     {
         $request->validate([
             'checkoutQty' => 'required',
         ]);
 
         $product = Product::find($request->get('id'));
+
         if ((integer)$product->quantity < (integer)$request->get('checkoutQty')) {
 
             return response()->json($product, 500);
         } else {
-            SDK::setAccessToken(env('MERCADO_PAGO_ACCESS_TOKEN'));
-            $preference = new Preference();
-            $payer = new Payer();
+
+            $paypalClient = new PayPalClient();
 
             $owner = User::find($request->get('user_id'));
 
@@ -123,72 +88,76 @@ class PaymentController extends Controller
                 $price = (float)$request->get('price');
             }
 
-            $payer->name = auth()->user()->name;
-            $payer->surname = auth()->user()->lastname;
-            $payer->email = auth()->user()->email;
-            $preference->payer = $payer;
+            $arrayBody = [
+                'intent' => 'CAPTURE',
+                'application_context' => [
+                    'brand_name' => "INAGAVE",
+                    'locale' => 'es-MX',
+                    'landing_page' => 'NO_PREFERENCE',
+                    'shipping_preference' => 'NO_SHIPPING',
+                    'user_action' => 'PAY_NOW',
+                    "cancel_url" => env('APP_URL') . "/api/paypal/checkout/feedback" .
+                        "?type=cancel",
+                    "return_url" => env('APP_URL') . "/api/paypal/checkout/feedback" .
+                        "?type=return"
+                ],
+                'purchase_units' => [
+                    [
+                        'description' => $product->estate . ' / ' . $request->get('checkoutQty') . ' Item(s)',
+                        'soft_descriptor' => 'INAGAVE',
+                        'amount' => [
+                            'currency_code' => 'MXN',
+                            'value' => (float)$request->get('checkoutQty') * $price,
+                        ]
+                    ]
+                ],
+            ];
 
-            $item = new Item();
-            $item->title = $product->estate . ' / ' . $request->get('checkoutQty') . ' Item(s)';
-            $item->quantity = (integer)$request->get('checkoutQty');
-            $item->unit_price = $price;
-            $item->currency_id = "MXN";
-            $preference->items = [$item];
-            $preference->back_urls = [
-                "failure" => env('APP_URL') . "/api/checkout/feedback",
-                "success" => env('APP_URL') . "/api/checkout/feedback",
-                "pending" => env('APP_URL') . "/api/checkout/feedback"
-            ];
-            $preference->auto_return = "approved";
-            $preference->payment_methods = [
-                "excluded_payment_types" => [
-                    ["id" => "ticket"], ["id" => "atm"], ["id" => "digital_currency"]
-                ]
-            ];
-            $preference->save();
+            $result = $paypalClient->createOrder($arrayBody);
 
             $payment = new Payment($product->toArray());
             $payment->user_id = auth()->user()->id;
             $payment->product_id = $product->id;
             $payment->quantity = (integer)$request->get('checkoutQty');
             $payment->total = $price * (float)$request->get('checkoutQty');
-            $payment->preference_id = $preference->id;
+            $payment->preference_id = $result->result->id;
+            $payment->type = 'PayPal';
             $payment->preference_status = 1;
-            $payment->type = 'MERCADO PAGO';
             $payment->feedback_status = 0;
             $payment->save();
 
             Mail::send(new CreatePreferenceMail($payment));
-
-            return response()->json(['id' => $preference->id], 200);
+            return response()->json($result);
         }
     }
 
-    public function feedback(Request $request): \Illuminate\Http\Response
+    public function feedback(Request $request)
     {
-        $payment = Payment::where('preference_id', '=', $request->get('preference_id'))->get();
+        $payment = Payment::where('preference_id', '=', $request->get('token'))->get();
 
         if ($payment[0]->feedback_status === 1) {
             return response(['ERROR' => 'PREFERENCE_ID PROCESADO CON ANTERIORIDAD']);
         }
+        $paypalClient = new PayPalClient();
+        $result = $paypalClient->getOrder($request->get("token"));
 
         $payment = Payment::find($payment[0]->id);
-        $payment->collection_id = $request->get('collection_id');
-        $payment->collection_status = $request->get('collection_status');
-        $payment->payment_id = $request->get('payment_id');
-        $payment->status = $request->get('status');
-        $payment->external_reference = $request->get('external_reference');
-        $payment->payment_type = $request->get('payment_type');
-        $payment->merchant_order_id = $request->get('merchant_order_id');
-        $payment->preference_id = $request->get('preference_id');
-        $payment->site_id = $request->get('site_id');
-        $payment->processing_mode = $request->get('processing_mode');
-        $payment->merchant_account_id = $request->get('merchant_account_id');
+        $payment->collection_id = $result->result->id;
+        $payment->collection_status = $result->result->status;
+        $payment->payment_id = $result->result->id;
+        $payment->status = $result->result->status;
+        $payment->external_reference = 'PayPal';
+        $payment->payment_type = 'PayPal';
+        $payment->merchant_order_id = $result->result->payer->payer_id;
+        $payment->preference_id = $result->result->payer->payer_id;
+        $payment->site_id = $result->result->payer->email_address;
+        $payment->processing_mode = 'PayPal';
+        $payment->merchant_account_id = $result->result->payer->payer_id;
 
         $payment->feedback_status = 1;
         $payment->save();
 
-        if ($request->get('status') === 'approved') {
+        if ($result->result->status === 'APPROVED') {
             $product = Product::find($payment->product_id);
             $product->quantity = (integer)$product->quantity - (integer)$payment->quantity;
             $product->save();
@@ -205,7 +174,11 @@ class PaymentController extends Controller
             if (!$owner->isAdmin() && $newProduct->id !== $owner->id) {
                 $this->insertOnWallet($owner, $product, $newProduct, $payment);
             }
-            return response(['payment' => $payment]);
+            return response()->view('responses.feedback_success',
+                [
+                    'payment' => $payment
+                ]
+            );
         } else {
             return response(['ERROR' => 'PAGO NO APROBADO']);
         }

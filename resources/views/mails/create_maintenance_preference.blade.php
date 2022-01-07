@@ -98,7 +98,7 @@
                 <p>Fecha de
                     Creación:&nbsp;<strong>{{ $maintenance['created_at']}}</strong>
                 </p>
-                <p>Método de Pago:&nbsp;<strong>MercadoPago</strong></p>
+                <p>Método de Pago:&nbsp;<strong>{{ $maintenance['type'] }} </strong></p>
                 <p>
                     Gracias por su preferencia.
                     <br/>

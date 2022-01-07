@@ -114,7 +114,7 @@
                 <p>Fecha de
                     Creación:&nbsp;<strong>{{ $payment['created_at']}}</strong>
                 </p>
-                <p>Método de Pago:&nbsp;<strong>MercadoPago</strong></p>
+                <p>Método de Pago:&nbsp;<strong>{{ $payment['type'] }} </strong></p>
                 <p>
                     Gracias por su preferencia.
                     <br/>

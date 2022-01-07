@@ -33,6 +33,7 @@
     "laravel/tinker": "^2.5",
     "laravel/ui": "^3.2",
     "mercadopago/dx-php": "^2.4",
+    "paypal/paypal-checkout-sdk": "^1.0",
     "pusher/pusher-php-server": "~6.1",
     "rebing/graphql-laravel": "^7.2",
     "spatie/laravel-http-logger": "^1.7"

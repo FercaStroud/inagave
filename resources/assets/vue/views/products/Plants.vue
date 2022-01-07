@@ -74,6 +74,32 @@ export default class Plants extends Vue {
     return (this.prices.find(({year}) => year === parseInt(planted_at.slice(0, 4)))).price;
   }
 
+  async maintenancePayPalPayment(product): Promise<void> {
+    this.SET_LOADING(true);
+    try {
+      product.price = this.settings.maintenance;
+      const response = await axios.post('paypal/checkout/maintenance', product);
+      if (response.data.result.links !== undefined) {
+        let links = response.data.result.links;
+        links.forEach(function (item, index) {
+          if (item.rel === "approve") {
+            window.location.replace(item.href);
+          }
+        })
+      } else {
+        alert(
+          "Error desconocido,, favor de mandar lo siguiente al administrador:"
+          + JSON.stringify(response.data)
+        )
+      }
+    } catch {
+      this.$bvModal.msgBoxOk('' + this.$t('errors.generic_error'));
+    } finally {
+      this.mpContainer = true;
+      this.SET_LOADING(false);
+    }
+  }
+
   async maintenancePayment(product): Promise<void> {
     this.SET_LOADING(true);
     try {
@@ -244,16 +270,33 @@ export default class Plants extends Vue {
                 p.text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total') }}:
                 p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:2em") ${{ parseFloat(product.quantity) * parseFloat(settings.maintenance) }} (MXN)
                 hr
-
                 b-button(
                   variant="warning"
                   @click="maintenancePayment(product)"
                   block
                   v-if="!isLoading"
-                ) {{ $t('strings.generate_maintenance_payment') }}
+                ) {{ $t('strings.generate_maintenance_payment') }} - Mercado Pago
                 div(v-else)
                   b-button(
                     variant="warning"
+                    disabled
+                    block
+                  )
+                    b-spinner(
+                      small
+                      variant="light"
+                      type="grow"
+                    )
+
+                b-button(
+                  variant="info"
+                  @click="maintenancePayPalPayment(product)"
+                  block
+                  v-if="!isLoading"
+                ) {{ $t('strings.generate_maintenance_payment') }} - PayPal
+                div(v-else)
+                  b-button(
+                    variant="info"
                     disabled
                     block
                   )

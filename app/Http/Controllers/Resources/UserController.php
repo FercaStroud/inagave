@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Util\Utils;
+use Illuminate\Support\Str;
 use Response;
 
 class UserController extends Controller
@@ -73,6 +74,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $user->email = Str::random(68);
+        $user->save();
         $user->delete();
 
         return response()->json(null, 204);

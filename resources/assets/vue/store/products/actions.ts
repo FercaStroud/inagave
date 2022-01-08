@@ -69,6 +69,7 @@ const addProduct = async ({ commit }, payload) => {
     location_url: payload.location_url,
     quantity: payload.quantity,
     price: payload.price,
+    maintenance_price: payload.maintenance_price,
     available: payload.available,
     planted_at: payload.planted_at,
     jimado_at: payload.jimado_at,
@@ -103,6 +104,7 @@ const editProduct = async ({ commit }, payload) => {
     location_url: payload.location_url,
     quantity: payload.quantity,
     price: payload.price,
+    maintenance_price: payload.maintenance_price,
     available: payload.available,
     planted_at: payload.planted_at,
     jimado_at: payload.jimado_at,
@@ -225,6 +227,10 @@ const setImageForm = ({ commit }, payload) => {
   commit('SET_PRODUCT_IMAGE_FORM', payload);
 };
 
+const setSelectedPrice = ({ commit }, payload) => {
+  commit('SET_SELECTED_PRICE', payload);
+};
+
 const setModalAdd = ({ commit }, payload) => {
   commit('SET_MODAL_ADD', payload);
 };
@@ -251,4 +257,5 @@ export default {
   setImageForm,
 
   loadUserProducts,
+  setSelectedPrice,
 };

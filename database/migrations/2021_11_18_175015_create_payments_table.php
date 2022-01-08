@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->string('quantity', 20);
             $table->string('total', 20);
             $table->string('type', 20);
+            $table->string('selected_payment', 20);
             $table->smallInteger('age')->nullable();
             $table->string('collection_id', 200)->nullable();
             $table->string('collection_status', 200)->nullable();

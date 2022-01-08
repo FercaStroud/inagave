@@ -150,7 +150,9 @@ export default class ProductsList extends Vue {
       template(v-slot:head(quantity)="data")
         span {{$t("products.quantity")}}
       template(v-slot:head(price)="data")
-        span {{$t("products.price")}}
+        span {{$t("products.form_inagave_price_name")}}
+      template(v-slot:head(maintenance_price)="data")
+        span {{$t("products.form_maintenance_price_name")}}
       template(v-slot:head(owner)="data")
         span {{$t("strings.owner")}}
       template(v-slot:head(available)="data")
@@ -174,6 +176,8 @@ export default class ProductsList extends Vue {
         span {{data.item.size}} (ha)
       template(v-slot:cell(price)="data")
         span ${{data.item.price}} (MXN)
+      template(v-slot:cell(maintenance_price)="data")
+        span ${{data.item.maintenance_price}} (MXN)
       template(v-slot:cell(age)="data")
         span {{data.item.age}} {{$t("strings.years")}}
       template(v-slot:cell(owner)="data")

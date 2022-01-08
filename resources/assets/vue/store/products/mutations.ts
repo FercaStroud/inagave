@@ -55,6 +55,10 @@ const DELETE_PRODUCT_IMAGE = (state, payload) => {
   });
 };
 
+const SET_SELECTED_PRICE = (state, payload) => {
+  state.selectedPrice = payload;
+};
+
 const SET_LOADING = (state, payload) => {
   state.isLoading = payload;
 };
@@ -108,4 +112,5 @@ export default {
   SET_PRODUCT_IMAGE_FORM,
   SET_MODAL_ADD,
   SET_PRODUCT_IMAGE_MODAL_ADD,
+  SET_SELECTED_PRICE
 };

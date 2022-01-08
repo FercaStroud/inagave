@@ -29,6 +29,7 @@ class Product extends Model
         'location_url',
         'quantity',
         'price',
+        'maintenance_price',
         'description',
         'available',
         'planted_at',

@@ -67,6 +67,8 @@ class PaypalController extends Controller
 
     public function preference(Request $request)
     {
+        $selectedPrice = $request->get('selectedPrice');
+
         $request->validate([
             'checkoutQty' => 'required',
         ]);
@@ -83,7 +85,11 @@ class PaypalController extends Controller
             $owner = User::find($request->get('user_id'));
 
             if ($owner->isAdmin()) {
-                $price = (float)$product->price;
+                if($selectedPrice === "inagave") {
+                    $price = (float)$product->price;
+                } else{
+                    $price = (float)$product->maintenance_price;
+                }
             } else {
                 $price = (float)$request->get('price');
             }
@@ -107,7 +113,7 @@ class PaypalController extends Controller
                         'soft_descriptor' => 'INAGAVE',
                         'amount' => [
                             'currency_code' => 'MXN',
-                            'value' => (float)$request->get('checkoutQty') * $price,
+                            'value' => number_format((float)$request->get('checkoutQty') * $price,2, '.', ''),
                         ]
                     ]
                 ],
@@ -124,6 +130,7 @@ class PaypalController extends Controller
             $payment->type = 'PayPal';
             $payment->preference_status = 1;
             $payment->feedback_status = 0;
+            $payment->selected_payment = $selectedPrice;
             $payment->save();
 
             Mail::send(new CreatePreferenceMail($payment));
@@ -133,6 +140,10 @@ class PaypalController extends Controller
 
     public function feedback(Request $request)
     {
+        if($request->get('type') === "cancel"){
+            return response(['ERROR' => 'PAGO CANCELADO']);
+        }
+
         $payment = Payment::where('preference_id', '=', $request->get('token'))->get();
 
         if ($payment[0]->feedback_status === 1) {
@@ -167,6 +178,11 @@ class PaypalController extends Controller
             $newProduct->quantity = (integer)$payment->quantity;
             $newProduct->user_id = $payment->user_id;
             $newProduct->available = 0;
+            if($payment->selected_payment === "inagave"){
+                $newProduct->maintenance_type = 0;
+            } else{
+                $newProduct->maintenance_type = 1;
+            }
             $newProduct->save();
             Mail::send(new FeedbackMail($payment, $newProduct));
             $owner = User::find($product->user_id);

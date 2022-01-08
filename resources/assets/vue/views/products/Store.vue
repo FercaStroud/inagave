@@ -12,14 +12,14 @@ import 'leaflet/dist/leaflet.css';
 import axios from "axios";
 
 @Component({
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-    LIcon,
-    LControl
-  },
-})
+             components: {
+               LMap,
+               LTileLayer,
+               LMarker,
+               LIcon,
+               LControl
+             },
+           })
 export default class Store extends Vue {
   @Action setBackUrl;
   @Action setMenu;
@@ -28,6 +28,8 @@ export default class Store extends Vue {
 
   @pStore.State isLoading;
   @pStore.State products;
+  @pStore.State selectedPrice;
+  @pStore.Action setSelectedPrice;
   @pStore.Action loadStoreProducts;
   @pStore.Mutation SET_LOADING;
 
@@ -52,8 +54,8 @@ export default class Store extends Vue {
 
   mounted() {
     this.$nextTick(() => {
-        this.getProducts();
-        this.getPrices();
+      this.getProducts();
+      this.getPrices();
     });
   }
 
@@ -70,11 +72,12 @@ export default class Store extends Vue {
   }
 
   async checkoutPaypal(product): Promise<void> {
+    product.selectedPrice = this.selectedPrice;
     if (parseInt(product.checkoutQty) > parseInt(product.quantity)) {
       this.$bvModal.msgBoxOk('' + this.$t('errors.max_error'));
     } else {
 
-      if(product.user.type_id !== 1) {
+      if (product.user.type_id !== 1) {
         product.price = this.getProductPriceByYear(product.planted_at);
       }
       this.SET_LOADING(true);
@@ -88,12 +91,12 @@ export default class Store extends Vue {
             if (item.rel === "approve") {
               window.location.replace(item.href);
             }
-          })
+          });
         } else {
           alert(
             "Error desconocido,, favor de mandar lo siguiente al administrador:"
             + JSON.stringify(response.data)
-          )
+          );
         }
 
       } catch {
@@ -102,7 +105,7 @@ export default class Store extends Vue {
           variant: 'danger',
           toaster: 'b-toaster-top-center',
           solid: true
-        })
+        });
       } finally {
         this.mpContainer = true;
         this.SET_LOADING(false);
@@ -111,11 +114,12 @@ export default class Store extends Vue {
   }
 
   async checkout(product): Promise<void> {
+    product.selectedPrice = this.selectedPrice;
     if (parseInt(product.checkoutQty) > parseInt(product.quantity)) {
       this.$bvModal.msgBoxOk('' + this.$t('errors.max_error'));
     } else {
 
-      if(product.user.type_id !== 1) {
+      if (product.user.type_id !== 1) {
         product.price = this.getProductPriceByYear(product.planted_at);
       }
       this.SET_LOADING(true);
@@ -128,13 +132,8 @@ export default class Store extends Vue {
           }
         );
         mp.checkout({
-          preference: {
-            id: response.data.id
-          },
-          render: {
-            container: '.mp-container' + product.id,
-            label: this.$t('strings.checkout'),
-          },
+          preference: {id: response.data.id},
+          render: {container: '.mp-container' + product.id, label: this.$t('strings.checkout'),},
           autoOpen: true,
         });
       } catch {
@@ -143,7 +142,7 @@ export default class Store extends Vue {
           variant: 'danger',
           toaster: 'b-toaster-top-center',
           solid: true
-        })
+        });
       } finally {
         this.mpContainer = true;
         this.SET_LOADING(false);
@@ -209,15 +208,19 @@ export default class Store extends Vue {
                     :img-src="'/products/' + image.src"
                     style="max-height:300px"
                   )
-                .font-weight-bold.montserrat.price.text-right.mt-3 $ {{ product.price }}&nbsp;
-                  small / {{ $t('strings.unit') }}
+                hr
+                br
+                .font-weight-bold.montserrat.price.text-right.mt-3.text-center(style="cursor:pointer" @click="setSelectedPrice('inagave')") $ {{ product.price }}&nbsp;
+                  small / {{ $t('strings.unit') }} {{ $t('products.form_inagave_price_name') }}
+                .font-weight-bold.montserrat.price.text-right.mt-3.text-center(style="cursor:pointer" @click="setSelectedPrice('maintenance')") $ {{ product.maintenance_price }}&nbsp;
+                  small / {{ $t('strings.unit') }} {{ $t('products.form_maintenance_price_name') }}
 
               b-col.mt-2(md="6" sm="12")
                 strong {{ $t('products.location') }}
                 l-map(
                   :zoom="14"
                   :center="(product.location).split(',')"
-                  style="height: 282px; width: 100%;"
+                  style="height: 408px; width: 100%;"
                 )
                   l-tile-layer(
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -262,9 +265,12 @@ export default class Store extends Vue {
                   span.text-muted {{ product.user.name }}
 
                 hr
+                b-btn.btn-warning.btn-block(@click="setSelectedPrice('maintenance')" v-if="selectedPrice === 'inagave' && product.user.type_id === 1") {{ $t('products.form_inagave_price_name') }}
+                b-btn.btn-info.btn-block(v-if="selectedPrice === 'maintenance' && product.user.type_id === 1" @click="setSelectedPrice('inagave')") {{ $t('products.form_maintenance_price_name') }}
                 p(v-if="product.user.type_id === 1")
                   strong {{ $t('strings.total') }}:
-                    .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * product.price).toFixed(2) }}
+                    .montserrat.total.text-warning.text-right(v-if="selectedPrice === 'inagave'" ) $ {{ parseFloat(product.checkoutQty * product.price).toFixed(2) }}
+                    .montserrat.total.text-info.text-right(v-else ) $ {{ parseFloat(product.checkoutQty * product.maintenance_price).toFixed(2) }}
                 p(v-else)
                   strong {{ $t('strings.total') }}:
                     .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * getProductPriceByYear(product.planted_at)).toFixed(2) }}

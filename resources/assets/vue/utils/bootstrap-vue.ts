@@ -30,6 +30,7 @@ import {
   BFormGroup,
   BFormTextarea,
   BFormFile,
+  BFormSelectOption,
   BFormCheckbox,
   BFormRadioGroup,
   BFormRadio,
@@ -75,3 +76,4 @@ Vue.component('b-media-body', BMediaBody);
 Vue.component('b-icon', BIcon);
 Vue.component('b-button-group', BButtonGroup);
 Vue.component('b-form-datepicker', BFormDatepicker);
+Vue.component('b-form-select-option', BFormSelectOption);

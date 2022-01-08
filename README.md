@@ -1,4 +1,4 @@
-# Laravel Vue Boilerplate
+ # Laravel Vue Boilerplate
 
 <p align="center">
   <img src="logo.png" />

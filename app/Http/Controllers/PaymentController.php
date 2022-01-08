@@ -102,6 +102,8 @@ class PaymentController extends Controller
 
     public function preference(Request $request): \Illuminate\Http\JsonResponse
     {
+        $selectedPrice = $request->get('selectedPrice');
+
         $request->validate([
             'checkoutQty' => 'required',
         ]);
@@ -118,7 +120,11 @@ class PaymentController extends Controller
             $owner = User::find($request->get('user_id'));
 
             if ($owner->isAdmin()) {
-                $price = (float)$product->price;
+                if($selectedPrice === "inagave") {
+                    $price = (float)$product->price;
+                } else{
+                    $price = (float)$product->maintenance_price;
+                }
             } else {
                 $price = (float)$request->get('price');
             }
@@ -156,6 +162,7 @@ class PaymentController extends Controller
             $payment->preference_status = 1;
             $payment->type = 'MERCADO PAGO';
             $payment->feedback_status = 0;
+            $payment->selected_payment = $selectedPrice;
             $payment->save();
 
             Mail::send(new CreatePreferenceMail($payment));
@@ -198,6 +205,11 @@ class PaymentController extends Controller
             $newProduct->quantity = (integer)$payment->quantity;
             $newProduct->user_id = $payment->user_id;
             $newProduct->available = 0;
+            if($payment->selected_payment === "inagave"){
+                $newProduct->maintenance_type = 0;
+            } else{
+                $newProduct->maintenance_type = 1;
+            }
             $newProduct->save();
             Mail::send(new FeedbackMail($payment, $newProduct));
             $owner = User::find($product->user_id);
@@ -205,7 +217,9 @@ class PaymentController extends Controller
             if (!$owner->isAdmin() && $newProduct->id !== $owner->id) {
                 $this->insertOnWallet($owner, $product, $newProduct, $payment);
             }
-            return response(['payment' => $payment]);
+            return response()->view('responses.feedback_success',
+                ['payment' => $payment]
+            );
         } else {
             return response(['ERROR' => 'PAGO NO APROBADO']);
         }

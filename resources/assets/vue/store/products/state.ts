@@ -53,6 +53,11 @@ export default {
       sortable: true,
     },
     {
+      key: 'maintenance_price',
+      class: 'text-right',
+      sortable: true,
+    },
+    {
       key: 'owner',
       class: 'text-center',
       sortable: true,
@@ -94,4 +99,5 @@ export default {
   isProductImageModalLoading: false,
   isModalVisible: false,
   isProductImageModalVisible: false,
+  selectedPrice: 'inagave',
 };

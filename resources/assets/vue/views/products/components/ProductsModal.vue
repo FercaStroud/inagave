@@ -97,17 +97,6 @@ export default class ProductsModal extends Vue {
             )
         b-col(md="4")
           b-form-group(
-            :label='$t("products.form_price_name")'
-            :description='$t("products.form_price_description")'
-            label-for='price',
-          )
-            b-form-input#price(
-              type='text',
-              required,
-              v-model='form.price',
-            )
-        b-col(md="4")
-          b-form-group(
             :label='$t("products.form_municipality")'
             :description='$t("products.form_municipality_description")'
             label-for='municipality',
@@ -117,6 +106,28 @@ export default class ProductsModal extends Vue {
               v-model='form.municipality',
               maxlength="75",
               required,
+            )
+        b-col(md="6")
+          b-form-group(
+            :label='$t("products.form_inagave_price_name")'
+            :description='$t("products.form_inagave_price_description")'
+            label-for='inagave_price',
+          )
+            b-form-input#inagave_price(
+              type='text',
+              required,
+              v-model='form.price',
+            )
+        b-col(md="6")
+          b-form-group(
+            :label='$t("products.form_maintenance_price_name")'
+            :description='$t("products.form_maintenance_price_description")'
+            label-for='maintenance_price',
+          )
+            b-form-input#maintenance_price(
+              type='text',
+              required,
+              v-model='form.maintenance_price',
             )
         b-col(md="6")
           b-form-group(

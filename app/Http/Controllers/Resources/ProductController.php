@@ -29,6 +29,32 @@ class ProductController extends Controller
         return $products;
     }
 
+    public function addProductToUser(Request $request){
+        $request->validate([
+            'product_id' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        $product = Product::find($request->get('product_id'));
+        if ((integer)$product->quantity < (integer)$request->get('quantity')) {
+
+            return response()->json($product, 500);
+        } else {
+            $product->quantity = (integer)$product->quantity - (integer)$request->get('quantity');
+            $product->save();
+
+            $newProduct = $product->replicate();
+            $newProduct->push();
+            $newProduct->quantity = (integer)$request->get('quantity');
+            $newProduct->available = 0;
+            $newProduct->user_id = (integer)$request->get('id');
+            $newProduct->save();
+
+            return response()->json($newProduct, 201);
+        }
+
+    }
+
     public function getUserProducts()
     {
         $products = Product::with('maintenances')

@@ -53,6 +53,7 @@ Route::group(['middleware' => ['admin'],], function () {
     Route::get('get/all/payments', 'PaymentController@index');
     Route::get('edit/settings', 'SettingController@update');
     Route::post('approve/user/request', 'Resources\WalletController@approveRequest');
+    Route::post('user/add/product/', 'Resources\ProductController@addProductToUser');
 
 });
 

@@ -153,6 +153,10 @@ const setForm = ({ commit }, payload) => {
   commit('SET_FORM', payload);
 };
 
+const setLoading = ({ commit }, payload) => {
+  commit('SET_LOADING', payload);
+};
+
 const loadProductImages = async ({ commit }, payload) => {
   commit('SET_LOADING', true);
 
@@ -258,4 +262,5 @@ export default {
 
   loadUserProducts,
   setSelectedPrice,
+  setLoading,
 };

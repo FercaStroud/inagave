@@ -10,4 +10,6 @@ export default {
   isLoading: false,
   isModalLoading: false,
   isModalVisible: false,
+  formProduct: {},
+  isModalToAddProductVisible: false,
 };

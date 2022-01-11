@@ -119,8 +119,20 @@ const setModalVisible = ({ commit }, payload) => {
   commit('SET_MODAL_VISIBLE', payload);
 };
 
+const setModalToAddProductToUserVisible = ({ commit }, payload) => {
+  commit('SET_MODAL_TO_ADD_PRODUCT_VISIBLE', payload);
+};
+
 const setUserStats = ({ commit }, payload) => {
   commit('SET_USER_STATS', payload);
+};
+
+const setFormProduct = ({ commit }, payload) => {
+  commit('SET_FORM_PRODUCT', payload);
+};
+
+const setLoading = ({ commit }, payload) => {
+  commit('SET_LOADING', payload);
 };
 
 export default {
@@ -131,4 +143,7 @@ export default {
   setModalVisible,
   setUserStats,
   loadUserStats,
+  setFormProduct,
+  setModalToAddProductToUserVisible,
+  setLoading,
 };

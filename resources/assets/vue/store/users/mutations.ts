@@ -47,6 +47,14 @@ const SET_MODAL_VISIBLE = (state, payload) => {
   state.isModalVisible = payload;
 };
 
+const SET_MODAL_TO_ADD_PRODUCT_VISIBLE = (state, payload) => {
+  state.isModalToAddProductVisible = payload;
+};
+
+const SET_FORM_PRODUCT = (state, payload) => {
+  state.formProduct = payload;
+};
+
 export default {
   SET_USERS,
   ADD_USER,
@@ -56,4 +64,6 @@ export default {
   SET_MODAL_LOADING,
   SET_MODAL_VISIBLE,
   SET_USER_STATS,
+  SET_MODAL_TO_ADD_PRODUCT_VISIBLE,
+  SET_FORM_PRODUCT,
 };

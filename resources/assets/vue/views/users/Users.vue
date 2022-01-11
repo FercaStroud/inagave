@@ -6,11 +6,13 @@ import dialog from '@/utils/dialog';
 
 import UsersCard from './components/UsersCard.vue';
 import UsersModal from './components/UsersModal.vue';
+import AddProductToUser from '@/views/users/components/AddProductToUser.vue';
 
 const uStore = namespace('users');
 
 @Component({
   components: {
+    AddProductToUser,
     UsersCard,
     UsersModal,
   },
@@ -22,9 +24,13 @@ export default class Users extends Vue {
   @uStore.State pagination;
   @uStore.State isLoading;
   @uStore.State isModalVisible;
+  @uStore.State isModalToAddProductVisible;
+  @uStore.State formProduct;
   @uStore.Action deleteUser;
   @uStore.Action loadUsers;
   @uStore.Action setModalVisible;
+  @uStore.Action setFormProduct;
+  @uStore.Action setModalToAddProductToUserVisible;
 
   currentPage = 1;
   form: Partial<User> = {};
@@ -90,7 +96,7 @@ b-container(tag='main')
 
   .users(v-if='users.length > 0')
     users-card(
-      v-for='user, i in users',
+      v-for='(user, i) in users',
       :key='user.id',
       :user='user',
       @edit-user='editUser(user, i)',
@@ -115,5 +121,11 @@ b-container(tag='main')
     :form='form',
     :is-add='isModalAdd',
     :is-visible='isModalVisible',
+  )
+
+  add-product-to-user(
+    ref='add_product_to_user',
+    :form='formProduct',
+    :is-visible='isModalToAddProductVisible',
   )
 </template>

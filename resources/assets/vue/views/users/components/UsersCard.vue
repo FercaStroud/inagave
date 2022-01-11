@@ -1,6 +1,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { BIconPencilFill, BIconTrashFill } from 'bootstrap-vue';
+import {namespace} from 'vuex-class';
+
+const uStore = namespace('users');
 
 @Component({
   components: {
@@ -10,9 +13,18 @@ import { BIconPencilFill, BIconTrashFill } from 'bootstrap-vue';
 })
 export default class UsersCard extends Vue {
   @Prop() user: any;
+  @uStore.Action setModalToAddProductToUserVisible;
+  @uStore.Action setFormProduct;
+  @uStore.State isModalToAddProductVisible;
+  @uStore.State formProduct;
 
   get actualUser() {
     return this.$store.state.auth.user;
+  }
+
+  handleAddProductToUser(user){
+    this.setFormProduct(user);
+    this.setModalToAddProductToUserVisible(true)
   }
 }
 </script>
@@ -30,6 +42,8 @@ b-card.users-card.mb-3(no-body)
       | &nbsp;{{ user.type_id === 1 ? $t('strings.admin') : $t('strings.normal') }}
 
   b-card-footer
+    b-button(@click='handleAddProductToUser(user)', variant='warning') {{ $t('products.add_product') }}
+
     b-button(@click='$emit("edit-user")', variant='link')
       b-icon-pencil-fill
       | &nbsp;{{ $t('buttons.edit') }}

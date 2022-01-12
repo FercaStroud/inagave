@@ -34,7 +34,7 @@ export default class AddProductToUser extends Vue {
   async handleOk(): Promise<void> {
     try {
       this.setLoading(true);
-      const response = await axios.post('user/add/product/', this.form);
+      const response = await axios.post('user/add/product', this.form);
       const checkErrors = checkResponse(response);
 
       if (checkErrors) {

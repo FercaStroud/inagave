@@ -50,7 +50,7 @@ class ProductController extends Controller
             $newProduct->user_id = (integer)$request->get('id');
             $newProduct->save();
 
-            return response()->json($newProduct, 201);
+            return response()->json($newProduct);
         }
 
     }

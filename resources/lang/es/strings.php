@@ -33,6 +33,7 @@ return [
     'false' => 'Falso',
     'planted_at' => 'Plantado el',
     'jimado_at' => 'Jimado el',
+    'with_maintenance' => 'Incluye Mantenimiento',
 
     // Buttons
     'update_table' => 'Actualizar tabla',

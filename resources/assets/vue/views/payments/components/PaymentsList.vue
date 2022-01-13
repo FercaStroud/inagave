@@ -5,8 +5,8 @@ import {Action, State, namespace} from 'vuex-class';
 const pStore = namespace('payments');
 
 @Component({
-  components: {}
-})
+             components: {}
+           })
 
 export default class PaymentsList extends Vue {
   @pStore.State payments;
@@ -16,12 +16,10 @@ export default class PaymentsList extends Vue {
   @pStore.Action loadAllPayments;
 
   async created() {
-    if (this.payments.length == 0) {
-      if(this.actualUser.type_id === 2){
-        await this.getUserPayments();
-      } else {
-        await this.getAllPayments();
-      }
+    if (this.actualUser.type_id === 2) {
+      await this.getUserPayments();
+    } else {
+      await this.getAllPayments();
     }
   }
 
@@ -119,7 +117,7 @@ export default class PaymentsList extends Vue {
         span {{$t("strings.created_at")}}
 
       template(v-slot:cell(user_name)="data")
-        span {{ data.item.user.name }} {{ data.item.user.lastname }}
+        span(v-if="data.item.user !== null") {{ data.item.user.name }} {{ data.item.user.lastname }}
       template(v-slot:cell(created_at)="data")
         span {{ data.item.created_at | moment("D, MMMM YYYY") }}
 

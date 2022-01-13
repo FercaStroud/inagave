@@ -96,6 +96,7 @@ export default class AddProductToUser extends Vue {
               b-form-select-option(
                 v-for="(product, i) in products" :key="i"
                 :value="product.id"
+                v-if="product.user.type_id === 1"
               ) {{product.estate}}
           b-button(
             v-else
@@ -132,5 +133,14 @@ export default class AddProductToUser extends Vue {
               variant="light"
               type="grow"
             )
-
+        b-col(md="6")
+          b-form-group(
+            :label='$t("strings.with_maintenance")',
+            label-for='maintenance_type',
+          )
+            b-form-checkbox#maintenance_type(
+              name="maintenance_type",
+              switch,
+              v-model='form.maintenance_type',
+            )
 </template>

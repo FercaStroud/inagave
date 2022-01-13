@@ -5,8 +5,8 @@ import {Action, State, namespace} from 'vuex-class';
 const mStore = namespace('maintenances');
 
 @Component({
-  components: {}
-})
+             components: {}
+           })
 
 export default class MaintenancesList extends Vue {
   @mStore.State maintenances;
@@ -16,9 +16,7 @@ export default class MaintenancesList extends Vue {
   search = '';
 
   async created() {
-    if (this.maintenances.length == 0) {
-        await this.getMaintenances();
-    }
+    await this.getMaintenances();
   }
 
   get actualUser() {
@@ -115,7 +113,7 @@ export default class MaintenancesList extends Vue {
         span {{$t("strings.created_at")}}
 
       template(v-slot:cell(product_name)="data")
-        span {{ data.item.product.estate }}
+        span(v-if="data.item.product !== null" ) {{ data.item.product.estate }}
       template(v-slot:cell(start_date)="data")
         span {{ data.item.start_date | moment("D, MMMM YYYY") }}
       template(v-slot:cell(end_date)="data")

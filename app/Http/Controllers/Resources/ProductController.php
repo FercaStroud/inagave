@@ -29,7 +29,8 @@ class ProductController extends Controller
         return $products;
     }
 
-    public function addProductToUser(Request $request){
+    public function addProductToUser(Request $request)
+    {
         $request->validate([
             'product_id' => 'required',
             'quantity' => 'required',
@@ -48,6 +49,8 @@ class ProductController extends Controller
             $newProduct->quantity = (integer)$request->get('quantity');
             $newProduct->available = 0;
             $newProduct->user_id = (integer)$request->get('id');
+            $newProduct->maintenance_type = (bool)(int)$request->get('maintenance_type', 0);
+
             $newProduct->save();
 
             return response()->json($newProduct);

@@ -23,6 +23,7 @@ export default class UsersCard extends Vue {
   }
 
   handleAddProductToUser(user){
+    user.maintenance_type = false;
     this.setFormProduct(user);
     this.setModalToAddProductToUserVisible(true)
   }

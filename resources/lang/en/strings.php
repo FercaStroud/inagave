@@ -37,6 +37,7 @@ return [
     'false' => 'False',
     'planted_at' => 'Planted At',
     'jimado_at' => 'Jimado At',
+    'with_maintenance' => 'With Maintenance',
 
     // Buttons
     'update_table' => 'Update Table',

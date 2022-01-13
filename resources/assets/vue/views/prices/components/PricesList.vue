@@ -8,10 +8,10 @@ import PricesModal from './PricesModal.vue';
 const pStore = namespace('prices');
 
 @Component({
-  components: {
-    PricesModal,
-  }
-})
+             components: {
+               PricesModal,
+             }
+           })
 
 export default class PricesList extends Vue {
   @pStore.State form;
@@ -29,9 +29,7 @@ export default class PricesList extends Vue {
   search = '';
 
   async created() {
-    if (this.prices.length == 0) {
-      await this.getPrices();
-    }
+    await this.getPrices();
   }
 
   get actualUser() {

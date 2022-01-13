@@ -48,9 +48,7 @@ export default class Users extends Vue {
 
     this.currentPage = this.pagination.currentPage;
 
-    if (this.users.length == 0) {
-      await this.getUsers(1);
-    }
+    await this.getUsers(1);
   }
 
   addUser(): void {

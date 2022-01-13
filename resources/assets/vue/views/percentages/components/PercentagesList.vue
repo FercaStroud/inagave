@@ -8,10 +8,10 @@ import PercentagesModal from './PercentagesModal.vue';
 const pStore = namespace('percentages');
 
 @Component({
-  components: {
-    PercentagesModal,
-  }
-})
+             components: {
+               PercentagesModal,
+             }
+           })
 
 export default class PercentagesList extends Vue {
   @pStore.State form;
@@ -29,9 +29,7 @@ export default class PercentagesList extends Vue {
   search = '';
 
   async created() {
-    if (this.percentages.length == 0) {
-      await this.getPercentages();
-    }
+    await this.getPercentages();
   }
 
   get actualUser() {

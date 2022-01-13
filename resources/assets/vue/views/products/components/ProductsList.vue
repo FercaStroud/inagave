@@ -8,10 +8,10 @@ import ProductImageModal from './ProductImageModal.vue';
 const pStore = namespace('products');
 
 @Component({
-  components: {
-    ProductImageModal,
-  }
-})
+             components: {
+               ProductImageModal,
+             }
+           })
 
 export default class ProductsList extends Vue {
   @pStore.State form;
@@ -41,9 +41,7 @@ export default class ProductsList extends Vue {
   search = '';
 
   async created() {
-    if (this.products.length == 0) {
-      await this.getProducts();
-    }
+    await this.getProducts();
   }
 
   get actualUser() {

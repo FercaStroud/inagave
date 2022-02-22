@@ -82,6 +82,12 @@ class PaypalController extends Controller
 
             $paypalClient = new PayPalClient();
 
+            if ($request->has('app_user')) {
+                $user = User::find($request->get('app_user'));
+            } else {
+                $user = User::find(auth()->user()->id);
+            }
+
             $owner = User::find($request->get('user_id'));
 
             if ($owner->isAdmin()) {
@@ -120,9 +126,10 @@ class PaypalController extends Controller
             ];
 
             $result = $paypalClient->createOrder($arrayBody);
+            return response()->json($result);
 
             $payment = new Payment($product->toArray());
-            $payment->user_id = auth()->user()->id;
+            $payment->user_id = $user->id;
             $payment->product_id = $product->id;
             $payment->quantity = (integer)$request->get('checkoutQty');
             $payment->total = $price * (float)$request->get('checkoutQty');
@@ -133,7 +140,7 @@ class PaypalController extends Controller
             $payment->selected_payment = $selectedPrice;
             $payment->save();
 
-            Mail::send(new CreatePreferenceMail($payment));
+            Mail::send(new CreatePreferenceMail($payment, $user));
             return response()->json($result);
         }
     }

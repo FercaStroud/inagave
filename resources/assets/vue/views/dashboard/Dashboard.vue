@@ -20,6 +20,7 @@ export default class Dashboard extends Vue {
 </script>
 
 <template lang="pug">
-  b-container(tag='main' fluid)
+  b-container.pb-5(tag='main' fluid)
     ContentDashboard
+    b-row.pt-5
 </template>

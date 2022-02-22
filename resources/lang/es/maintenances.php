@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Lista de Transacciones de Mantenimiento',
+    'title' => 'Inversionistas próximos mantenimientos',
     'product_name' => 'Producto Predio',
     'product_id' => 'ID de Producto',
 

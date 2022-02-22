@@ -58,10 +58,19 @@ class ProductController extends Controller
 
     }
 
-    public function getUserProducts()
+    public function getUserProducts(Request $request)
     {
+        if ($request->has('user_id')) {
+            $userId = $request->get('user_id');
+        } else {
+            $userId = auth()->user()->id;
+        }
+
         $products = Product::with('maintenances')
-            ->where('user_id', '=', auth()->user()->id)
+            ->where([
+                ['quantity', '>', 0],
+                ['user_id', '=', $userId]
+            ])
             ->with('user')->get();
 
         foreach ($products as $key => $product) {

@@ -5,11 +5,11 @@ namespace App\Classes;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Orders\OrdersGetRequest;
 use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-//use PayPalCheckoutSdk\Core\SandboxEnvironment as Environment;
+use PayPalCheckoutSdk\Core\SandboxEnvironment as Environment;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalHttp\HttpException;
 
-use PayPalCheckoutSdk\Core\ProductionEnvironment as Environment;
+//use PayPalCheckoutSdk\Core\ProductionEnvironment as Environment;
 
 class PayPalClient
 {

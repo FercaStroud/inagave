@@ -56,6 +56,16 @@ export default class App extends Vue {
           b-col#home(tag='main' lg="12" md="12" sm="12")
             router-view#router
     router-view#router(v-else)
+    footer#app-footer.bg-primary.w-100
+      b-container
+        b-row.p-3
+          b-col
+            b-link.p-1.color-white(href='https://inagave.com/' target="_blank" style="float:left") {{ $t('strings.by_inagave_team') }}
+
+          b-col
+            router-link.p-1.color-white(href='https://inagave.com/privacy_policy.pdf' target="_blank" style="float:right") {{ $t('strings.privacy_policy') }}
+            //router-link.p-1.color-white(to="#" style="float:right") /
+            //router-link.p-1.color-white(to='/terms-of-use' style="float:right") {{ $t('strings.terms_of_use') }}
     .languages
       b-button(
         v-for='(locale, i) in locales',
@@ -69,8 +79,6 @@ export default class App extends Vue {
 <style lang="scss" scoped>
 
 .app {
-  height: 100%;
-
   .languages {
     bottom: 16px;
     position: fixed;

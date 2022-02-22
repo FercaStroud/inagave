@@ -49,11 +49,8 @@ return [
     'form_product_image_name_description' => 'form_product_image_name_description',
     'form_product_image'=> 'Image',
     'form_product_image_description' => 'form_product_image_description',
-
-
     'form_maintenance_price_name' => 'Precio con Mantenimiento',
     'form_maintenance_price_description' => 'Precio con Mantenimiento',
     'form_inagave_price_name' => 'Precio sin Mantenimieto',
     'form_inagave_price_description' => 'Precio sin Mantenimiento',
-
 ];

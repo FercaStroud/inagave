@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Resources;
 
+use App\Mail\SendLinkToResetPasswordMail;
+use App\Mail\SuccessResetPasswordMail;
 use App\Price;
 use App\Product;
 use App\Wallet;
@@ -11,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Util\Utils;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Response;
 
@@ -66,6 +69,72 @@ class UserController extends Controller
         return $user;
     }
 
+    public function setUserSettings(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'address' => 'required',
+            'state' => 'required',
+            'municipality' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+        ]);
+
+        if ($request->has('app_user')) {
+            $user = User::find($request->get('app_user'));
+        } else {
+            $user = User::find(auth()->user()->id);
+        }
+
+        tap($user)->update($request->all());
+
+        $user->save();
+        return response()->json($user, 201);
+    }
+
+    public function setUserPassword(Request $request){
+        $request->validate([
+            'password' => 'required',
+        ]);
+
+        if ($request->has('app_user')) {
+            $user = User::find($request->get('app_user'));
+        } else {
+            $user = User::find(auth()->user()->id);
+        }
+
+        $user->password = bcrypt($request->get('password'));
+
+        $user->save();
+        return response()->json($user, 201);
+    }
+
+    public function sendLinkForPasswordReset(Request $request){
+        $request->validate([
+            'email' => 'required',
+        ]);
+
+        $user = User::where('email', '=', $request->get('email'))->first();
+        $user->remember_token = Str::random(50);
+
+        $user->save();
+        Mail::send(new SendLinkToResetPasswordMail($user));
+    }
+
+    public function passwordResetByToken(Request $request){
+        $request->validate([
+            'token' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('remember_token', '=', $request->get('token'))->first();
+        $user->password = bcrypt($request->get('password'));
+
+        $user->save();
+
+        Mail::send(new SuccessResetPasswordMail($user));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -99,28 +168,36 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUserStats()
+    public function getUserStats(Request $request)
     {
+        if($request->has('user_id')){
+            $userId = $request->get('user_id');
+        } else {
+            $userId = auth()->user()->id;
+        }
         try {
             $wallet_deposits = Wallet::where([
-                ['user_id', '=', auth()->user()->id],
+                ['user_id', '=', $userId],
                 ['type', '=', 'DEPOSIT'],
                 ['bank', '=', 'USER'],
             ])->sum('amount');
 
             $wallet_withdraws = Wallet::where([
-                ['user_id', '=', auth()->user()->id],
+                ['user_id', '=', $userId],
                 ['type', '=', 'WITHDRAW'],
                 ['status', '=', 'APPROVED'],
             ])->sum('amount');
 
-            $products = Product::where('user_id', '=', auth()->user()->id)->get();
+            $products = Product::where('user_id', '=', $userId)->get();
             $plantFounds = 0;
 
             foreach ($products as $key => $product) {
                 $year = \Carbon\Carbon::parse($product->planted_at)->year;
-                $price = Price::select('price')->where('year', '=', $year)->get();
-                $plantFounds += (float)$price[0]->price * $product->quantity;
+                if($product->maintenance_type === 1){
+                    $plantFounds += $product->maintenance_price * $product->quantity;
+                } else{
+                    $plantFounds += $product->price * $product->quantity;
+                }
             }
 
             return response()->json([

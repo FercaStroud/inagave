@@ -38,6 +38,11 @@ export default class ContentDashboard extends Vue {
     this.loadPrices();
   }
 
+  async getUserData(): Promise<void> {
+    await this.getPrices();
+    await this.getUserStats();
+  }
+
   async getUserStats(): Promise<void> {
     this.loadUserStats();
   }
@@ -48,7 +53,15 @@ export default class ContentDashboard extends Vue {
 <template lang="pug">
   div
     h1.mt-5 {{ $t('strings.dashboard') }}
-    b-row(v-if="!isLoading" )
+
+    b-button(
+      style="margin-bottom: 5px;"
+      @click="getUserData"
+      size="sm"
+      variant="outline-primary"
+    ) {{ $t('strings.update_dashboard') }}
+
+    b-row.pt-5.pb-5(v-if="!isLoading" )
       b-col(md="6" sm="12")
         b-row
           b-col(md="12" sm="12")

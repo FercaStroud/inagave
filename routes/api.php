@@ -77,3 +77,20 @@ Route::get('checkout/feedback', 'PaymentController@feedback');
 Route::get('checkout/maintenance/feedback', 'MaintenanceController@feedback');
 Route::get('paypal/checkout/maintenance/feedback', 'MaintenanceController@paypalFeedback');
 Route::get('paypal/checkout/feedback', 'PaypalController@feedback');
+
+
+Route::post('app/login', 'Auth\LoginController@login');
+Route::post('app/register', 'Auth\RegisterController@register');
+Route::post('app/get/user/stats', 'Resources\UserController@getUserStats');
+Route::get('app/get/agave/prices', 'Resources\PricesController@index');
+Route::get('app/get/store/products', 'Resources\ProductController@getStoreProducts');
+Route::post('app/get/user/products', 'Resources\ProductController@getUserProducts');
+Route::post('app/checkout', 'PaymentController@preference');
+Route::post('app/paypal/checkout', 'PaypalController@preference');
+Route::post('app/get/user/wallet', 'Resources\WalletController@getUserWallet');
+Route::post('app/request/withdraw', 'Resources\WalletController@requestWithdraw');
+Route::post('app/set/user/settings', 'Resources\UserController@setUserSettings');
+Route::post('app/set/user/password', 'Resources\UserController@setUserPassword');
+Route::get('app/get/user/payments', 'PaymentController@getByUserId');
+Route::post('app/password/reset', 'Resources\UserController@sendLinkForPasswordReset');
+Route::post('app/password/reset/token', 'Resources\UserController@passwordResetByToken');

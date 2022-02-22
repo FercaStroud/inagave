@@ -40,7 +40,9 @@ return [
     'with_maintenance' => 'With Maintenance',
 
     // Buttons
+    'i_accept_the_terms_and_use' => 'I accept the terms and use',
     'update_table' => 'Update Table',
+    'update_dashboard' => 'Update Dashboard',
     'add' => 'Add',
     'update' => 'Update',
     'delete' => 'Delete',
@@ -74,7 +76,7 @@ return [
     'approve' => 'Approve',
 
     // Pages
-    'dashboard' => 'Dashboard',
+    'dashboard' => 'My Dashboard',
     'home' => 'Home',
     'messages' => 'Messages',
     'users' => 'Users',
@@ -101,5 +103,8 @@ return [
     'new_private_message' => 'New Private Message',
     'public_channel' => 'Public Channel',
     'new_public_message' => 'New Public Message',
+    'by_inagave_team' => 'By Inagave Team',
+    'terms_of_use' => 'Terms of Use',
+    'privacy_policy' => 'Privacy Policy',
 
 ];

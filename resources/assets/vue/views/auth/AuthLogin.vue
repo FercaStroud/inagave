@@ -76,59 +76,80 @@ export default class AuthLogin extends Vue {
 </script>
 
 <template lang="pug">
-b-form(@submit='login')
   b-container(fluid)
     b-row
-      b-col(md="12")
-        b-form-group.montserrat.text-primary(
-          :label='$t("strings.email")'
-          label-for='email',
-        )
-          b-form-input(
-            type='email',
-            v-model='form.email',
-            name='email',
-            maxlength='191',
-            required,
-            autofocus,
+      b-col.mt-5.mb-5.shadow(
+        md="4"
+        sm="10"
+        lg="4"
+        offset-sm="1"
+        offset-md="4"
+        style="background-color:rgba(255,255,255,1)"
+      )
+        router-link(:to='{ name: "auth.login" }')
+          img.mt-3(
+            src='/assets/images/logo.svg',
+            alt='Logo'
+            style="width:300px;margin-left:50%;left:-150px;position:relative;"
           )
-          span.help-block(v-if='authError')
-            strong {{ $t('auth.failed') }}
-      b-col(md="12")
-        b-form-group.montserrat.text-primary(
-          :label='$t("strings.password")'
-          label-for='password',
-        )
-          b-form-input(
-            type='password',
-            v-model='form.password',
-            required,
-          )
-      b-col(md="12")
-        b-form-group#boxes
-          .d-flex.justify-content-between.align-items-center
-            b-form-checkbox.montserrat.text-primary(
-              v-model='form.rememberMe',
-              checked-value=true,
-              unchecked-value=false,
-            ) {{ $t('login.keep_connected') }}
 
-            b-button.content-vertical.text-secondary(variant='link', :to='{ name: "auth.reset" }')
-              b-icon-question-circle-fill
-              | &nbsp;{{ $t('login.forgot_password') }}
+        b-form.mt-5(@submit='login')
+          b-container(fluid)
+            b-row
+              b-col(md="12")
+                b-form-group.montserrat.text-primary(
+                  :label='$t("strings.email")'
+                  label-for='email',
+                )
+                  b-form-input(
+                    type='email',
+                    v-model='form.email',
+                    name='email',
+                    maxlength='191',
+                    required,
+                    autofocus,
+                  )
+                  span.help-block(v-if='authError')
+                    strong {{ $t('auth.failed') }}
+              b-col(md="12")
+                b-form-group.montserrat.text-primary(
+                  :label='$t("strings.password")'
+                  label-for='password',
+                )
+                  b-form-input(
+                    type='password',
+                    v-model='form.password',
+                    required,
+                  )
+              b-col(md="12")
+                b-form-group#boxes
+                  .d-flex.justify-content-between.align-items-center
+                    b-form-checkbox.montserrat.text-primary(
+                      v-model='form.rememberMe',
+                      checked-value=true,
+                      unchecked-value=false,
+                    ) {{ $t('login.keep_connected') }}
 
-      b-col.mb-4(md="12")
-        .d-flex.justify-content-between
-          b-button(
-            type='submit',
-            variant='primary',
-            :class='{ disabled: isSending }',
-          ) {{ $t('login.login') }}
+                    b-button.content-vertical.text-secondary(variant='link', :to='{ name: "auth.reset" }')
+                      b-icon-question-circle-fill
+                      | &nbsp;{{ $t('login.forgot_password') }}
 
-          b-button(
-            variant='primary',
-            :to='{ name: "auth.register" }',
-          ) {{ $t('login.register') }}
+              b-col.mb-4(md="12")
+                .d-flex.justify-content-between
+                  b-button.btn-block(
+                    type='submit',
+                    variant='primary',
+                    :class='{ disabled: isSending }',
+                  ) {{ $t('login.login') }}
+
+
+              b-col.mb-4(md="12")
+                p.text-center Inagave es una plataforma que te permitirá intertir en agave, si ya eres inversionista
+                  | inicia sesión, si aún no tienes cuenta regístrate.
+                b-button.mt-2.btn-block(
+                  variant='secondary',
+                  :to='{ name: "auth.register" }',
+                ) {{ $t('login.register') }}
 </template>
 
 <style scoped>

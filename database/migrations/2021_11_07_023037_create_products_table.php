@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('location_url', 475)->nullable();
             $table->integer('quantity');
             $table->float('price');
-            $table->float('maintenance_price');
+            $table->float('maintenance_price')->default(0);
             $table->boolean('available')->default(1);
             $table->boolean('maintenance_type')->default(0);
             $table->timestamp('planted_at')->nullable();

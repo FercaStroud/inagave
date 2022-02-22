@@ -22,7 +22,8 @@ export default class AuthResetForm extends Vue {
   }
 
   async doSubmit() {
-    const response = await this.axios.post('../password/reset', this.form);
+    const response = await this.axios.post('app/password/reset/token', this.form);
+
     const checkErrors = checkResponse(response);
 
     if (checkErrors) {
@@ -32,7 +33,7 @@ export default class AuthResetForm extends Vue {
 
     this.setDialogMessage('passwords.reset');
 
-    this.$router.push({ name: 'auth.login' });
+    await this.$router.push({name: 'auth.login'});
   }
 
   async submitForm(evt: Event) {
@@ -52,47 +53,51 @@ export default class AuthResetForm extends Vue {
 </script>
 
 <template lang="pug">
-b-form(@submit='submitForm')
-  .title {{ $t('login.reset_password') }}
-
-  b-form-group(
-    :label='$t("strings.email")'
-    label-for='email',
-  )
-    b-form-input(
-      type='email',
-      v-model='form.email',
-      name='email',
-      maxlength='191',
-      required,
-      autofocus,
+b-container(fluid)
+  b-row
+    b-col.mt-5.mb-5.shadow(
+      md="4"
+      sm="10"
+      lg="4"
+      offset-sm="1"
+      style="background-color:rgba(255,255,255,1)"
     )
+      router-link(:to='{ name: "auth.login" }')
+        img.mt-3(
+          src='/assets/images/logo.svg',
+          alt='Logo'
+          style="width:300px;margin-left:50%;left:-150px;position:relative;"
+        )
+      b-form(@submit='submitForm')
+        h5.title {{ $t('login.reset_password') }}
 
-  b-form-group(
-    :label='$t("strings.password")'
-    label-for='password',
-  )
-    b-form-input(
-      type='password',
-      v-model='form.password',
-      required,
-    )
+        b-form-group(
+          label='Token'
+          label-for='token',
+        )
+          b-form-input(
+            type='text',
+            v-model='form.token',
+            name='token',
+            maxlength='191',
+            required,
+            autofocus,
+            readonly
+          )
+        b-form-group(
+          :label='$t("strings.password")'
+          label-for='password',
+        )
+          b-form-input(
+            type='password',
+            v-model='form.password',
+            required,
+          )
 
-  b-form-group(
-    :label='$t("settings.password_confirmation")'
-    label-for='password_confirmation',
-  )
-    b-form-input(
-      type='password',
-      v-model='form.password_confirmation',
-      name='password_confirmation',
-      required,
-    )
-
-  b-form-group
-    b-button(
-      type='submit',
-      variant='primary',
-      :class='{ disabled: isSending }',
-    ) {{ $t('login.reset_password') }}
+        b-form-group
+          b-button(
+            type='submit',
+            variant='primary',
+            :class='{ disabled: isSending }',
+          ) {{ $t('login.reset_password') }}
 </template>

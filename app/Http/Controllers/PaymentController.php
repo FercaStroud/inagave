@@ -39,10 +39,16 @@ class PaymentController extends Controller
         return $payments;
     }
 
-    public function getByUserId()
+    public function getByUserId(Request $request)
     {
+        if ($request->has('app_user')) {
+            $user = User::find($request->get('app_user'));
+        } else {
+            $user = User::find(auth()->user()->id);
+        }
+
         $payments = Payment::where([
-            ['user_id', '=', auth()->user()->id],
+            ['user_id', '=', $user->id],
             ['preference_status', '=', 1],
         ])->with('user')->get();
         foreach ($payments as $key => $payment) {
@@ -120,18 +126,24 @@ class PaymentController extends Controller
             $owner = User::find($request->get('user_id'));
 
             if ($owner->isAdmin()) {
-                if($selectedPrice === "inagave") {
+                if ($selectedPrice === "inagave") {
                     $price = (float)$product->price;
-                } else{
+                } else {
                     $price = (float)$product->maintenance_price;
                 }
             } else {
                 $price = (float)$request->get('price');
             }
 
-            $payer->name = auth()->user()->name;
-            $payer->surname = auth()->user()->lastname;
-            $payer->email = auth()->user()->email;
+            if ($request->has('app_user')) {
+                $user = User::find($request->get('app_user'));
+            } else {
+                $user = User::find(auth()->user()->id);
+            }
+
+            $payer->name = $user->name;
+            $payer->surname = $user->lastname;
+            $payer->email = $user->email;
             $preference->payer = $payer;
 
             $item = new Item();
@@ -154,7 +166,7 @@ class PaymentController extends Controller
             $preference->save();
 
             $payment = new Payment($product->toArray());
-            $payment->user_id = auth()->user()->id;
+            $payment->user_id = $user->id;
             $payment->product_id = $product->id;
             $payment->quantity = (integer)$request->get('checkoutQty');
             $payment->total = $price * (float)$request->get('checkoutQty');
@@ -165,9 +177,13 @@ class PaymentController extends Controller
             $payment->selected_payment = $selectedPrice;
             $payment->save();
 
-            Mail::send(new CreatePreferenceMail($payment));
+            Mail::send(new CreatePreferenceMail($payment, $user));
 
-            return response()->json(['id' => $preference->id], 200);
+            if($request->has('app_user')) {
+                return response()->json(['init_point' => $preference->init_point], 200);
+            } else {
+                return response()->json(['id' => $preference->id], 200);
+            }
         }
     }
 
@@ -205,9 +221,9 @@ class PaymentController extends Controller
             $newProduct->quantity = (integer)$payment->quantity;
             $newProduct->user_id = $payment->user_id;
             $newProduct->available = 0;
-            if($payment->selected_payment === "inagave"){
+            if ($payment->selected_payment === "inagave") {
                 $newProduct->maintenance_type = 0;
-            } else{
+            } else {
                 $newProduct->maintenance_type = 1;
             }
             $newProduct->save();

@@ -33,10 +33,12 @@ return [
     'false' => 'Falso',
     'planted_at' => 'Plantado el',
     'jimado_at' => 'Jimado el',
-    'with_maintenance' => 'Incluye Mantenimiento',
+    'with_maintenance' => 'Con Mantenimiento',
 
     // Buttons
+    'i_accept_the_terms_and_use' => 'Acepto los terminos y condiciones.',
     'update_table' => 'Actualizar tabla',
+    'update_dashboard' => 'Actualizar tablero',
     'add' => 'Añadir',
     'update' => 'Actualizar',
     'delete' => 'Eliminar',
@@ -74,7 +76,7 @@ return [
     'approve' => 'Aprobar',
 
     // Pages
-    'dashboard' => 'Tablero',
+    'dashboard' => 'Mi Tablero',
     'home' => 'Home',
     'messages' => 'Mensajes',
     'users' => 'Usuarios',
@@ -102,4 +104,7 @@ return [
     'public_channel' => 'Canal público',
     'new_public_message' => 'Nuevo mensaje público',
 
+    'by_inagave_team' => 'Todos los derechos reservados. Inagave',
+    'terms_of_use' => 'Terminos de Uso',
+    'privacy_policy' => 'Políticas de Privacidad',
 ];

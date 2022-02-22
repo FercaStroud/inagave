@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title' => 'LISTADO DE PRODUCTOS',
-    'my_plants' => 'MIS PLANTAS',
+    'title' => 'Listado de predios',
+    'my_plants' => 'Mis plantas',
     'estate' => 'Predio',
     'size' => 'Dimensión del Predio',
     'age' => 'Edad de la Planta',
@@ -60,8 +60,9 @@ return [
     'form_product_image'=> 'Imagen',
     'form_product_image_description' => 'Seleccione una imagen para continuar',
 
-    'form_maintenance_price_name' => 'Precio con Mantenimiento',
-    'form_maintenance_price_description' => 'Precio con Mantenimiento',
-    'form_inagave_price_name' => 'Precio sin Mantenimieto',
-    'form_inagave_price_description' => 'Precio sin Mantenimiento',
+    'form_maintenance_price_name' => 'Inversión con Mantenimiento',
+    'form_maintenance_price_description' => 'Inversión con Mantenimiento',
+    'form_inagave_price_name' => 'Inversión sin Mantenimieto',
+    'form_inagave_price_description' => 'Inversión sin Mantenimiento',
+
 ];

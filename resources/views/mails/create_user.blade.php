@@ -44,7 +44,7 @@
                 style="font-size: 0px;">
                 <a target="_blank">
                     <img
-                        src="https://inagave.com/wp-content/uploads/2021/09/INAGAVE-VECTORE.png"
+                        src="https://panel.inagave.com/assets/images/logo.svg"
                         alt="Logo"
                         style="display: block; font-size: 12px;"
                         width="200" title="Logo">

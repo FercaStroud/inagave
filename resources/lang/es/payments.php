@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'HISTORIAL DE PAGOS',
+    'title' => 'Historial de pagos',
     'estate' => 'Predio',
     'user_name' => 'Propietario',
     'quantity' => 'Cantidad',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Resources;
 
+use App\User;
 use App\Wallet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,8 +17,14 @@ class WalletController extends Controller
 
     public function requestWithdraw(Request $request)
     {
+        if ($request->has('app_user')) {
+            $user = User::find($request->get('app_user'));
+        } else {
+            $user = User::find(auth()->user()->id);
+        }
+
         $wallet = New Wallet();
-        $wallet->user_id = auth()->user()->id;
+        $wallet->user_id = $user->id;
         $wallet->parent_id = 0;
         $wallet->status = 'PENDING';
         $wallet->amount = (float)$request->get('amount');
@@ -38,10 +45,16 @@ class WalletController extends Controller
         return response()->json($wallet);
     }
 
-    public function getUserWallet()
+    public function getUserWallet(Request $request)
     {
+        if ($request->has('app_user')) {
+            $user = User::find($request->get('app_user'));
+        } else {
+            $user = User::find(auth()->user()->id);
+        }
+
         $wallets = Wallet::where([
-            ['user_id', '=', auth()->user()->id],
+            ['user_id', '=', $user->id],
             ['parent_id', '=', 0],
         ])->with('user')->get();
         foreach ($wallets as $key => $wallet) {

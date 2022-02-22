@@ -246,7 +246,7 @@ const router = new Router({
           },
         },
         {
-          path: 'password/reset/:token',
+          path: 'password/reset/token/:token',
           name: 'auth.reset.token',
           component: AuthResetForm,
           meta: {

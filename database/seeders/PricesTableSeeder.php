@@ -15,16 +15,12 @@ class PricesTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
-        $limit = 10;
-
-        for ($i = 0; $i < $limit; $i++) {
             $price = Price::create([
-                'year' => (Integer)'202'.$i,
-                'price' => $faker->randomFloat(2, 1, 1000),
+                'weight' => (float)0.416,
+                'price' => (float)27.5,
+                'default' => 0,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
             ]);
-        }
     }
 }

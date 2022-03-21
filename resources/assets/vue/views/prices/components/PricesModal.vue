@@ -62,6 +62,19 @@ export default class PricesModal extends Vue {
             )
         b-col(md="6")
           b-form-group(
+            :label='$t("prices.form_weight")'
+            :description='$t("prices.form_weight_description")'
+            label-for='weight',
+          )
+            b-form-input#weight(
+              type='numeric',
+              v-model='form.weight',
+              min="0"
+              step="0.1"
+              required,
+            )
+        b-col(md="6")
+          b-form-group(
             :label='$t("prices.form_year")'
             :description='$t("prices.form_year_description")'
             label-for='year',
@@ -71,5 +84,15 @@ export default class PricesModal extends Vue {
               v-model='form.year',
               min="0"
               required,
+            )
+        b-col(md="6")
+          b-form-group(
+            label='Default',
+            label-for='default',
+          )
+            b-form-checkbox#default(
+              name="default",
+              switch,
+              v-model='form.default',
             )
 </template>

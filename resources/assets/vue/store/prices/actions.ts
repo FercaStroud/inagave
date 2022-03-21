@@ -23,7 +23,7 @@ const loadPrices = async ({ commit }, payload) => {
 const addPrice = async ({ commit }, payload) => {
   const price = {
     price: payload.price,
-    year: payload.year,
+    weight: payload.weight,
   };
 
   commit('SET_MODAL_LOADING', true);
@@ -47,7 +47,8 @@ const addPrice = async ({ commit }, payload) => {
 const editPrice = async ({ commit }, payload) => {
   const product = {
     price: payload.price,
-    year: payload.year,
+    weight: payload.weight,
+    default: payload.default,
   };
 
   commit('SET_MODAL_LOADING', true);

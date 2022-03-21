@@ -13,7 +13,7 @@ return [
     'open' => 'Abierto',
     'publish' => 'Publicar',
     'reject' => 'Rechazar',
-    'save' => 'Salvar',
+    'save' => 'Guardar',
     'sending' => 'Enviando',
     'update' => 'Actualizar',
 

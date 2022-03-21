@@ -77,12 +77,6 @@ export default class ContentDashboard extends Vue {
           b-col(md="12" sm="12")
             b-card
               b-card-body
-                .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_wallet_user') }}:
-                p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:2em") ${{(stats.total_user_founds).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}} (MXN)
-                b-button(variant="warning" block to="/wallet" ) {{ $t('strings.withdraw_wallet') }}
-          b-col.mt-3(md="6" sm="12")
-            b-card
-              b-card-body
                 .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_wallet_user_plants') }}:
                 p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:2em") ${{(stats.total_plant_founds).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}} (MXN)
                 b-button(variant="warning" block to="/user/products") {{ $t('strings.sell_plant') }}
@@ -90,8 +84,21 @@ export default class ContentDashboard extends Vue {
           b-col.mt-3(md="6" sm="12")
             b-card
               b-card-body
+                .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_wallet_user') }}:
+                p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:2em") ${{(stats.total_user_founds).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}} (MXN)
+                b-button(variant="warning" block to="/wallet" ) {{ $t('strings.withdraw_wallet') }}
+
+          b-col.mt-3(md="6" sm="12")
+            b-card
+              b-card-body
                 .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_user_plants') }}:
                 p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:2em") {{stats.total_plants}}
-                b-button(variant="primary" block to="/store") {{ $t('strings.buy_plant') }}
+
+                .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_user_plants_inagave_method') }}:
+                p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:1.2em")  {{stats.total_plants_m_inagave}}
+
+                .text-center.font-weight-bold.text-info.montserrat {{ $t('strings.total_user_plants_total_method') }}:
+                p.font-weight-bold.text-center.text-danger.montserrat(style="font-size:1.2em")  {{stats.total_plants_m_total}}
+                b-button(variant="primary" block to="/store") {{ $t('strings.buy_plants') }}
 
 </template>

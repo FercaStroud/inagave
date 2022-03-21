@@ -18,7 +18,8 @@ class PricesController extends Controller
     {
         $request->validate([
             'price' => 'required',
-            'year' => 'required',
+            'weight' => 'required',
+            'default' => 'required',
         ]);
 
         $price = new Price($request->all());
@@ -30,7 +31,8 @@ class PricesController extends Controller
     {
         $request->validate([
             'price' => 'required',
-            'year' => 'required',
+            'weight' => 'required',
+            'default' => 'required',
         ]);
 
         tap($price)->update($request->all());

@@ -50,6 +50,7 @@ class PaymentController extends Controller
         $payments = Payment::where([
             ['user_id', '=', $user->id],
             ['preference_status', '=', 1],
+            ['status', '!=', null],
         ])->with('user')->get();
         foreach ($payments as $key => $payment) {
             if ($payment->collection_status == 'approved') {

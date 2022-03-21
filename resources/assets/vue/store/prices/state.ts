@@ -17,8 +17,18 @@ export default {
       sortable: true,
     },
     {
-      key: 'year',
+      key: 'weight',
       class: 'text-center',
+      sortable: true,
+    },
+    {
+      key: 'year',
+      class: 'text-right',
+      sortable: true,
+    },
+    {
+      key: 'default',
+      class: 'text-right',
       sortable: true,
     },
     {

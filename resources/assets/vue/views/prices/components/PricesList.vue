@@ -38,6 +38,7 @@ export default class PricesList extends Vue {
 
   editPrice(price: Price): void {
     this.setModalAdd(false);
+    price.default = Boolean(price.default);
     this.setForm(price);
     this.setModalVisible(true);
   }
@@ -97,8 +98,12 @@ export default class PricesList extends Vue {
 
       template(v-slot:head(price)="data")
         span {{$t("prices.price")}}
+      template(v-slot:head(weight)="data")
+        span {{$t("prices.weight")}}
       template(v-slot:head(year)="data")
         span {{$t("prices.year")}}
+      template(v-slot:head(default)="data")
+        span Default
 
       template(v-slot:head(created_at)="data")
         span {{$t("strings.created_at")}}

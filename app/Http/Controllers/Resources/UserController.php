@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Resources;
 
 use App\Mail\SendLinkToResetPasswordMail;
 use App\Mail\SuccessResetPasswordMail;
+use App\Payment;
 use App\Price;
 use App\Product;
 use App\Wallet;
@@ -175,7 +176,6 @@ class UserController extends Controller
         } else {
             $userId = auth()->user()->id;
         }
-        try {
             $wallet_deposits = Wallet::where([
                 ['user_id', '=', $userId],
                 ['type', '=', 'DEPOSIT'],
@@ -188,29 +188,50 @@ class UserController extends Controller
                 ['status', '=', 'APPROVED'],
             ])->sum('amount');
 
+            $productsInagave = Product::where(
+                [
+                    ['user_id', '=', $userId],
+                    ['maintenance_type', '=', '0'],
+                ]
+            )->get();
+
+            $productsTotal = Product::where(
+                [
+                    ['user_id', '=', $userId],
+                    ['maintenance_type', '=', '1'],
+                ]
+            )->get();
             $products = Product::where('user_id', '=', $userId)->get();
+
             $plantFounds = 0;
+            $price = Price::where("default", '=', 1)->first();
+            $now  = \Carbon\Carbon::parse(\Carbon\Carbon::now()->format('Y'))->year;
 
             foreach ($products as $key => $product) {
                 $year = \Carbon\Carbon::parse($product->planted_at)->year;
-                if($product->maintenance_type === 1){
-                    $plantFounds += $product->maintenance_price * $product->quantity;
-                } else{
-                    $plantFounds += $product->price * $product->quantity;
-                }
+                $months = ($now - $year) * 12;
+
+                $plantFounds += (($price->weight * $months) * $price->price) * $product->quantity;
             }
 
+            $user = User::find($userId);
+            $payments = Payment::where([
+                ["user_id", '=', $user->id],
+                ['status', '!=', null],
+            ])->get();
+
+            foreach ($payments as $key => $payment) {
+                $plantFounds += $payment->total;
+            }
+
+
             return response()->json([
+                'total_plants_m_inagave' => $productsInagave->sum('quantity'),
+                'total_plants_m_total' => $productsTotal->sum('quantity'),
                 'total_plants' => $products->sum('quantity'),
                 'total_user_founds' => (float)$wallet_deposits - (float)$wallet_withdraws,
                 'total_plant_founds' => $plantFounds,
+                'store' => 0,
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'total_plants' => 0,
-                'total_user_founds' => 0,
-                'total_plant_founds' => 0,
-            ]);
-        }
     }
 }

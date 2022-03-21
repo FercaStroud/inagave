@@ -68,7 +68,19 @@ export default class Store extends Vue {
   }
 
   getProductPriceByYear(planted_at) {
-    return (this.prices.find(({year}) => year === parseInt(planted_at.slice(0, 4)))).price;
+    planted_at = parseInt(planted_at.slice(0, 4));
+    let now = new Date().getFullYear();
+
+    let months = (now - planted_at) * 12;
+    let defaultPrice;
+
+    (this.prices).forEach(function (data, index){
+      if(data.default === 1 || data.default === true){
+        defaultPrice = data;
+      }
+    });
+
+    return (defaultPrice.weight * months) * defaultPrice.price;
   }
 
   async checkoutPaypal(product): Promise<void> {
@@ -132,10 +144,10 @@ export default class Store extends Vue {
           }
         );
         mp.checkout({
-          preference: {id: response.data.id},
-          render: {container: '.mp-container' + product.id, label: this.$t('strings.checkout'),},
-          autoOpen: true,
-        });
+                      preference: {id: response.data.id},
+                      render: {container: '.mp-container' + product.id, label: this.$t('strings.checkout'),},
+                      autoOpen: true,
+                    });
       } catch {
         this.$bvToast.toast('', {
           title: this.$t('errors.generic_error'),
@@ -180,24 +192,7 @@ export default class Store extends Vue {
         b-card.product-card.shadow
           b-card-body(style="padding:0")
             b-row
-              b-col.mt-2(
-                v-if="product.user.type_id === 2"
-                md="3"
-                sm="12"
-              )
-                strong {{ $t('prices.title') }}
-                b-list-group(
-                  style="max-height: 282px; overflow: auto"
-                )
-                  b-list-group-item(
-                    v-for="(price, key) in prices"
-                    :key="key"
-                    class="flex-column align-items-start"
-                  )
-                    .d-flex.w-100.justify-content-between
-                      h5.mb-1 ${{price.price}} (MXN)
-                      small {{price.year}}
-              b-col(v-else md="3" sm="12")
+              b-col(v-if="product.user.type_id !== 2" md="3" sm="12")
                 b-carousel(
                   id="carousel-fade"
                   indicators
@@ -210,9 +205,11 @@ export default class Store extends Vue {
                   )
                 hr
                 br
-                .font-weight-bold.montserrat.price.text-right.mt-3.text-center(style="cursor:pointer" @click="setSelectedPrice('inagave')") $ {{ product.price }}&nbsp;
+                b-btn.btn-warning.btn-block(@click="setSelectedPrice('inagave')" v-if="product.user.type_id === 1") {{ $t('products.form_inagave_price_name') }}
+                b-btn.btn-info.btn-block(v-if="product.user.type_id === 1" @click="setSelectedPrice('maintenance')") {{ $t('products.form_maintenance_price_name') }}
+                //.font-weight-bold.montserrat.price.text-right.mt-3.text-center(style="cursor:pointer" @click="setSelectedPrice('inagave')") $ {{ product.price }}&nbsp;
                   small / {{ $t('strings.unit') }} {{ $t('products.form_inagave_price_name') }}
-                .font-weight-bold.montserrat.price.text-right.mt-3.text-center(style="cursor:pointer" @click="setSelectedPrice('maintenance')") $ {{ product.maintenance_price }}&nbsp;
+                //.font-weight-bold.montserrat.price.text-right.mt-3.text-center(style="cursor:pointer" @click="setSelectedPrice('maintenance')") $ {{ product.maintenance_price }}&nbsp;
                   small / {{ $t('strings.unit') }} {{ $t('products.form_maintenance_price_name') }}
 
               b-col.mt-2(md="6" sm="12")
@@ -261,12 +258,11 @@ export default class Store extends Vue {
                   strong {{ $t('strings.jimado_at') }}: &nbsp;
                   span.text-muted {{ product.jimado_at | moment("D, MMMM YYYY") }}
                   br/
-                  strong {{ $t('strings.owner') }}: &nbsp;
-                  span.text-muted {{ product.user.name }}
+                  //strong {{ $t('strings.owner') }}: &nbsp;
+                  //span.text-muted {{ product.user.name }}
 
                 hr
-                b-btn.btn-warning.btn-block(@click="setSelectedPrice('maintenance')" v-if="selectedPrice === 'inagave' && product.user.type_id === 1") {{ $t('products.form_inagave_price_name') }}
-                b-btn.btn-info.btn-block(v-if="selectedPrice === 'maintenance' && product.user.type_id === 1" @click="setSelectedPrice('inagave')") {{ $t('products.form_maintenance_price_name') }}
+
                 p(v-if="product.user.type_id === 1")
                   strong {{ $t('strings.total') }}:
                     .montserrat.total.text-warning.text-right(v-if="selectedPrice === 'inagave'" ) $ {{ parseFloat(product.checkoutQty * product.price).toFixed(2) }}
@@ -274,22 +270,26 @@ export default class Store extends Vue {
                 p(v-else)
                   strong {{ $t('strings.total') }}:
                     .montserrat.total.text-danger.text-right $ {{ parseFloat(product.checkoutQty * getProductPriceByYear(product.planted_at)).toFixed(2) }}
-                b-input-group(v-if="!isLoading && !mpContainer && product.user_id !== user.id")
+
+                p {{ $t('strings.qty_to_shop') }}
+                b-input-group.mb-2(v-if="!isLoading && !mpContainer && product.user_id !== user.id")
                   b-form-input(
                     type="number"
                     min="0"
                     v-model="product.checkoutQty"
                     :max="product.quantity"
                   )
-                  b-input-group-append
-                    b-button(
-                      variant="warning"
-                      @click="checkout(product)"
-                    ) MercadoPago
-                    b-button(
-                      variant="info"
-                      @click="checkoutPaypal(product)"
-                    ) PayPal
+
+                b-button.btn-block(
+                  variant="warning"
+                  @click="checkout(product)"
+                ) MercadoPago
+
+                b-button.btn-block(
+                  variant="info"
+                  @click="checkoutPaypal(product)"
+                ) PayPal
+
                 div(v-if="isLoading")
                   b-button(
                     variant="danger"

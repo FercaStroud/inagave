@@ -60,9 +60,9 @@ return [
     'form_product_image'=> 'Imagen',
     'form_product_image_description' => 'Seleccione una imagen para continuar',
 
-    'form_maintenance_price_name' => 'Inversión con Mantenimiento',
+    'form_maintenance_price_name' => 'Inversión con método Total',
     'form_maintenance_price_description' => 'Inversión con Mantenimiento',
-    'form_inagave_price_name' => 'Inversión sin Mantenimieto',
+    'form_inagave_price_name' => 'Inversión con método INAGAVE',
     'form_inagave_price_description' => 'Inversión sin Mantenimiento',
 
 ];

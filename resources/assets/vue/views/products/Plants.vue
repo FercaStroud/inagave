@@ -71,7 +71,19 @@ export default class Plants extends Vue {
   }
 
   getProductPriceByYear(planted_at) {
-    return (this.prices.find(({year}) => year === parseInt(planted_at.slice(0, 4)))).price;
+    planted_at = parseInt(planted_at.slice(0, 4));
+    let now = new Date().getFullYear();
+
+    let months = (now - planted_at) * 12;
+    let defaultPrice;
+
+    (this.prices).forEach(function (data, index){
+      if(data.default === 1 || data.default === true){
+        defaultPrice = data;
+      }
+    });
+
+    return (defaultPrice.weight * months) * defaultPrice.price;
   }
 
   async maintenancePayPalPayment(product): Promise<void> {
@@ -226,6 +238,9 @@ export default class Plants extends Vue {
                   strong {{ $t('products.available') }}: &nbsp;
                   span.text-success(v-if="product.available" ) {{$t("strings.true")}}
                   span.text-danger(v-else) {{$t("strings.false")}}
+                  br/
+                  strong(v-if="product.maintenance_type === 1") {{ $t('strings.total_method') }}
+                  strong(v-else) {{ $t('strings.inagave_method') }}
 
                 hr
               b-col(

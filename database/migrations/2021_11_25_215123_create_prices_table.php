@@ -16,7 +16,8 @@ class CreatePricesTable extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('price');
-            $table->smallInteger('year')->unique();
+            $table->float('weight');
+            $table->boolean('default')->default(0);
             $table->timestamps();
         });
     }
